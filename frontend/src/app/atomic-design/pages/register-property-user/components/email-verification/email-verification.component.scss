@@ -1,0 +1,15 @@
+@import "../../../../../style/colors";
+
+:host {
+  display: block;
+  height: 1177px;
+  background-color: #fafbff;
+
+  .body {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: center;
+
+  }
+}

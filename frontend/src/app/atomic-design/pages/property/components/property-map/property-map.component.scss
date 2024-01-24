@@ -1,0 +1,35 @@
+@import "../../../../../style/breaking-points.scss";
+
+:host {
+  .map {
+    font-family: "Lato";
+    font-style: normal;
+    margin: 45px 0px;
+
+    .title {
+      margin-bottom: 25px;
+      font-weight: 700;
+      font-size: 24px;
+      line-height: 32px;
+      color: #304659;
+    }
+  }
+
+  @media screen and (max-width: $medium) {
+    .map {
+      .title {
+        font-size: 20px;
+      }
+    }
+  }
+  @media screen and (max-width: $small) {
+    .map {
+      margin: 45px -15px 45px -15px !important;
+
+      .title {
+        font-size: 20px;
+        margin: 0 15px 25px 15px;
+      }
+    }
+  }
+}

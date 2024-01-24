@@ -1,0 +1,42 @@
+<div class="field">
+  <p class="field-label">{{ label }}</p>
+  <form class="field-input" [class.no-background]="selectedValue !== undefined">
+    <mat-form-field appearance="fill">
+      <input
+        matInput
+        id="search-location-field"
+        [formControl]="myControl"
+        [matAutocomplete]="auto"
+        [placeholder]="placeholder"
+      />
+
+      <mat-autocomplete
+        #auto="matAutocomplete"
+        class="auto-complete-custom-style"
+        [classList]="'test'"
+        (optionSelected)="optionSelected($event)"
+      >
+        <mat-option
+          class="place-option"
+          *ngFor="let option of filteredLocations"
+          [value]="option"
+        >
+          <div class="parent">
+            <mat-icon class="place-icon">place</mat-icon>
+            <div class="texts">
+              <div style="display: flex">
+                <span *ngIf="option?.villageId">{{
+                  option?.cityId
+                    ? option?.villageName + ",&nbsp;"
+                    : option?.villageName
+                }}</span>
+                <span *ngIf="option?.cityId">{{ option?.cityName }}</span>
+              </div>
+              <span>{{ option?.countryName }}</span>
+            </div>
+          </div>
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+  </form>
+</div>

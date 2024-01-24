@@ -1,0 +1,269 @@
+@import "../../../../../style/colors";
+@import "../../../../../style/breaking-points";
+
+:host {
+  display: block;
+
+  .rate-plan-container {
+    font-family: Lato, sans-serif;
+    font-style: normal;
+
+    .plan-header {
+      margin-top: 34.2px;
+      display: flex;
+      justify-content: space-between;
+
+      @media screen and (max-width: $small) {
+        flex-direction: column;
+      }
+
+      h5 {
+        font-weight: bold;
+        font-size: 24px;
+        line-height: 32px;
+        color: #304659;
+      }
+
+      .choose-weekly-plan {
+        mat-radio-button {
+          margin-left: 16px;
+
+          ::ng-deep .mat-radio-label {
+            color: #304659;
+          }
+        }
+      }
+    }
+
+    mat-divider {
+      margin: 22px -35.39px;
+      color: #304659;
+    }
+
+    .discount-header {
+      width: 570px;
+      display: flex;
+      justify-content: flex-end;
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 20px;
+      color: #304659;
+    }
+
+    .section {
+      display: flex;
+      flex-direction: column;
+      position: relative;
+
+      &.custom {
+        margin-bottom: 12px;
+      }
+
+      .rate-plan {
+        height: 80px;
+        border-radius: 10px;
+        border: 1px solid #e6e8f0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 12.5px;
+
+        @media screen and (min-width: $medium) {
+          width: 570px;
+        }
+
+        @media screen and (max-width: $small) {
+          margin-top: 18px;
+        }
+
+        &.cancellation {
+          flex-direction: column;
+          align-items: flex-start;
+          justify-content: space-evenly;
+          height: 163.39px;
+
+          mat-checkbox {
+            font-weight: 500;
+            font-size: 14px;
+            line-height: 20px;
+          }
+
+          .cancellation-question {
+            color: #ff6647;
+            margin-left: 16px;
+            font-weight: 500;
+            font-size: 14px;
+            line-height: 20px;
+          }
+        }
+
+        .cancel-booking {
+          margin-left: 16px;
+          display: flex;
+          justify-content: space-between;
+          width: 95%;
+          font-weight: 500;
+          font-size: 14px;
+          line-height: 20px;
+          color: #304659;
+
+          button {
+            min-width: 16px;
+            width: 16px;
+            height: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+            margin: 0 20px;
+            padding: 0;
+
+            ::ng-deep.mat-button-wrapper {
+              height: 16px;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+            }
+
+            mat-icon {
+              font-size: 12px;
+              width: 12px;
+              height: 12px;
+            }
+          }
+
+          p {
+            margin-bottom: 0 !important;
+            margin-right: 12px;
+          }
+        }
+
+        &.room-price {
+          background: rgba(103, 27, 181, 0.02);
+          border-color: $primary;
+        }
+
+        .rate {
+          font-weight: 500;
+          font-size: 14px;
+          line-height: 20px;
+          color: #304659;
+          margin-left: 16px;
+          margin-bottom: 0 !important;
+          color: #304659;
+          @media screen and (min-width: $small) {
+            width: 69%;
+          }
+
+          &.custom {
+            margin-right: 8px;
+          }
+        }
+      }
+
+      .discount-percentage {
+        display: flex;
+        align-items: center;
+        margin-right: 16px;
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 20px;
+
+        @media screen and (min-width: $small) {
+          position: absolute;
+          right: 0;
+          top: 22px;
+        }
+
+        @media screen and (max-width: $small) {
+          display: flex;
+          justify-content: flex-end;
+        }
+
+        .input-label {
+          font-weight: 500;
+          font-size: 14px;
+          line-height: 20px;
+          margin-right: 8px;
+          color: #304659;
+
+          &.hide-in-desktop {
+            @media screen and (min-width: $small) {
+              display: none;
+            }
+          }
+        }
+
+        app-single-line-field {
+          height: 34.17px;
+          width: 68.33px;
+          margin-right: 8px;
+          margin-bottom: 8px;
+          color: #671bb5;
+
+          @media screen and (max-width: $small) {
+            width: 86.01px;
+          }
+
+          ::ng-deep .mat-form-field-infix {
+            padding: 0 !important;
+            height: 34.17px;
+          }
+
+          ::ng-deep .mat-form-field-outline {
+            background-color: #f9fafc;
+          }
+        }
+
+        .percentage {
+          color: $primary;
+          font-weight: bold;
+          font-size: 24px;
+          line-height: 32px;
+          width: 16px;
+          color: $primary;
+        }
+
+        p {
+          margin-bottom: 0 !important;
+        }
+      }
+    }
+
+    .rate-offer {
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 20px;
+      color: #ff6647;
+      margin-top: 16px;
+    }
+
+    .weekly-plan {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      @media screen and (max-width: $small) {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      h5 {
+        font-weight: bold;
+        font-size: 24px;
+        line-height: 32px;
+        color: #304659;
+      }
+
+      .choose-weekly-plan {
+        mat-radio-button {
+          margin-left: 16px;
+
+          ::ng-deep .mat-radio-label {
+            color: #304659;
+          }
+        }
+      }
+    }
+  }
+}

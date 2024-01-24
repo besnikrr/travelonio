@@ -1,0 +1,49 @@
+@import "../../../style/responsivness";
+
+:host {
+  display: block;
+
+  .container {
+    display: flex;
+    flex-direction: column;
+    height:100%;
+    padding: 80px 30px;
+
+    .content {
+      background-color: #fafbff;
+      height: 100%;
+      display: flex;
+      width: 100%;
+      align-items: center;
+      justify-content: center;
+      .two-columns {
+        max-width: 1440px;
+        .left {
+          width: 100%;
+        }
+        .step-content {
+          width: 100%;
+        }
+
+        .bill-card {
+
+        }
+      }
+
+    }
+
+    .footer {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+  @media screen and (max-width: $desktop) {
+    .container {
+      padding: 2.5rem 1rem;
+      .bill-card {
+        width: 100%;
+      }
+    }
+  }
+}

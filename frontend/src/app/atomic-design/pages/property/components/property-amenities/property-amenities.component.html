@@ -1,0 +1,30 @@
+<div class="amenities">
+  <h1 class="title" i18n="@@amenities">Amenities</h1>
+  <ul class="list">
+    <ng-container *ngFor="let amenity of amenities; let i = index">
+      <li *ngIf="hasAmenityValue[i]" class="item">
+        <p class="category">
+          {{
+            Amenities.convertToString(
+              Amenities.convertFromApiValue(amenity.name)
+            )
+          }}
+        </p>
+        <div class="item__desk" *ngFor="let o of amenity.option">
+          <span class="icon" *ngIf="o.selected">
+            <mat-icon [svgIcon]="'reze:done'">done</mat-icon>
+          </span>
+          <p>
+            {{
+              o.selected
+                ? Amenities.convertToString(
+                    Amenities.convertFromApiValue(o.name)
+                  ) + (o.distance ? ": " + o.distance + "km" : "")
+                : ""
+            }}
+          </p>
+        </div>
+      </li>
+    </ng-container>
+  </ul>
+</div>

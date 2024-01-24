@@ -1,0 +1,250 @@
+@import "../../../../../style/colors";
+@import "../../../../../style/breaking-points";
+
+:host {
+  display: block;
+
+  .rooms-prices-container {
+    display: flex;
+    font-family: Lato, sans-serif;
+    font-style: normal;
+    align-items: center;
+    flex-direction: column;
+
+    @media screen and (max-width: $small) {
+      position: relative;
+    }
+
+    .headers {
+      width: 100%;
+      display: flex;
+      justify-content: space-around;
+      color: #304659;
+
+      @media screen and (max-width: $small) {
+        display: none;
+      }
+
+      .first-header {
+        width: 125px;
+      }
+    }
+    .room-container {
+      display: flex;
+      width: 100%;
+    }
+    .room {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      margin-bottom: 5px;
+
+      mat-divider {
+        @media screen and (max-width: $small) {
+          width: 100%;
+        }
+      }
+
+      @media screen and (max-width: $small) {
+        flex-direction: column;
+        align-items: flex-end;
+        height: 280px;
+        justify-content: space-between;
+      }
+
+      .room-block {
+        height: 90px;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        border-radius: 10px;
+        border: 1px solid #c1c4d6;
+        justify-content: center;
+        padding: 10px;
+
+        @media screen and (max-width: $small) {
+          height: 75px;
+          width: 100%;
+        }
+
+        .room-name-price {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          font-weight: 500;
+          font-size: 14px;
+          height: 100%;
+          width: 100%;
+
+          .name {
+            width: 100%;
+            color: #304659;
+          }
+
+          .price {
+            color: $primary;
+            width: 100%;
+          }
+        }
+      }
+
+      .include-discount {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        margin: 0 20px;
+        color: #304659;
+
+        .yes-option {
+          @media screen and (max-width: $small) {
+            margin-right: 8px;
+          }
+        }
+
+        @media screen and (min-width: $small) {
+          width: 15px;
+        }
+
+        @media screen and (max-width: $small) {
+          flex-direction: row;
+          justify-content: space-between;
+          width: 100%;
+          margin: 0;
+        }
+      }
+
+      .discount-percentage {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-right: 34.62px;
+        margin-left: 44px;
+
+        @media screen and (max-width: $small) {
+          flex-direction: row;
+          justify-content: space-between;
+          width: 100%;
+          margin: 0;
+        }
+
+        app-single-line-field {
+          height: 51.18px;
+          width: 85px;
+
+          ::ng-deep .mat-form-field-infix {
+            padding: 0 !important;
+            height: 51.18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 0.84374em solid transparent;
+          }
+        }
+
+        span {
+          color: #304659;
+          font-family: Lato, sans-serif;
+          font-size: 14px;
+          font-weight: 500;
+          line-height: 20px;
+          letter-spacing: 0;
+          text-align: left;
+
+          @media screen and (min-width: $small) {
+            display: none;
+          }
+        }
+
+        p {
+          font-weight: normal;
+          font-size: 16px;
+          line-height: 24px;
+          color: #671bb5;
+          margin-left: 6px;
+        }
+
+        .read-only {
+          ::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
+            background-color: #f9fafc;
+          }
+        }
+
+        ::ng-deep {
+          input {
+            height: 100%;
+          }
+        }
+      }
+
+      .date-container {
+        display: flex;
+        margin-top: 16px;
+        justify-content: space-between;
+        align-items: center;
+        @media screen and (max-width: $small) {
+          width: 100%;
+        }
+
+        span {
+          color: #304659;
+          font-family: Lato, sans-serif;
+          font-size: 14px;
+          font-weight: 500;
+          line-height: 20px;
+          letter-spacing: 0px;
+          text-align: left;
+
+          @media screen and (min-width: $small) {
+            display: none;
+          }
+        }
+
+        .period {
+          height: 90px;
+          width: 135px;
+          display: flex;
+          flex-direction: column;
+          border-radius: 10px;
+          border: 1px solid #c1c4d6;
+          justify-content: space-evenly;
+          padding: 11px;
+          color: #304659;
+
+          @media screen and (max-width: $small) {
+            height: 35px;
+            flex-direction: row;
+            width: 280px;
+            align-items: center;
+            margin-bottom: 10px;
+          }
+
+          .to {
+            height: 0;
+            padding: 0;
+            margin: 0;
+            color: #c1c4d6;
+            padding-bottom: 10px;
+            @media screen and (max-width: $small) {
+              padding-bottom: 27px;
+            }
+          }
+
+          .datepicker {
+            @media screen and (max-width: $small) {
+              width: 110px;
+            }
+          }
+        }
+      }
+    }
+
+    .rooms-list-footer {
+      margin-top: 30px;
+      width: 100%;
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 20px;
+      color: #696f8c;
+    }
+  }
+}

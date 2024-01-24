@@ -1,0 +1,442 @@
+@import "../../../../../style/colors";
+@import "../../../../../style/breaking-points.scss";
+
+:host {
+  display: block;
+  .container {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 30px 0 80px 0;
+
+    .content {
+      display: flex;
+      flex-direction: column;
+      margin: 0 80px;
+
+      .heading {
+        display: flex;
+        flex-direction: column;
+
+        h1 {
+          margin-bottom: 10px;
+          font-weight: 700;
+          font-size: 32px;
+          line-height: 40px;
+          color: #304659;
+        }
+
+        .subheading {
+          display: flex;
+          align-items: center;
+          margin-bottom: 30px;
+
+          p {
+            margin: 0;
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 24px;
+            color: #696f8c;
+          }
+
+          .rating {
+            display: flex;
+            align-items: center;
+            margin-right: 30px;
+
+            mat-icon {
+              margin-right: 5px;
+            }
+          }
+        }
+      }
+
+      .gallery {
+        position: relative;
+        display: grid;
+        grid-template-columns: repeat(11, 1fr);
+        grid-gap: 10px;
+        margin-bottom: 30px;
+
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: fill;
+          cursor: pointer;
+          border-radius: 10px;
+        }
+
+        &__item {
+          border-radius: 10px;
+          width: 100%;
+          height: 100%;
+          background-color: white;
+          opacity: 0.9;
+
+          &:hover {
+            opacity: 1;
+          }
+
+          &--1 {
+            grid-column-start: 1;
+            grid-column-end: 8;
+            grid-row-start: 1;
+            grid-row-end: 7;
+          }
+
+          &--2 {
+            grid-column-start: 8;
+            grid-column-end: 12;
+            grid-row-start: 1;
+            grid-row-end: 5;
+          }
+
+          &--3 {
+            grid-column-start: 8;
+            grid-column-end: 10;
+            grid-row-start: 5;
+            grid-row-end: 7;
+          }
+
+          &--4 {
+            grid-column-start: 10;
+            grid-column-end: 12;
+            grid-row-start: 5;
+            grid-row-end: 7;
+          }
+        }
+
+        .image-count {
+          display: none;
+          position: absolute;
+          padding: 6px 15px;
+          right: 0;
+          bottom: 0;
+          background: #ffffff;
+
+          font-weight: 400;
+          font-size: 12px;
+          line-height: 16px;
+          color: #101840;
+        }
+      }
+
+      .tabs {
+        ul {
+          display: flex;
+          padding: 0;
+          border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+
+          li {
+            list-style: none;
+            padding: 30px;
+            border-bottom: 4px solid transparent;
+            transition: border-color 0.33s ease;
+            cursor: pointer;
+            min-width: 130px;
+            font-family: "Lato";
+            font-weight: 500;
+            font-size: 18px;
+            line-height: 24px;
+            color: #696f8c;
+            text-decoration: none;
+
+            &:hover {
+              border-bottom: 4px solid #671bb5;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .images {
+    padding-bottom: 30px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: baseline;
+
+    &--preview {
+      overflow-x: scroll;
+      overflow-y: hidden;
+      padding-bottom: 20px;
+      flex-wrap: nowrap !important;
+
+      &::-webkit-scrollbar {
+        height: 7px;
+      }
+    }
+
+    .image-box {
+      display: flex;
+      justify-content: center;
+      height: 117.8px;
+      width: 115.93px !important;
+      position: relative;
+      text-align: center;
+      color: white;
+      margin: 5px;
+      opacity: 0.6;
+
+      &--preview {
+        flex: 0 0 115.93px;
+      }
+
+      &.show-overlay {
+        opacity: 1;
+      }
+
+      img {
+        width: 100%;
+        height: auto;
+        margin: 0 5px;
+        border-radius: 6px;
+      }
+    }
+
+    .image-box .options {
+      display: none;
+    }
+
+    .image-box:hover .options {
+      display: block;
+    }
+  }
+
+  .overlay {
+    background-color: #00000060;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 3;
+  }
+
+  .details-card {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 686.6521606445312px;
+    width: 723.5078125px;
+    border-radius: 20px;
+    box-shadow: 0px 16px 32px rgba(103, 27, 181, 0.1);
+
+    .details {
+      height: 100%;
+      display: flex;
+      justify-content: space-between;
+      flex-direction: column;
+
+      .preview {
+        min-height: 440px;
+        max-height: 440px;
+
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: contain;
+        }
+      }
+
+      p {
+        margin: 10px 0px;
+        text-align: center;
+        color: $primary;
+        font-size: 18px;
+        line-height: 24px;
+        color: #101840;
+      }
+    }
+
+    .close {
+      text-align: end;
+    }
+
+    .before {
+      position: fixed;
+      top: 50%;
+      left: -15%;
+      width: 48px;
+      height: 48px;
+      cursor: pointer;
+
+      mat-icon {
+        width: 100%;
+        height: 100%;
+      }
+    }
+
+    .after {
+      position: fixed;
+      top: 50%;
+      right: -15%;
+      width: 48px;
+      height: 48px;
+      cursor: pointer;
+
+      mat-icon {
+        width: 100%;
+        height: 100%;
+      }
+    }
+  }
+
+  @media screen and (max-width: $medium) {
+    .content {
+      margin: 0 25px !important;
+    }
+
+    .heading {
+      h1 {
+        font-size: 20px !important;
+      }
+
+      .subheading {
+        margin-bottom: 16px !important;
+
+        p {
+          font-size: 14px !important;
+        }
+
+        .rating {
+          margin-right: 16px !important;
+        }
+      }
+    }
+
+    .images--preview {
+      .image-box {
+        height: 85.8px !important;
+        width: 85.93px !important;
+
+        &--preview {
+          flex: 0 0 85.93px;
+        }
+      }
+    }
+
+    .details-card {
+      height: 516.6521606445312px;
+      width: 523.5078125px;
+
+      .preview {
+        min-height: 340px !important;
+        max-height: 340px !important;
+      }
+
+      .before {
+        left: -7%;
+        width: 33px;
+        height: 33px;
+      }
+
+      .after {
+        right: -7%;
+        width: 33px;
+        height: 33px;
+      }
+    }
+
+    .tabs {
+      ul {
+        li {
+          padding: 10px !important;
+
+          a {
+            font-size: 14px !important;
+          }
+        }
+      }
+    }
+  }
+
+  @media screen and (max-width: $small) {
+    .content {
+      margin: 0 15px !important;
+    }
+
+    .heading {
+      h1 {
+        font-size: 20px !important;
+      }
+
+      .subheading {
+        margin-bottom: 16px !important;
+        align-items: flex-start !important;
+        flex-direction: column-reverse !important;
+
+        p {
+          font-size: 14px !important;
+          margin-bottom: 12px !important;
+        }
+
+        .rating {
+          margin-right: 16px !important;
+          justify-content: center !important;
+          margin-bottom: 20px !important;
+
+          p {
+            margin-bottom: 0px !important;
+          }
+        }
+      }
+    }
+
+    .images--preview {
+      .image-box {
+        height: 75.8px !important;
+        width: 75.93px !important;
+
+        &--preview {
+          flex: 0 0 85.93px;
+        }
+      }
+    }
+
+    .details-card {
+      height: 456.6521606445312px;
+      width: 323.5078125px;
+
+      .preview {
+        min-height: 290px !important;
+        max-height: 290px !important;
+      }
+
+      .before {
+        display: none;
+      }
+
+      .after {
+        display: none;
+      }
+    }
+
+    .gallery {
+      grid-template-columns: repeat(1, 1fr) !important;
+      grid-template-rows: repeat(7, 8vw) !important;
+      margin-bottom: 16px !important;
+
+      &__item {
+        grid-column-start: 1 !important;
+        grid-column-end: 1 !important;
+        grid-row-start: 1 !important;
+        grid-row-end: 8 !important;
+
+        &:not(:first-child) {
+          display: none !important;
+        }
+      }
+
+      .image-count {
+        display: block !important;
+      }
+    }
+
+    .tabs {
+      display: none;
+    }
+  }
+}

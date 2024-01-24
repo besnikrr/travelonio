@@ -1,0 +1,37 @@
+<div class="container">
+  <mat-form-field
+    class="form-field"
+    appearance="outline"
+    [class.readonly]="readOnly"
+  >
+    <mat-label>{{ label }}</mat-label>
+    <input
+      matInput
+      type="text"
+      [placeholder]="placeholder"
+      [type]="hideCharacters ? 'password' : type"
+      [formControl]="formControl"
+      [value]="initialValue"
+      [maxLength]="maxLength"
+      (change)="inputValueChanged()"
+      autocomplete="off"
+      [readonly]="readOnly"
+    />
+
+    <h2 *ngIf="symbol">{{symbol}}</h2>
+
+    <button
+      *ngIf="displayEye"
+      mat-icon-button
+      matSuffix
+      (click)="hideCharacters = !hideCharacters"
+      [attr.aria-label]="'Hide password'"
+      [attr.aria-pressed]="hideCharacters"
+    >
+      <mat-icon>{{
+        hideCharacters ? "visibility_off" : "visibility"
+        }}</mat-icon>
+    </button>
+    <mat-error *ngIf="formControl.invalid">{{ getErrorMessage() }}</mat-error>
+  </mat-form-field>
+</div>

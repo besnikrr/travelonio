@@ -1,0 +1,35 @@
+@import "../../../style/colors";
+
+:host {
+  display: block;
+
+  .container {
+    display: flex;
+    align-items: center;
+
+    .image {
+      width: 52px;
+      height: 52px;
+      background-color: $disabled;
+      margin-right: 20px;
+      border-radius: 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .details {
+      display: flex;
+      flex-direction: column;
+
+      h2 {
+        color: $heading-color;
+        margin-bottom: 0 !important;
+      }
+
+      span {
+        color: $dark-gray;
+      }
+    }
+  }
+}

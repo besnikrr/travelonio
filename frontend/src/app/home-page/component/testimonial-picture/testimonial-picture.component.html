@@ -1,0 +1,9 @@
+<div class="container">
+  <img [src]="image" />
+  <div class="testimonial" *ngIf="testimonial">
+    <div class="quotation-icon">
+      <mat-icon *ngIf="showIcons" [svgIcon]="'reze:quotation'"></mat-icon>
+    </div>
+    <p>{{testimonial}}</p>
+  </div>
+</div>

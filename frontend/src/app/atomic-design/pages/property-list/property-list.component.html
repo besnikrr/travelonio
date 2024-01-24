@@ -1,0 +1,426 @@
+<app-home-page-header class="absolute"></app-home-page-header>
+
+<div class="hp-content">
+  <div class="sidebar sort-sidebar" [ngClass]="{ open: isSortSidebarOpen }">
+    <div class="header">
+      <button mat-icon-button class="clear" i18n="@@clearAll"></button>
+      <p i18n="@@sortBy">Sort by</p>
+      <button mat-icon-button class="close" (click)="toggleSortSidebar()">
+        <mat-icon [svgIcon]="'reze:close-btn'"></mat-icon>
+      </button>
+    </div>
+    <div class="content">
+      <div class="item">
+        <mat-checkbox
+          color="primary"
+          [checked]="bestValue"
+          (change)="this.bestValue = !this.bestValue"
+        >
+          <p i18n="@@bestValueForMoney">Best Value for Money</p>
+        </mat-checkbox>
+      </div>
+      <div class="item">
+        <mat-label i18n="@@sortByPrice">Sort by Price</mat-label>
+        <mat-radio-group
+          color="primary"
+          class="radio-group"
+          (change)="setSortByPrice($event)"
+          [value]="priceSort"
+        >
+          <mat-radio-button i18n="@@priceLowHigh" value="asc">
+            Price Low to High
+          </mat-radio-button>
+          <mat-radio-button i18n="@@priceHighLow" value="desc">
+            Price High to Low
+          </mat-radio-button>
+        </mat-radio-group>
+      </div>
+      <div class="item">
+        <mat-label i18n="@@sortByRatings">Sort by Ratings</mat-label>
+        <mat-radio-group
+          color="primary"
+          class="radio-group"
+          (change)="setSortByRating($event)"
+          [value]="ratingSort"
+        >
+          <mat-radio-button [value]="ReviewRankEnum.ALL" i18n="@@all"
+            >All
+          </mat-radio-button>
+          <mat-radio-button [value]="ReviewRankEnum.ONE_STAR" i18n="@@oneStar">
+            1 star
+          </mat-radio-button>
+          <mat-radio-button [value]="ReviewRankEnum.TWO_STARS" i18n="@@twoStar">
+            2 stars
+          </mat-radio-button>
+          <mat-radio-button
+            [value]="ReviewRankEnum.THREE_STARS"
+            i18n="@@threeStar"
+          >
+            3 stars
+          </mat-radio-button>
+          <mat-radio-button
+            [value]="ReviewRankEnum.FOUR_STARS"
+            i18n="@@fourStar"
+          >
+            4 stars
+          </mat-radio-button>
+          <mat-radio-button
+            [value]="ReviewRankEnum.FIVE_STARS"
+            i18n="@@fiveStar"
+          >
+            5 stars
+          </mat-radio-button>
+        </mat-radio-group>
+      </div>
+    </div>
+  </div>
+
+  <div class="sidebar filter-sidebar" [ngClass]="{ open: isFilterSidebarOpen }">
+    <div class="header">
+      <button mat-icon-button class="clear" i18n="@@clearAll"></button>
+      <p i18n="@@filters">Filters</p>
+      <button mat-icon-button class="close" (click)="toggleFilterSidebar()">
+        <mat-icon [svgIcon]="'reze:close-btn'"></mat-icon>
+      </button>
+    </div>
+    <div class="content">
+      <div class="item">
+        <!-- TODO - translate -->
+        <mat-label i18n="@@propertyType">Property Type</mat-label>
+        <mat-radio-group
+          color="primary"
+          class="radio-group"
+          (change)="selectPropertyTypesRadio($event)"
+        >
+          <mat-radio-button
+            *ngFor="let property of propertyOptions"
+            [value]="property.name"
+            [checked]="selectedProperty === property.name"
+          >
+            {{ property.name }}
+          </mat-radio-button>
+        </mat-radio-group>
+      </div>
+      <div class="item item--price" *ngIf="priceRange">
+        <mat-label i18n="@@pricePerNight">Price per night</mat-label>
+        <p class="field-label" i18n="@@princeRange">Price Range</p>
+        <div class="inputs">
+          <mat-form-field appearance="outline">
+            <input
+              matInput
+              type="text"
+              [value]="
+                selectedMinPrice
+                  ? selectedMinPrice
+                  : priceRange.startPrice + ' €'
+              "
+              disabled
+            />
+          </mat-form-field>
+          <span> - </span>
+          <mat-form-field appearance="outline">
+            <input
+              matInput
+              type="text"
+              [value]="
+                selectedMaxPrice ? selectedMaxPrice : priceRange.endPrice + ' €'
+              "
+              disabled
+            />
+          </mat-form-field>
+        </div>
+        <ngx-slider
+          [(value)]="
+            selectedMinPrice ? selectedMinPrice : priceRange.startPrice
+          "
+          [(highValue)]="
+            selectedMaxPrice ? selectedMaxPrice : priceRange.endPrice
+          "
+          [options]="optionsSlider"
+          (userChange)="priceRangeChangedOnSlider($event)"
+        ></ngx-slider>
+      </div>
+      <div class="item">
+        <mat-label i18n="@@sorroundings">Sorroundings</mat-label>
+        <mat-checkbox
+          color="primary"
+          *ngFor="let sorroundingsOption of sorroundingsOptions"
+          [checked]="selectedSurroundings.includes(sorroundingsOption.value)"
+          (change)="selectSurroundingsCheckbox($event, sorroundingsOption.value)"
+        >
+          {{ sorroundingsOption.name }}
+        </mat-checkbox>
+      </div>
+      <div class="item">
+        <mat-label i18n="@@tripType">Trip type</mat-label>
+        <mat-checkbox
+          color="primary"
+          *ngFor="let tripOption of tripOptions"
+          [checked]="selectedTrips.includes(tripOption.value)"
+          (change)="selectTripsCheckbox($event, tripOption.value)"
+        >
+          <span
+            class="trip"
+            [style.background]="tripOption.associatedColor"
+          ></span
+          >{{ tripOption.name }}
+        </mat-checkbox>
+      </div>
+    </div>
+  </div>
+
+  <div class="sidebar map-sidebar" [ngClass]="{ open: isMapSidebarOpen }">
+    <button mat-icon-button class="close" (click)="toggleMapSidebar()">
+      <mat-icon [svgIcon]="'reze:close-btn'"></mat-icon>
+    </button>
+    <div class="map-mobile">
+      <google-map
+        [height]="'100%'"
+        [width]="'100%'"
+        [zoom]="zoom"
+        [center]="center"
+        [options]="options"
+        (mapClick)="addMarker($event)"
+      >
+        <div *ngIf="propertyList && propertyList.length !== 0">
+          <map-marker
+            (mapClick)="pinClicked(m.propertyId)"
+            style="color: white"
+            *ngFor="let m of markerPosition"
+            [position]="{ lat: m.lat, lng: m.lng }"
+            [options]="markerOptions"
+            [label]="m.label"
+          >
+          </map-marker>
+        </div>
+      </google-map>
+    </div>
+  </div>
+  <div class="hp-container">
+    <div class="properties-with-map">
+      <div class="property-list">
+        <div class="search">
+          <div class="country">
+            <app-search-location-field
+              [selectedValue]="selectedPropertyFiltersFromStore"
+              [filteredLocations]="listOfCountries$ | async"
+              (searchChange)="locationChange($event)"
+              (locationSelected)="locationSelected($event)"
+            ></app-search-location-field>
+          </div>
+
+          <div class="dates">
+            <app-check-in-out
+              [selectedStartDate]="startDate"
+              [selectedEndDate]="endDate"
+              [showPlaceholder]="false"
+              (startDate)="startDateChange($event)"
+              (endDate)="endDateChange($event)"
+            ></app-check-in-out>
+          </div>
+
+          <div class="guests">
+            <app-guests-filter
+              [selectedGuests]="guests"
+              (searchChange)="guestChanged($event)"
+              [showPlaceholder]="false"
+            ></app-guests-filter>
+          </div>
+
+          <button
+            mat-raised-button
+            color="primary"
+            class="field-container search-button"
+            (click)="searchClick()"
+          >
+            <mat-icon [svgIcon]="'reze:search'"></mat-icon>
+          </button>
+        </div>
+
+        <div class="filters-mobile">
+          <div class="desk" (click)="toggleSortSidebar()">
+            <div class="icon">
+              <mat-icon [svgIcon]="'reze:sort'"></mat-icon>
+            </div>
+            <span i18n="@@sort">Sort</span>
+          </div>
+          <div class="desk" (click)="toggleFilterSidebar()">
+            <div class="icon">
+              <mat-icon [svgIcon]="'reze:filter'"></mat-icon>
+            </div>
+            <span i18n="@@filter">Filter</span>
+          </div>
+          <div class="desk" (click)="toggleMapSidebar()">
+            <div class="icon">
+              <mat-icon [svgIcon]="'reze:map'"></mat-icon>
+            </div>
+            <span i18n="@@map">Map</span>
+          </div>
+        </div>
+        <div class="filters">
+          <mat-form-field appearance="outline">
+            <mat-select
+              i18n-placeholder="@@propertyType"
+              placeholder="Property type"
+              (selectionChange)="selectPropertyTypes($event)"
+              [value]="selectedProperty"
+            >
+              <mat-option
+                *ngFor="let property of propertyOptions"
+                [value]="property.name"
+                >{{ property.name }}</mat-option
+              >
+            </mat-select>
+          </mat-form-field>
+          <app-price-range
+            *ngIf="priceRange"
+            [priceRange]="priceRange"
+            [selectedMinPrice]="
+              selectedMinPrice ? selectedMinPrice : priceRange.startPrice
+            "
+            [selectedMaxPrice]="
+              selectedMaxPrice ? selectedMaxPrice : priceRange.endPrice
+            "
+            (priceRangeSelected)="priceRangeChanged($event)"
+          ></app-price-range>
+          <mat-form-field appearance="outline">
+            <mat-select
+              multiple
+              placeholder="Sorroundings"
+              i18n-placeholder="@@sorroundings"
+              [value]="selectedSurroundings"
+              (selectionChange)="selectSurroundings($event)"
+            >
+              <mat-option
+                *ngFor="let sorroundingOption of sorroundingsOptions"
+                [value]="sorroundingOption.value"
+              >
+                {{ sorroundingOption.name }}</mat-option
+              >
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-select
+              multiple
+              placeholder="Trip type"
+              i18n-placeholder="@@tripType"
+              [value]="selectedTrips"
+              (selectionChange)="selectTrips($event)"
+            >
+              <mat-option
+                *ngFor="let tripOption of tripOptions"
+                [value]="tripOption.value"
+                ><span
+                  class="trip"
+                  [style.background]="tripOption.associatedColor"
+                ></span
+                >{{ tripOption.name }}</mat-option
+              >
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="map-icon" (click)="openMap()">
+          <mat-icon *ngIf="showIcons" [svgIcon]="'reze:map'"></mat-icon>
+          <span i18n="@@map">Map</span>
+        </div>
+        <div class="properties-in-area">
+          <span class="stays" *ngIf="propertyList?.length"
+            >{{ propertyList.length }}+<span i18n="@@staysInMapArea">
+              stays in map area</span
+            ></span
+          >
+          <div class="sort">
+            <mat-form-field appearance="none">
+              <mat-select
+                i18n-placeholder="@@sortByPrice"
+                placeholder="Sort by Price"
+                (selectionChange)="setSortByPrice($event)"
+                [value]="priceSort"
+              >
+                <mat-option value="asc" i18n="@@priceLowHigh"
+                  >Price Low to High
+                </mat-option>
+                <mat-option value="desc" i18n="@@priceHighLow"
+                  >Price High to Low
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="none">
+              <mat-select
+                i18n-placeholder="@@sortByRatings"
+                placeholder="Sort by Ratings"
+                (selectionChange)="setSortByRating($event)"
+                [value]="ratingSort"
+              >
+                <mat-option [value]="ReviewRankEnum.ALL" i18n="@@all"
+                  >All
+                </mat-option>
+                <mat-option [value]="ReviewRankEnum.ONE_STAR" i18n="@@oneStar">
+                  1 star
+                </mat-option>
+                <mat-option [value]="ReviewRankEnum.TWO_STARS" i18n="@@twoStar">
+                  2 stars
+                </mat-option>
+                <mat-option
+                  [value]="ReviewRankEnum.THREE_STARS"
+                  i18n="@@threeStar"
+                >
+                  3 stars
+                </mat-option>
+                <mat-option
+                  [value]="ReviewRankEnum.FOUR_STARS"
+                  i18n="@@fourStar"
+                >
+                  4 stars
+                </mat-option>
+                <mat-option
+                  [value]="ReviewRankEnum.FIVE_STARS"
+                  i18n="@@fiveStar"
+                >
+                  5 stars
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-checkbox
+              color="primary"
+              [checked]="bestValue"
+              (change)="this.bestValue = !this.bestValue"
+            >
+              <p i18n="@@bestValueForMoney">Best Value for Money</p>
+            </mat-checkbox>
+          </div>
+        </div>
+
+        <app-property-info
+          *ngFor="let property of propertyList; let last = last"
+          [property]="property"
+          [class.border-bottom]="!last"
+        >
+        </app-property-info>
+      </div>
+
+      <div class="map" *ngIf="center">
+        <google-map
+          [height]="'100%'"
+          [width]="'100%'"
+          [zoom]="zoom"
+          [center]="center"
+          [options]="options"
+          (mapClick)="addMarker($event)"
+        >
+          <div *ngIf="propertyList.length !== 0">
+            <map-marker
+              (mapClick)="pinClicked(m.propertyId)"
+              style="color: white"
+              *ngFor="let m of markerPosition"
+              [position]="{ lat: m.lat, lng: m.lng }"
+              [options]="markerOptions"
+              [label]="m.label"
+            >
+            </map-marker>
+          </div>
+        </google-map>
+      </div>
+    </div>
+  </div>
+</div>

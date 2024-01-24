@@ -1,0 +1,38 @@
+<div class="container">
+  <div class="header">
+    <h5 i18n="@@insertRoomFormList">List your rooms and their quantity</h5>
+    <mat-accordion>
+      <app-room-form
+        *ngFor="let room of rooms; trackBy: trackRooms; let index = index"
+        [propertyId]="propertyId"
+        [room]="room"
+        [allBedTypes]="beds"
+        [roomOrderNumber]="index + 1"
+        [tags]="room.tags"
+        [dirtyInputs]="dirtyInputs"
+        (newImageUploaded)="newRoomImageUploaded($event)"
+        (updateRoomEmitter)="updateRoomEmitter($event)"
+        (setImageAsPrimaryEmitter)="setImageAsPrimary($event)"
+        (deleteImageEmitter)="deleteImage($event)"
+        (deleteRoomEmitter)="deleteRoom($event)"
+        (tagUpdatedEmitter)="tagUpdated($event)"
+      >
+      </app-room-form>
+    </mat-accordion>
+    <mat-error
+      i18n="@@roomsAreRequired"
+      *ngIf="rooms?.length === 0 && (dirtyInputs | async)"
+    >
+      Rooms are required
+    </mat-error>
+    <div class="other-rooms">
+      <button
+        mat-flat-button
+        (click)="addNewRoom()"
+        i18n="@@insertRoomAddAnotherRoom"
+      >
+        Add another room
+      </button>
+    </div>
+  </div>
+</div>

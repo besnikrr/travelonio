@@ -1,0 +1,16 @@
+<div class="container">
+  <div class="bed-icon">
+    <mat-icon [svgIcon]="'reze:' + bed.icon"></mat-icon>
+  </div>
+  <div class="details">
+    <div class="bed-info">
+      <p>{{ BedType.convertToString(bed.bedType) }}</p>
+      <span class="dimensions">{{ bed.dimensions }}</span>
+    </div>
+    <app-quantity
+      [elementId]="bed.bedId"
+      [quantity]="quantity"
+      (newQuantity)="newBedQuantity($event)"
+    ></app-quantity>
+  </div>
+</div>

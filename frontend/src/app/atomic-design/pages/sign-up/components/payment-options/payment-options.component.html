@@ -1,0 +1,192 @@
+<div class="payment-options-container">
+  <div class="payment-options-header">
+    <h5 i18n="@@paymentOptionsTitle">Choose the payment options you offer</h5>
+    <mat-icon
+      *ngIf="showIcons"
+      [svgIcon]="'reze:info'"
+      (mouseover)="this.displayInfoCard = true"
+      (mouseleave)="this.displayInfoCard = false"
+    ></mat-icon>
+    <mat-card *ngIf="displayInfoCard" class="info-card"
+      ><p>Why we need this information text is displayed here</p></mat-card
+    >
+  </div>
+  <mat-divider></mat-divider>
+  <div class="payment-options-content">
+    <div
+      class="payment-option"
+      [class.selected]="
+        options?.payAtProperty.selected || options?.payWhenBooking.selected
+      "
+    >
+      <mat-form-field appearance="fill">
+        <mat-label
+          *ngIf="
+            !options?.payAtProperty.selected &&
+            !options?.payWhenBooking.selected
+          "
+          i18n="@@selectPaymentMethodText"
+          >Select payment method
+        </mat-label>
+        <mat-select
+          (selectionChange)="selectPaymentOption($event)"
+          [value]="
+            options?.payAtProperty.selected
+              ? paymentOptions[0].type
+              : options?.payWhenBooking.selected
+              ? paymentOptions[0].type
+              : undefined
+          "
+        >
+          <mat-option
+            *ngFor="let payment of paymentOptions"
+            [value]="payment.type"
+          >
+            {{ payment.title }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <mat-error
+      i18n="@@paymentMethodIsRequired"
+      *ngIf="
+        (options?.payAtProperty.selected === null ||
+          options?.payAtProperty.selected === null) &&
+        (dirtyInputs | async)
+      "
+    >
+      Payment method needs to be defined
+    </mat-error>
+
+    <div class="payment-hint">
+      <p
+        class="hint"
+        *ngIf="options?.payWhenBooking.selected"
+        i18n="
+          all guests will need to make some
+          payment@@allGuestWillNeedToMakeSomePayment"
+      >
+        All guests will have to make some payment when making a reservation on
+        our platform.
+      </p>
+      <div class="hint" *ngIf="options?.payAtProperty.selected">
+        <p i18n="guests will pay at property@@willPayAtProperty">
+          Guests pay for their reservation at your property.
+        </p>
+        <p i18n="no Charge While Stay@@noChargeWhileStay">
+          We will not charge anything while they make their reservation on our
+          platform.
+        </p>
+      </div>
+    </div>
+
+    <div class="pay-when-booking" *ngIf="options?.payWhenBooking.selected">
+      <p i18n="@@paymentOptionsGuestsPay">
+        How much would you like guests to pay upfront?
+      </p>
+      <div class="percentage-container">
+        <div
+          class="percentage"
+          [class.selected]="
+            options?.payWhenBooking.upFrontPayPercentage === 100
+          "
+          (click)="update({ payWhenBooking: { upFrontPayPercentage: 100 } })"
+        >
+          <p>100%</p>
+        </div>
+        <div
+          class="percentage"
+          [class.selected]="options?.payWhenBooking.upFrontPayPercentage === 50"
+          (click)="update({ payWhenBooking: { upFrontPayPercentage: 50 } })"
+        >
+          <p>50%</p>
+        </div>
+        <div
+          class="percentage"
+          [class.selected]="options?.payWhenBooking.upFrontPayPercentage === 25"
+          (click)="update({ payWhenBooking: { upFrontPayPercentage: 25 } })"
+        >
+          <p>25%</p>
+        </div>
+      </div>
+    </div>
+
+    <mat-error
+      i18n="@@upfrontPaymentIsRequired"
+      *ngIf="
+        options?.payWhenBooking.selected === true &&
+        options?.payWhenBooking.upFrontPayPercentage === null &&
+        (dirtyInputs | async)
+      "
+    >
+      Upfront payment need to be defined
+    </mat-error>
+
+    <p
+      *ngIf="
+        options?.payWhenBooking.selected &&
+        options?.payWhenBooking.upFrontPayPercentage &&
+        options?.payWhenBooking.upFrontPayPercentage !== 100
+      "
+      class="remaining-payment"
+    >
+      <span i18n="@@paymentOptionsRemaining">The remaining</span>
+      {{ options?.payWhenBooking.upFrontPayPercentage === 50 ? "50%" : "75%" }}
+      <span i18n="@@paymentOptionsPayAtProperty"
+        >will be paid at property.</span
+      >
+    </p>
+
+    <div class="pay-at-property" *ngIf="options?.payAtProperty.selected">
+      <p i18n="@@paymentOptionGuestPreparation">
+        What payment methods do you accept? so guests can be prepared
+      </p>
+      <div class="payment-options">
+        <mat-checkbox
+          *ngFor="let paymentMethod of definedMethods"
+          color="primary"
+          [checked]="paymentMethod.selected"
+          (change)="updatePaymentMethod(paymentMethod, $event.checked)"
+          >{{ paymentMethods.toString(paymentMethod?.name) }}
+          <mat-icon
+            *ngIf="showIcons && paymentMethod.name === paymentMethods.Other"
+            [svgIcon]="'reze:arrow-down'"
+          ></mat-icon>
+        </mat-checkbox>
+      </div>
+
+      <div *ngIf="newMethods[0].selected">
+        <div class="payment-option" *ngFor="let paymentMethod of otherMethods">
+          <mat-checkbox
+            color="primary"
+            [checked]="paymentMethod.selected"
+            (change)="updatePaymentMethod(paymentMethod, $event.checked)"
+            >{{
+              paymentMethod.name === paymentMethods.Paypal
+                ? "Paypal Account"
+                : "Paysera Account"
+            }}
+            <img
+              *ngIf="paymentMethod.name === paymentMethods.Paypal"
+              src="../../../../../../assets/homePage/paypal-logo%201.png" />
+            <img
+              *ngIf="paymentMethod.name === paymentMethods.Paysera"
+              src="../../../../../../assets/homePage/1200px-Paysera_logo%201.png"
+          /></mat-checkbox>
+        </div>
+        <app-single-line-field
+          *ngIf="newMethods[0].selected"
+          label="Other method"
+          i18n-label="other method text@@otherMethodText"
+          placeholder="Add other method"
+          i18n-placeholder="add other method text@@addOtherMethod"
+          [initialValue]="newMethods[0].value"
+          (onChange)="
+            updatePaymentMethod(newMethods[0], newMethods[0].selected, $event)
+          "
+        ></app-single-line-field>
+      </div>
+    </div>
+  </div>
+</div>

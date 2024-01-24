@@ -1,0 +1,150 @@
+$desktop: 960px;
+$tablet: 768px;
+$phone: 500px;
+
+//PHONES
+@mixin dont-show-in-phone {
+  @media screen and (max-width: $phone) {
+    display: none;
+  }
+}
+
+@mixin dont-show-in-tablet {
+  @media screen and (max-width: $tablet) {
+    display: none;
+  }
+}
+
+@mixin full-width-in-phone {
+  @media screen and (max-width: $phone) {
+    width: 100%;
+  }
+}
+
+@mixin set-width-to-340px-in-phone {
+  @media screen and (max-width: $phone) {
+    width: 340px;
+  }
+}
+
+@mixin remove-padding-in-phone {
+  @media screen and (max-width: $phone) {
+    padding: 0;
+  }
+}
+
+@mixin padding-bottom-in-phone {
+  @media screen and (max-width: $phone) {
+    padding-bottom: 15px;
+  }
+}
+
+@mixin almost-full-width-in-phone {
+  @media screen and (max-width: $phone) {
+    width: 90%;
+  }
+}
+
+@mixin half-width-in-phone {
+  @media screen and (max-width: $phone) {
+    width: 50%;
+  }
+}
+
+//TABLETS
+@mixin dont-show-in-tablet {
+  @media screen and (max-width: $tablet) {
+    display: none;
+  }
+}
+
+//DESKTOPS
+@mixin dont-show-in-desktop {
+  @media screen and (min-width: $tablet) {
+    display: none;
+  }
+}
+
+//OTHER UTILS
+@mixin dont-show-under-1150px {
+  @media screen and (max-width: 1150px) {
+    display: none;
+  }
+}
+
+@mixin become-host-button-in-phone {
+  @media screen and (max-width: $phone) {
+    height: 45px;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 0 10px;
+    border-radius: 10px;
+    margin-right: 0.2rem;
+  }
+}
+
+@mixin become-host-button-in-tablet {
+  @media screen and (min-width: $phone) {
+    height: 50px;
+    font-size: 14px;
+    font-weight: 700;
+    padding: 0 25px;
+    border-radius: 10px;
+    margin-right: 1.875rem;
+  }
+}
+
+@mixin logo-size-in-phone {
+  @media screen and (max-width: $phone) {
+    width: 95px;
+  }
+}
+
+@mixin logo-size-in-tablet {
+  @media screen and (min-width: $phone) {
+    width: 110px;
+  }
+}
+
+@mixin left-padding-in-phone {
+  @media screen and (max-width: $phone) {
+    padding-left: 15px;
+  }
+}
+
+@mixin left-padding-in-tablet {
+  @media screen and (min-width: $phone) {
+    padding-left: 25px;
+  }
+}
+
+@mixin profile-icon-size-in-phone {
+  @media screen and (max-width: $phone) {
+    width: 85px;
+    height: 45px;
+  }
+}
+
+@mixin profile-icon-size-in-tablet {
+  @media screen and (min-width: $phone) {
+    width: 91px;
+    height: 52px;
+  }
+}
+
+@mixin columns-in-tablet {
+  @media screen and (max-width: $tablet) {
+    flex-direction: column;
+  }
+}
+@mixin full-width-in-tablet {
+  @media screen and (max-width: $tablet) {
+    width: 100%;
+  }
+}
+
+@mixin align-left-tablet {
+  @media screen and (max-width: $tablet) {
+    align-items: flex-start;
+  }
+}

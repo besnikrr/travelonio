@@ -1,0 +1,346 @@
+<div class="sections">
+  <div
+    class="section"
+    *ngIf="
+      propertyType?.toString() ===
+        propertyTypes.toString(propertyTypes.Hotel) ||
+      propertyType?.toString() ===
+        propertyTypes.toString(propertyTypes.Apartment)
+    "
+  >
+    <div class="section-title" i18n="@@breakfastIncluded">
+      Is breakfast included?
+    </div>
+    <div class="section-options">
+      <mat-radio-group (change)="breakfastChanged($event)">
+        <mat-radio-button
+          [checked]="propertyPoliciesData?.breakfastIncluded === true"
+          value="yes"
+          color="primary"
+          i18n="@@globalYes"
+          >Yes
+        </mat-radio-button>
+        <mat-radio-button
+          [checked]="propertyPoliciesData?.breakfastIncluded === false"
+          value="no"
+          color="primary"
+          i18n="@@globalNo"
+          >No
+        </mat-radio-button>
+      </mat-radio-group>
+    </div>
+  </div>
+
+  <mat-error
+    i18n="@@isBreakfastIncludedIsRequired"
+    *ngIf="
+      propertyPoliciesData?.breakfastIncluded === null && (dirtyInputs | async)
+    "
+  >
+    Defining breakfast is required
+  </mat-error>
+  <mat-divider
+    *ngIf="propertyPoliciesData?.breakfastIncluded === false"
+  ></mat-divider>
+
+  <div
+    class="section"
+    *ngIf="propertyPoliciesData?.breakfastIncluded === false"
+  >
+    <div class="section-title" i18n="@@breakfastBoughtExtra">
+      Can it be bought as an extra cost?
+    </div>
+    <div class="section-options">
+      <mat-radio-group (change)="breakfastExtraCostChanged($event)">
+        <mat-radio-button
+          [checked]="propertyPoliciesData?.buyBreakfastPossibility === true"
+          value="yes"
+          color="primary"
+          i18n="@@globalYes"
+          >Yes
+        </mat-radio-button>
+        <mat-radio-button
+          [checked]="propertyPoliciesData?.buyBreakfastPossibility === false"
+          value="no"
+          color="primary"
+          i18n="@@globalNo"
+          >No
+        </mat-radio-button>
+      </mat-radio-group>
+    </div>
+  </div>
+  <mat-error
+    i18n="@@breakfastExtraCostIsRequired"
+    *ngIf="
+      propertyPoliciesData?.breakfastIncluded !== null &&
+      propertyPoliciesData?.buyBreakfastPossibility === null &&
+      (dirtyInputs | async)
+    "
+  >
+    Buying breakfast with extra cost is required
+  </mat-error>
+
+  <div
+    class="section-container"
+    *ngIf="
+      (propertyType?.toString() ===
+        propertyTypes.toString(propertyTypes.Hotel) &&
+        propertyPoliciesData?.buyBreakfastPossibility === true &&
+        propertyPoliciesData?.breakfastIncluded === false) ||
+      (propertyType?.toString() ===
+        propertyTypes.toString(propertyTypes.Apartment) &&
+        propertyPoliciesData?.buyBreakfastPossibility === true &&
+        propertyPoliciesData?.breakfastIncluded === false)
+    "
+  >
+    <div class="section-option">
+      <div class="section-option-title">
+        <p class="section-option-label" i18n="@@breakfastPricePerson">
+          Price per person
+        </p>
+        <p
+          class="section-option-placeholder"
+          i18n="@@breakfastPricePersonEnter"
+        >
+          Enter your price per person
+        </p>
+      </div>
+    </div>
+
+    <div class="section-option-input">
+      <app-single-line-field
+        [initialValue]="
+          (propertyPoliciesData && propertyPoliciesData.breakfastPricePerPerson
+            ? propertyPoliciesData.breakfastPricePerPerson + ''
+            : '') + ''
+        "
+        label="Price per person"
+        i18n-label="@@breakfastPricePerson"
+        placeholder="Enter your price per person"
+        i18n-placeholder="@@breakfastPricePersonEnter"
+        [validators]="[validators.pattern('[+-]?([0-9]*[.])?[0-9]+')]"
+        (onChange)="pricePerBreakfastChanged($event)"
+      ></app-single-line-field>
+      <h2 class="currency">€</h2>
+    </div>
+    <mat-error
+      i18n="@@breakfastPriceIsRequired"
+      *ngIf="
+        propertyPoliciesData?.breakfastIncluded !== null &&
+        propertyPoliciesData?.buyBreakfastPossibility !== null &&
+        (propertyPoliciesData?.breakfastPricePerPerson === 0 ||
+          propertyPoliciesData?.breakfastPricePerPerson === null) &&
+        (dirtyInputs | async)
+      "
+    >
+      Breakfast price is required
+    </mat-error>
+  </div>
+
+  <mat-divider
+    *ngIf="
+      propertyType?.toString() ===
+        propertyTypes.toString(propertyTypes.Hotel) ||
+      propertyType?.toString() ===
+        propertyTypes.toString(propertyTypes.Apartment)
+    "
+  ></mat-divider>
+
+  <div
+    class="section"
+    *ngIf="
+      propertyType?.toString() ===
+      propertyTypes.toString(propertyTypes.Apartment)
+    "
+  >
+    <div class="section-title" i18n="@@breakfastGuestStay">
+      How many guests can stay?
+    </div>
+    <div class="section-options">
+      <app-quantity
+        [elementId]="'1'"
+        [quantity]="
+          propertyPoliciesData && propertyPoliciesData.potentialGuestNumber
+            ? propertyPoliciesData.potentialGuestNumber
+            : 0
+        "
+        (newQuantity)="guestNumberChanged($event)"
+      ></app-quantity>
+    </div>
+  </div>
+  <mat-error
+    i18n="@@potentialGuestNumberIsRequired"
+    *ngIf="
+      propertyType?.toString() ===
+        propertyTypes.toString(propertyTypes.Apartment) &&
+      (propertyPoliciesData?.potentialGuestNumber === null ||
+        propertyPoliciesData?.potentialGuestNumber === 0) &&
+      (dirtyInputs | async)
+    "
+  >
+    Number of guests is required
+  </mat-error>
+  <mat-divider
+    *ngIf="
+      propertyType?.toString() ===
+      propertyTypes.toString(propertyTypes.Apartment)
+    "
+  ></mat-divider>
+
+  <div
+    class="section-container"
+    *ngIf="
+      propertyType?.toString() ===
+      propertyTypes.toString(propertyTypes.Apartment)
+    "
+  >
+    <div class="section-option">
+      <div class="section-option-title">
+        <p class="section-option-label" i18n="@@breakfastHowBig">
+          How big is your property?
+        </p>
+        <p class="section-option-placeholder" i18n="@@breakfastPropertySize">
+          Enter your property size
+        </p>
+      </div>
+    </div>
+    <div class="section-option-input">
+      <app-single-line-field
+        [initialValue]="
+          (propertyPoliciesData && propertyPoliciesData.propertySquareSize
+            ? propertyPoliciesData.propertySquareSize + ''
+            : '') + ''
+        "
+        label="Property size"
+        i18n-label="property size text@@propertySizeText"
+        placeholder="Enter your property size"
+        i18n-placeholder="@@breakfastPropertySize"
+        [validators]="[validators.pattern('[+-]?([0-9]*[.])?[0-9]+')]"
+        (onChange)="propertySizeChanged($event)"
+      ></app-single-line-field>
+      <h2 class="currency">m2</h2>
+    </div>
+    <mat-error
+      i18n="@@propertySizeIsRequired"
+      *ngIf="
+        (propertyPoliciesData?.propertySquareSize === null ||
+          propertyPoliciesData?.propertySquareSize === 0) &&
+        (dirtyInputs | async)
+      "
+    >
+      Property size is required
+    </mat-error>
+  </div>
+
+  <mat-divider
+    *ngIf="
+      propertyType?.toString() ===
+      propertyTypes.toString(propertyTypes.Apartment)
+    "
+  ></mat-divider>
+
+  <div
+    class="section"
+    *ngIf="
+      propertyType?.toString() ===
+      propertyTypes.toString(propertyTypes.Apartment)
+    "
+  >
+    <div class="section-title" i18n="@@breakfastRoomApartment">
+      Is this a room in an apartment that you are renting?
+    </div>
+    <div class="section-options">
+      <mat-radio-group (change)="roomInAnApartmentChanged($event)">
+        <mat-radio-button
+          [checked]="propertyPoliciesData?.isRoomInsideApartment === true"
+          value="yes"
+          color="primary"
+          i18n="@@globalYes"
+          >Yes
+        </mat-radio-button>
+        <mat-radio-button
+          [checked]="propertyPoliciesData?.isRoomInsideApartment === false"
+          value="no"
+          color="primary"
+          i18n="@@globalNo"
+          >No
+        </mat-radio-button>
+      </mat-radio-group>
+    </div>
+  </div>
+  <mat-error
+    i18n="@@roomInsideApartmentIsRequired"
+    *ngIf="
+      propertyType?.toString() ===
+        propertyTypes.toString(propertyTypes.Apartment) &&
+      propertyPoliciesData?.isRoomInsideApartment === null &&
+      (dirtyInputs | async)
+    "
+  >
+    This field is required
+  </mat-error>
+  <mat-divider
+    *ngIf="
+      propertyType?.toString() ===
+      propertyTypes.toString(propertyTypes.Apartment)
+    "
+  ></mat-divider>
+
+  <div class="section-container">
+    <div
+      class="section-option flex-column language-input"
+      *ngIf="
+        propertyType?.toString() ===
+          propertyTypes.toString(propertyTypes.Hotel) ||
+        propertyType?.toString() ===
+          propertyTypes.toString(propertyTypes.Apartment)
+      "
+    >
+      <div class="section-option-title language">
+        <p class="section-option-label" i18n="@@breakfastLanguagesSpeak">
+          What languages do you and your staff speak?
+        </p>
+      </div>
+
+      <div class="price-options dropdown">
+        <div class="chip-list-wrapper">
+          <mat-chip-list #chipList>
+            <ng-container *ngFor="let select of selectData">
+              <mat-chip class="cardinal-colors" (click)="removeChip(select)">
+                {{ setStaffLanguages(select.item) }}
+                <mat-icon class="mat-chip-remove">cancel</mat-icon>
+              </mat-chip>
+            </ng-container>
+          </mat-chip-list>
+        </div>
+
+        <mat-form-field class="half-width">
+          <input
+            placeholder="Select Languages"
+            i18n-placeholder="@@breakfastSelectLanguages"
+            matInput
+            type="text"
+            [matAutocomplete]="auto"
+            [formControl]="staffLanguages"
+          />
+        </mat-form-field>
+
+        <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+          <mat-option *ngFor="let data of filteredData | async">
+            <div (click)="optionClicked($event, data)">
+              <mat-checkbox
+                [value]="data.item"
+                [checked]="data.selected"
+                (change)="toggleSelection(data)"
+                (click)="$event.stopPropagation()"
+                color="primary"
+              >
+                {{ setStaffLanguages(data.item) }}
+              </mat-checkbox>
+            </div>
+          </mat-option>
+        </mat-autocomplete>
+      </div>
+    </div>
+  </div>
+</div>

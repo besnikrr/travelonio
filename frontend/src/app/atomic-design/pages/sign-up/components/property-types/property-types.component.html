@@ -1,0 +1,31 @@
+<div class="container">
+  <mat-card
+    class="main-card"
+    [ngClass]="{ 'disabled-mat-card': !property.active }"
+    *ngFor="let property of PropertyTypes.getAllPropertyData()"
+    (click)="setPropertyType($event, property)"
+    [class.selected]="
+      selectedPropertyType?.toString() === PropertyTypes.toString(property.type)
+    "
+  ><p>{{ PropertyTypes.getPropertyTypeNames(property.type) }}</p>
+
+    <mat-icon
+      *ngIf="showIcons"
+      (click)="showTypeInfo(property.type)"
+      [svgIcon]="'reze:info'"
+    ></mat-icon>
+    <mat-card
+      *ngIf="propertyIdForDisplayingInfo === property.type"
+      class="info-card"
+    ><h3>
+      {{ PropertyTypes.getPropertyTypeInfoData(property.type) }}
+    </h3></mat-card
+    >
+  </mat-card>
+
+  <mat-error
+    *ngIf="(selectedPropertyType === undefined || selectedPropertyType?.toString() === '') && dirtyInputs | async"
+    i18n="@@propertyTypeIsRequired">
+    Property type is required
+  </mat-error>
+</div>

@@ -1,0 +1,17 @@
+<div class="container">
+  <div class="content">
+    <app-two-columns-layout class="two-columns">
+      <div class="left step-content">
+        <router-outlet></router-outlet>
+      </div>
+      <div class="right bill-card">
+        <app-user-bill-card
+          [selectedStartDate]="startDate"
+          [selectedEndDate]="endDate"
+          [selectedGuests]="guests"
+          [buttonName]="billCardButtonName"
+        ></app-user-bill-card>
+      </div>
+    </app-two-columns-layout>
+  </div>
+</div>

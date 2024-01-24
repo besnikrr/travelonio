@@ -1,0 +1,57 @@
+@import "../../../style/colors";
+
+:host {
+  display: block;
+
+  .image {
+    height: 265px;
+    width: 355px;
+    background-color: $primary-light;
+    border-radius: 15px;
+  }
+
+  mat-card {
+    width: 355px;
+    height: 420px;
+    padding: 0;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+
+    mat-card-content {
+      height: 100%;
+
+      .content {
+        display: flex;
+        justify-content: space-between;
+        flex-direction: column;
+        padding: 16px;
+
+        .name-and-price {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+
+          .price {
+            color: $primary;
+          }
+        }
+
+        .details {
+          color: $gray;
+          padding: 8px 0;
+        }
+
+        .info {
+          display: flex;
+          justify-content: space-between;
+          color: $primary;
+          padding-top: 8px;
+
+          h3 {
+            margin-bottom: 0 !important;
+          }
+        }
+      }
+    }
+  }
+}

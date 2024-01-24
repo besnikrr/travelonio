@@ -1,0 +1,224 @@
+@import "../../../../../style/colors";
+@import "../../../../../style/breaking-points";
+
+:host {
+  display: block;
+
+  .rooms {
+    display: flex;
+    align-content: center;
+    justify-content: center;
+
+    ::ng-deep .mat-content {
+      height: 100%;
+    }
+
+    .room-container {
+      width: 100%;
+
+      mat-panel-title {
+        display: flex;
+        justify-content: space-between;
+
+        b {
+          display: flex;
+          align-items: center;
+        }
+
+        .delete-room-icon {
+          display: flex;
+          align-items: center;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+
+  .description-quantity-people {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+
+    .description {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      height: 70.95px;
+      border-radius: 10px;
+      border: 1px solid #e6e8f0;
+      margin-bottom: 14.75px;
+
+      mat-icon {
+        width: 8px;
+        height: 8px;
+      }
+
+      mat-form-field {
+        width: 100%;
+
+        ::ng-deep .mat-form-field-flex {
+          background-color: white;
+          border-radius: 10px;
+        }
+
+        ::ng-deep .mat-form-field-underline {
+          display: none;
+        }
+      }
+    }
+
+    .quantity-people {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+
+      @media screen and (max-width: $small) {
+        flex-direction: column;
+      }
+
+      .quantity {
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+        height: 70.95px;
+        border-radius: 10px;
+        border: 1px solid #e6e8f0;
+        margin-bottom: 14.75px;
+
+        .quantity-of {
+          width: 50%;
+        }
+
+        @media screen and (min-width: $small) {
+          width: 48.5%;
+        }
+
+        @media screen and (max-width: $small) {
+          justify-content: space-around;
+        }
+
+        p {
+          margin-left: 16px;
+        }
+      }
+    }
+  }
+
+  .bed-types-info {
+    border: 1px solid #e6e8f0;
+    width: 100%;
+    border-radius: 10px;
+
+    p {
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 20px;
+      color: #304659;
+      margin: 19px 0 0 19px;
+      margin-bottom: 0 !important;
+    }
+
+    .bed-types {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      margin: 19px 19px 0 19px;
+
+      app-bed-type-info {
+        margin-bottom: 24px;
+      }
+    }
+  }
+
+  .night-price {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    border-radius: 10px;
+    border: 1px solid #e6e8f0;
+    margin-bottom: 14.75px;
+    justify-content: space-between;
+    margin-top: 25px;
+    @media screen and (max-width: $small) {
+      flex-direction: column;
+    }
+    @media screen and (min-width: $small) {
+      height: 70.95px;
+    }
+
+    .price-hint-text {
+      display: flex;
+      flex-direction: column;
+      margin-left: 19px;
+
+      @media screen and (max-width: $small) {
+        width: 100%;
+      }
+
+      .label {
+        font-weight: 600;
+        font-size: 14px;
+        line-height: 20px;
+        color: #101840;
+      }
+
+      .placeholder {
+        font-weight: normal;
+        font-size: 16px;
+        line-height: 24px;
+        color: #696f8c;
+      }
+    }
+
+    input {
+      width: 96px;
+      height: 40px;
+      border-radius: 8px;
+      border: 1px solid #e6e8f0;
+      font-size: 20px;
+      background-color: #f9fafc;
+      margin-right: 16px;
+    }
+
+    .price-input {
+      width: 150px;
+      display: flex;
+      margin-top: 18px;
+      @media screen and (max-width: $small) {
+        justify-content: flex-end;
+        width: 100%;
+      }
+      @media screen and (min-width: $small) {
+        margin-right: 24.47px;
+      }
+
+      h2 {
+        margin-bottom: 0 !important;
+      }
+
+      app-single-line-field {
+        @media screen and (max-width: $small) {
+          width: 70px;
+        }
+      }
+
+      .currency {
+        margin-left: 3px;
+        margin-top: 15px;
+        color: $primary;
+      }
+    }
+  }
+
+  .upload-room-images {
+    height: 100%;
+    width: 100%;
+
+    p {
+      font-weight: normal;
+      font-size: 16px;
+      line-height: 24px;
+      color: #304659;
+    }
+  }
+}

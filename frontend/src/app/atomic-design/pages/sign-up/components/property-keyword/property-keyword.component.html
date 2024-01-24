@@ -1,0 +1,30 @@
+<div class="keywords-container">
+  <p class="select-keywords" i18n="@@propKeywordSelect">
+    Select some keywords that describe your property best (select up to 3)
+  </p>
+  <div class="keywords">
+    <div
+      class="keyword"
+      [class.selected]="selectedKeywords?.includes(keyword.uniqueId)"
+      *ngFor="let keyword of keywords"
+      (click)="selectKeyword(keyword.uniqueId)"
+    >
+      <mat-icon
+        [svgIcon]="'reze:' + keyword.icon"
+        [class.selected]="selectedKeywords?.includes(keyword.uniqueId)"
+      ></mat-icon>
+      <div>
+        <span [class.selected]="selectedKeywords?.includes(keyword.uniqueId)">{{
+          keyword.id
+        }}</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<mat-error
+  i18n="@@atLeastOneKeywordNeedToBeSelected"
+  *ngIf="selectedKeywords.length === 0 && (dirtyInputs | async)"
+>
+  At lease one option should be selected
+</mat-error>

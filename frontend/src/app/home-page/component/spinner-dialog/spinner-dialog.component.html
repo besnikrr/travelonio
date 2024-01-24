@@ -1,0 +1,72 @@
+<div class="container">
+  <ng-container *ngIf="data.randomNumber === 1">
+    <div class="content">
+      <h1 i18n="@@congratulation">Congratulation!</h1>
+      <h1 i18n="@@whatWeFound">Look what we have found for you 😊</h1>
+      <div class="room" *ngIf="property">
+        <div class="left">
+          <img
+            class="image"
+            src="{{ baseUrl }}/attachments/properties/{{
+              property.propertyId
+            }}/images/{{ room?.imageIds[0] }}{{
+              room.id ? '?roomId=' + room.id : ''
+            }}"
+            alt=""
+          />
+        </div>
+        <div class="right">
+          <div class="row-1">
+            <p class="room-name">
+              {{ room.description }} | {{ property.location.city }}
+            </p>
+            <p class="price">
+              € {{ room.price }}/<span i18n="@@night">night</span>
+            </p>
+          </div>
+          <div>
+            <h3 class="property-name">{{ property.name }}</h3>
+          </div>
+
+          <p class="room-name">
+            {{ room.peopleQuantity }} <span i18n="@@guest">guest</span> |
+            {{ room.beds.length }} <span i18n="@@bed">bed</span>
+          </p>
+
+          <div class="book-button">
+            <button
+              type="button"
+              mat-raised-button
+              color="primary"
+              (click)="navigateToRoomBookingPage()"
+              i18n="@@lucky"
+            >
+              I Feel Lucky!
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+  <ng-container *ngIf="data.randomNumber !== 1">
+    <div class="content">
+      <div class="joke">
+        <h1 class="text" i18n="@@nextTime">
+          Thanks for spinning me! You were not lucky this time. Better luck next
+          time.
+        </h1>
+        <h1 class="text" i18n="@@tellJoke">I'll tell you a joke:</h1>
+        <h1 class="text">{{ this.jokes[data.randomNumber - 1] }}</h1>
+        <button
+          type="button"
+          mat-raised-button
+          color="primary"
+          (click)="closeDialog()"
+          i18n="@@goodLuck"
+        >
+          Good luck next time!
+        </button>
+      </div>
+    </div>
+  </ng-container>
+</div>

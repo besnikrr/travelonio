@@ -1,0 +1,50 @@
+<mat-form-field appearance="outline">
+  <mat-select
+    [matMenuTriggerFor]="menu"
+    [placeholder]="priceRangeText"
+    readonly
+  >
+  </mat-select>
+  <mat-menu
+    #menu="matMenu"
+    yPosition="below"
+    panelWidth="420px"
+    class="price"
+    disableRipple
+  >
+    <p class="field-label" i18n="@@pricePerNight">Price Range</p>
+    <div class="menu-item" (click)="$event.stopPropagation()">
+      <div class="inputs">
+        <mat-form-field appearance="outline">
+          <input
+            matInput
+            type="text"
+            [value]="
+              selectedMinPrice ? selectedMinPrice : priceRange.startPrice + ' €'
+            "
+            disabled
+          />
+        </mat-form-field>
+        <span> - </span>
+        <mat-form-field appearance="outline">
+          <input
+            matInput
+            type="text"
+            [value]="
+              selectedMaxPrice ? selectedMaxPrice : priceRange.endPrice + ' €'
+            "
+            disabled
+          />
+        </mat-form-field>
+      </div>
+      <ngx-slider
+        [(value)]="selectedMinPrice ? selectedMinPrice : priceRange.startPrice"
+        [(highValue)]="
+          selectedMaxPrice ? selectedMaxPrice : priceRange.endPrice
+        "
+        [options]="options"
+        (userChange)="onPriceRangeChange($event)"
+      ></ngx-slider>
+    </div>
+  </mat-menu>
+</mat-form-field>

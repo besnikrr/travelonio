@@ -1,0 +1,28 @@
+<div class="quantity-container">
+  <div style="display: flex; align-items: center">
+    <button
+      mat-stroked-button
+      class="left"
+      (click)="decreaseQuantityNumber(elementId)"
+    >
+      <mat-icon>remove</mat-icon>
+    </button>
+    <div class="container">
+      <p class="count" *ngIf="(showIcon && quantity > 0) || !showIcon">
+        {{ quantity }}
+      </p>
+      <mat-icon
+        *ngIf="quantity === 0 && showIcon"
+        [svgIcon]="'reze:person'"
+      ></mat-icon>
+    </div>
+
+    <button
+      mat-stroked-button
+      class="right"
+      (click)="increaseElementNumber(elementId)"
+    >
+      <mat-icon>add</mat-icon>
+    </button>
+  </div>
+</div>

@@ -1,0 +1,43 @@
+<div class="parent-date">
+  <div *ngIf="showPlaceholder" class="placeholders">
+    <p i18n="@@checkIn">Check in*</p>
+    <p i18n="@@checkOut">Check out*</p>
+  </div>
+  <mat-date-range-input
+    [ngClass]="{ 'date-range': showPlaceholder }"
+    [class.disabled]="preventDateChange"
+    [formGroup]="form"
+    [rangePicker]="picker"
+    [min]="today"
+    [disabled]="preventDateChange"
+    (click)="picker.open()"
+  >
+    <input
+      matStartDate
+      formControlName="start"
+      placeholder="Add Dates"
+      i18n-placeholder="@@addDatesText"
+      readonly
+    />
+    <input
+      matEndDate
+      formControlName="end"
+      placeholder="Add Dates"
+      i18n-placeholder="@@addDatesText"
+      readonly
+    />
+  </mat-date-range-input>
+
+  <mat-date-range-picker #picker></mat-date-range-picker>
+
+  <mat-error
+    *ngIf="form.controls.start.hasError('matStartDateInvalid')"
+    i18n="@@invalidStartDateText"
+    >Invalid start date
+  </mat-error>
+  <mat-error
+    *ngIf="form.controls.end.hasError('matEndDateInvalid')"
+    i18n="@@invalidEndDateText"
+    >Invalid end date
+  </mat-error>
+</div>

@@ -1,0 +1,254 @@
+@import "../../../../../style/breaking-points";
+@import "../../../../../style/colors";
+
+:host {
+  display: block;
+
+  .payment-options-container {
+    font-family: Lato;
+    font-style: normal;
+
+    .payment-options-header {
+      display: flex;
+      justify-content: space-between;
+      position: relative;
+
+      h5 {
+        font-family: Lato, sans-serif;
+        font-size: 24px;
+        font-weight: 700;
+        line-height: 32px;
+        letter-spacing: 0px;
+        text-align: left;
+        color: #304659;
+      }
+
+      mat-icon {
+        height: 36px;
+        width: 36px;
+      }
+
+      .info-card {
+        width: 183.27px;
+        border-radius: 8px;
+        position: absolute;
+        right: 0;
+        top: 18px;
+
+        p {
+          font-weight: 500;
+          font-size: 12px;
+          line-height: 16px;
+          color: #696f8c;
+        }
+      }
+    }
+
+    mat-divider {
+      margin: 22px -35.39px;
+    }
+
+    .payment-options-content {
+      .payment-option {
+        height: 85px;
+        border-radius: 10px;
+        border: 1px solid #e6e8f0;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 27.59px;
+
+        &.selected {
+          border-color: $primary;
+        }
+
+        @media screen and (min-width: $medium) {
+          width: 570.88134765625px;
+          height: 75px;
+        }
+
+        p {
+          font-size: 14px;
+          font-weight: 500;
+          line-height: 20px;
+          color: #304659;
+          margin-left: 20px;
+          margin-bottom: 0 !important;
+        }
+
+        mat-checkbox {
+          width: 100%;
+
+          ::ng-deep .mat-checkbox-layout {
+            width: 100%;
+
+            ::ng-deep .mat-checkbox-inner-container {
+              margin-left: 16px;
+            }
+
+            ::ng-deep .mat-checkbox-label {
+              display: flex;
+              justify-content: space-between;
+              width: 85%;
+              align-items: center;
+
+              @media screen and (max-width: $medium) {
+                margin-right: 8px;
+                color: #304659;
+              }
+            }
+          }
+        }
+
+        mat-form-field {
+          width: 100%;
+
+          mat-label {
+            font-weight: normal;
+            font-size: 16px;
+            line-height: 24px;
+            color: #696f8c;
+          }
+
+          ::ng-deep.mat-form-field-wrapper {
+            padding: 20px;
+          }
+
+          ::ng-deep .mat-form-field-flex {
+            background-color: white;
+            padding: 0 !important;
+          }
+
+          ::ng-deep .mat-form-field-underline {
+            display: none;
+          }
+
+          ::ng-deep .mat-select-value-text {
+            color: $primary;
+          }
+
+          ::ng-deep .mat-select-arrow {
+            color: #ff6647;
+          }
+        }
+      }
+
+      .payment-hint {
+        .hint {
+          font-weight: 500;
+          font-size: 14px;
+          line-height: 20px;
+          color: #ff6647;
+        }
+      }
+
+      app-single-line-field {
+        height: 75px;
+
+        @media screen and (min-width: $medium) {
+          width: 570.88134765625px;
+        }
+      }
+
+      .pay-when-booking {
+        height: 85px;
+        border-radius: 10px;
+        border: 1px solid #e6e8f0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        margin-bottom: 27.59px;
+
+        @media screen and (min-width: $medium) {
+          width: 570.88134765625px;
+          height: 75px;
+        }
+
+        p {
+          font-weight: 500;
+          font-size: 14px;
+          line-height: 20px;
+          color: #304659;
+          margin-left: 20px;
+          margin-bottom: 6.35px !important;
+        }
+
+        .percentage-container {
+          margin-left: 20px;
+          display: flex;
+
+          .percentage {
+            border: 1px solid #e6e8f0;
+            background: #f9fafc;
+            height: 27.38px;
+            width: 62.61px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+            margin-right: 6.5px;
+            cursor: pointer;
+
+            p {
+              font-weight: 500;
+              font-size: 14px;
+              line-height: 20px;
+              color: #8f95b2;
+              margin-bottom: 0 !important;
+              margin-left: 0 !important;
+            }
+
+            &.selected {
+              border: 1px solid #671bb5;
+            }
+          }
+        }
+      }
+
+      .remaining-payment {
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 20px;
+        color: #ff6647;
+      }
+
+      .pay-at-property {
+        p {
+          font-weight: 500;
+          font-size: 18px;
+          line-height: 24px;
+          color: #101840;
+        }
+
+        .payment-options {
+          display: flex;
+          margin: 20px 0;
+          @media screen and (max-width: $small) {
+            flex-wrap: wrap;
+          }
+
+          @media screen and (min-width: $small) {
+            justify-content: space-between;
+          }
+
+          mat-checkbox {
+            color: #696f8c;
+            @media screen and (max-width: $small) {
+              width: 156px;
+            }
+          }
+
+          mat-icon {
+            margin-left: 8px;
+            width: 8px;
+            height: 8px;
+          }
+
+          .other-options {
+            display: flex;
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,81 @@
+<div class="container" [class.change-style]="!displayBookNowAndPrice">
+  <div class="img-ratio">
+    <img
+      src="{{ baseUrl }}/attachments/properties/{{
+        property?.propertyId
+      }}/images/{{ property?.primaryImageId }}"
+      alt="No available photo"
+    />
+  </div>
+  <div class="property-info">
+    <div class="content">
+      <div class="top-row">
+        <p class="location">{{ property.propertyType }}</p>
+        <!-- <p>{{ property.propertyType }} | {{ property.location.city }}</p> -->
+        <span *ngIf="displayBookNowAndPrice" class="price"
+          >€ {{ property?.price }} / <span i18n="@@night">night</span></span
+        >
+      </div>
+      <div class="row-1">
+        <span class="title-row">{{ property?.propertyName }}</span>
+      </div>
+      <!-- <div class="row-2">
+				{{ room.peopleQuantity }} <span i18n="@@guest">guest</span> |
+				{{ room.beds.length }} <span i18n="@@bed">bed</span>
+			</div> -->
+    </div>
+    <div class="bottom-row">
+      <button
+        *ngIf="displayBookNowAndPrice"
+        mat-raised-button
+        color="primary"
+        (click)="navigateToPropertyDetails()"
+        i18n="@@bookNow"
+      >
+        Book now
+      </button>
+    </div>
+  </div>
+</div>
+<!-- 
+<div class="room" *ngIf="property">
+  <div class="left">
+    <img
+      class="image"
+      src="{{ baseUrl }}/attachments/properties/{{
+        property.propertyId
+      }}/images/{{ room?.imageIds[0] }}{{
+        room.id ? '?roomId=' + room.id : ''
+      }}"
+      alt=""
+    />
+  </div>
+  <div class="right">
+    <div class="row-1">
+      <p class="room-name">
+        {{ room.description }} | {{ property.location.city }}
+      </p>
+      <p class="price">€ {{ room.price }}/<span i18n="@@night">night</span></p>
+    </div>
+    <div>
+      <h3 class="property-name">{{ property.name }}</h3>
+    </div>
+
+    <p class="room-name">
+      {{ room.peopleQuantity }} <span i18n="@@guest">guest</span> |
+      {{ room.beds.length }} <span i18n="@@bed">bed</span>
+    </p>
+
+    <div class="book-button">
+      <button
+        type="button"
+        mat-raised-button
+        color="primary"
+        (click)="navigateToRoomBookingPage()"
+        i18n="@@lucky"
+      >
+        I Feel Lucky!
+      </button>
+    </div>
+  </div>
+</div> -->

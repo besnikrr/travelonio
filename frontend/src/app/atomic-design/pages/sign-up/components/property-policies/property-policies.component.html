@@ -1,0 +1,146 @@
+<div class="policies-container">
+  <div class="policies">
+    <p i18n="@@propPoliciesSmoking">Is smoking allowed?</p>
+    <mat-slide-toggle
+      color="primary"
+      [checked]="propertyPoliciesData?.smokingAllowed"
+      (change)="
+        updatePropertyPolicies({
+          smokingAllowed: $event.checked
+        })
+      "
+    ></mat-slide-toggle>
+  </div>
+  <mat-divider></mat-divider>
+  <div class="policies">
+    <p i18n="@@propPoliciesPets">Are pets allowed?</p>
+    <mat-slide-toggle
+      color="primary"
+      [checked]="propertyPoliciesData?.petsAllowed"
+      (change)="
+        updatePropertyPolicies({
+          petsAllowed: $event.checked
+        })
+      "
+    ></mat-slide-toggle>
+  </div>
+  <mat-divider></mat-divider>
+  <div class="policies">
+    <p i18n="@@propPoliciesEvents">Are parties/events allowed?</p>
+    <mat-slide-toggle
+      color="primary"
+      [checked]="propertyPoliciesData?.eventsAllowed"
+      (change)="
+        updatePropertyPolicies({
+          eventsAllowed: $event.checked
+        })
+      "
+    ></mat-slide-toggle>
+  </div>
+  <mat-divider></mat-divider>
+
+  <div class="check-in-out">
+    <div class="check-in">
+      <p i18n="@@propPoliciesCheckIn" class="check-label">Check in</p>
+      <div class="from-to">
+        <div class="from">
+          <p i18n="@@propPoliciesFrom">From</p>
+          <mat-form-field appearance="fill">
+            <mat-label *ngIf="propertyPoliciesData?.checkIn?.from === null"
+            >12:00
+            </mat-label
+            >
+            <mat-select
+              (selectionChange)="updateCheckInFrom($event)"
+              [value]="propertyPoliciesData?.checkIn?.from"
+            >
+              <mat-option *ngFor="let hour of checkHours" [value]="hour">
+                {{ hour }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="from">
+          <p i18n="@@propPoliciesTo">To</p>
+          <mat-form-field appearance="fill">
+            <mat-label *ngIf="propertyPoliciesData?.checkIn?.to === null"
+            >12:00
+            </mat-label
+            >
+            <mat-select
+              (selectionChange)="updateCheckInTo($event)"
+              [value]="propertyPoliciesData?.checkIn?.to"
+            >
+              <mat-option *ngFor="let hour of checkHours" [value]="hour">
+                {{ hour }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+    <mat-error i18n="@@checkInIsRequired"
+               *ngIf="(propertyPoliciesData?.checkIn.from == null ||
+        propertyPoliciesData?.checkIn.to === null) && (dirtyInputs | async)">
+      Checkin time is required
+    </mat-error>
+    <div class="check-in">
+      <p class="check-label" i18n="@@propPoliciesCheckOut">Check out</p>
+      <div class="from-to">
+        <div class="from">
+          <p i18n="@@propPoliciesFrom">From</p>
+          <mat-form-field appearance="fill">
+            <mat-label *ngIf="propertyPoliciesData?.checkOut?.from === null"
+            >12:00
+            </mat-label
+            >
+            <mat-select
+              (selectionChange)="updateCheckOutFrom($event)"
+              [value]="propertyPoliciesData?.checkOut?.from"
+            >
+              <mat-option *ngFor="let hour of checkHours" [value]="hour">
+                {{ hour }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="from">
+          <p i18n="@@propPoliciesTo">To</p>
+          <mat-form-field appearance="fill">
+            <mat-label *ngIf="propertyPoliciesData?.checkOut?.to === null"
+            >12:00
+            </mat-label
+            >
+            <mat-select
+              (selectionChange)="updateCheckOutTo($event)"
+              [value]="propertyPoliciesData?.checkOut?.to"
+            >
+              <mat-option *ngFor="let hour of checkHours" [value]="hour">
+                {{ hour }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+    <mat-error i18n="@@checkOutIsRequired"
+               *ngIf="(propertyPoliciesData?.checkOut.from === null ||
+        propertyPoliciesData?.checkOut.to === null) && (dirtyInputs | async)">
+      Checkout time is required
+    </mat-error>
+  </div>
+
+  <div class="late-checkout">
+    <mat-checkbox
+      color="primary"
+      [checked]="propertyPoliciesData?.lateCheckout"
+      (change)="
+        updatePropertyPolicies({
+          lateCheckout: $event.checked
+        })
+      "
+    >
+      <p i18n="@@propPoliciesOffer">Offer the option of late check-out</p>
+    </mat-checkbox>
+  </div>
+</div>

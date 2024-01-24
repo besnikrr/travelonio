@@ -1,0 +1,97 @@
+<div class="availability">
+  <h1 class="title" i18n="@@availableRooms" id="available-rooms">Rooms</h1>
+  <div class="rooms">
+    <div *ngFor="let room of rooms" class="room">
+      <div class="left">
+        <img
+          class="image"
+          src="{{ baseUrl }}/attachments/properties/{{
+            room?.propertyId
+          }}/images/{{ room?.imageIds[0] }}{{
+            room.id ? '?roomId=' + room.id : ''
+          }}"
+          alt=""
+        />
+      </div>
+      <div class="right">
+        <div class="row-1">
+          <div class="room-name">
+            <h3 class="name">{{ room.description }}</h3>
+          </div>
+          <div class="room-price">
+            <p class="price">
+              € {{ room.price }}/<span i18n="@@night">night</span>
+            </p>
+          </div>
+        </div>
+
+        <div class="row-2">
+          <div class="beds">
+            <div *ngFor="let bed of room?.beds" class="bed">
+              <div>
+                <span>{{ bed.bedQuantity }} x </span>
+                <mat-icon
+                  class="icon"
+                  [svgIcon]="'reze:' + bed.icon"
+                ></mat-icon>
+                <span>
+                  {{
+                    BedType.convertToString(
+                      BedType.convertFromApiValue(bed.bedType)
+                    )
+                  }}</span
+                >
+              </div>
+            </div>
+            <p i18n="@@fitsNumberOfPeople">
+              Fits {{ room.peopleQuantity }} people
+            </p>
+          </div>
+
+          <div>
+            <button
+              class="book-button"
+              type="button"
+              mat-raised-button
+              color="primary"
+              i18n="@@bookNow"
+              [disabled]="
+                (roomQuantityForBooking?.roomId !== room.id &&
+                  room.quantity !== 1) ||
+                roomQuantityForBooking?.roomQuantity === 0
+              "
+              (click)="navigateToRoomBokingPage(room.propertyId, room.id)"
+            >
+              Book now
+            </button>
+          </div>
+        </div>
+
+        <div class="row-3">
+          <div class="message">
+            <p>{{ ratePlanType() }}</p>
+          </div>
+          <div class="counter" *ngIf="room.quantity > 1">
+            <mat-form-field appearance="outline" color="primary">
+              <mat-label i18n="@@addRooms">Add rooms</mat-label>
+              <mat-select
+                (selectionChange)="roomQuantitySelected($event, room.id)"
+                (opened)="roomQuantitySelectionOpened()"
+              >
+                <mat-option value="0">0</mat-option>
+                <mat-option
+                  *ngFor="
+                    let val of [].constructor(room?.quantity);
+                    let i = index
+                  "
+                  value="{{ i + 1 }}"
+                  >{{ i + 1 }} (€{{ room?.price * (i + 1) }})
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

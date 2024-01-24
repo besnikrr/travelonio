@@ -1,0 +1,57 @@
+<div>
+  <div class="content">
+    <div class="title">
+      <h1 i18n="guest details text@@guestDetailsText">Guest details</h1>
+    </div>
+    <mat-divider></mat-divider>
+  </div>
+
+  <h3
+    *ngIf="adults && adults.length > 0"
+    i18n="adults text@@adultsText"
+    class="text"
+  >
+    Adults
+  </h3>
+
+  <div class="guest-info" *ngFor="let adult of adults; let index = index">
+    <app-guest-inputs
+      [category]="'adults'"
+      [id]="index"
+      [inputsAmount]="adults"
+      [gender]="gender"
+    ></app-guest-inputs>
+  </div>
+
+  <h3
+    *ngIf="children && children.length > 0"
+    i18n="children text text@@childrenText"
+    class="text"
+  >
+    Children
+  </h3>
+  <div class="guest-info" *ngFor="let ch of children; let index = index">
+    <app-guest-inputs
+      [category]="'children'"
+      [id]="index"
+      [inputsAmount]="children"
+      [gender]="gender"
+    ></app-guest-inputs>
+  </div>
+
+  <h3
+    *ngIf="infants && infants.length > 0"
+    i18n="infants text@@infantsText"
+    class="text"
+  >
+    Infants
+  </h3>
+  <div class="guest-info" *ngFor="let i of infants; let index = index">
+    <app-guest-inputs
+      [category]="'infants'"
+      [id]="index"
+      [inputsAmount]="infants"
+      [gender]="gender"
+    ></app-guest-inputs>
+  </div>
+</div>

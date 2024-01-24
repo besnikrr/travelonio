@@ -1,0 +1,100 @@
+<div class="review-container">
+  <app-single-line-field
+    [initialValue]="reviewInfo?.name"
+    label="Official name of the business"
+    i18n-label="@@officialBusinessName"
+    (onChange)="updatePropertyInfo({ name: $event ? $event : '' })"
+  ></app-single-line-field>
+  <!-- <mat-error
+    i18n="@@businessNameIsRequired"
+    *ngIf="
+      (reviewInfo?.name === null || reviewInfo?.name === '') &&
+      (dirtyInputs | async)
+    "
+  >
+    Business name is required
+  </mat-error> -->
+
+  <app-single-line-field
+    [initialValue]="
+      reviewInfo?.businessAddress
+        ? reviewInfo?.businessAddress
+        : reviewInfo?.propertyAddress
+    "
+    label="Address"
+    i18n-label="@@addressGenericText"
+    [placeholder]="'Lidhja e Lezhes, Pristina, Kosovo'"
+    (onChange)="updatePropertyInfo({ address: $event ? $event : '' })"
+  ></app-single-line-field>
+  <!-- <mat-error
+    i18n="@@businessAddressIsRequired"
+    *ngIf="
+      (reviewInfo?.businessAddress === null ||
+        reviewInfo?.businessAddress === '') &&
+      (dirtyInputs | async)
+    "
+  >
+    Business address is required
+  </mat-error> -->
+
+  <app-single-line-field
+    [initialValue]="reviewInfo?.licenseNumber"
+    label="License number"
+    i18n-label="@@licenseNumberText"
+    placeholder="Enter your license number"
+    i18n-placeholder="@@enterLicenseNumber"
+    [validators]="[validators.pattern('^[0-9]*$')]"
+    (onChange)="updatePropertyInfo({ licenseNumber: $event ? $event : '' })"
+  ></app-single-line-field>
+  <!-- <mat-error
+    i18n="@@businessLicenseNumberIsRequired"
+    *ngIf="
+      (reviewInfo?.licenseNumber === null ||
+        reviewInfo?.licenseNumber === '') &&
+      (dirtyInputs | async)
+    "
+  >
+    Business license number is required
+  </mat-error> -->
+
+  <app-single-line-field
+    [initialValue]="reviewInfo?.vatNumber"
+    label="Vat number"
+    i18n-label="@@vatNumberGenericText"
+    placeholder="Enter your VAT number"
+    i18n-placeholder="@@enterVatNumberText"
+    [validators]="[validators.pattern('^[0-9]*$')]"
+    (onChange)="updatePropertyInfo({ vatNumber: $event ? $event : '' })"
+  ></app-single-line-field>
+  <!-- <mat-error
+    i18n="@@businessVatNumberIsRequired"
+    *ngIf="
+      (reviewInfo?.vatNumber === null || reviewInfo?.vatNumber === '') &&
+      (dirtyInputs | async)
+    "
+  >
+    Business VAT number is required
+  </mat-error> -->
+
+  <app-single-line-field
+    [initialValue]="reviewInfo?.businessRegistrationNumber"
+    label="Business registration number"
+    i18n-label="@@businessRegistrationNumber"
+    placeholder="Enter your business registration number"
+    i18n-placeholder="@@enterBusinessNumber"
+    [validators]="[validators.pattern('^[0-9]*$')]"
+    (onChange)="
+      updatePropertyInfo({ businessRegistrationNumber: $event ? $event : '' })
+    "
+  ></app-single-line-field>
+  <!-- <mat-error
+    i18n="@@businessRegistrationNumberIsRequired"
+    *ngIf="
+      (reviewInfo?.businessRegistrationNumber === null ||
+        reviewInfo?.businessRegistrationNumber === '') &&
+      (dirtyInputs | async)
+    "
+  >
+    Business registration number is required
+  </mat-error> -->
+</div>

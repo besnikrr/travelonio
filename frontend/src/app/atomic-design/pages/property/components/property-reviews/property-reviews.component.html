@@ -1,0 +1,97 @@
+<div class="reviews">
+  <h1 class="title" i18n="@@reviews">Reviews</h1>
+  <div class="info">
+    <div class="rate">
+      <mat-icon *ngIf="showIcons" [svgIcon]="'reze:rate-star'"></mat-icon>
+      <p>Very Good 4.6/5</p>
+    </div>
+    <mat-form-field appearance="outline" color="primary">
+      <mat-label>{{ "Rank" }}</mat-label>
+      <mat-select (selectionChange)="(undefined)">
+        <mat-option [value]="ReviewRankEnum.ALL">All</mat-option>
+        <mat-option [value]="ReviewRankEnum.ONE_STAR">{{
+          "1 star"
+          }}</mat-option>
+        <mat-option [value]="ReviewRankEnum.TWO_STARS">{{
+          "2 stars"
+          }}</mat-option>
+        <mat-option [value]="ReviewRankEnum.THREE_STARS">{{
+          "3 stars"
+          }}</mat-option>
+        <mat-option [value]="ReviewRankEnum.FOUR_STARS">{{
+          "4 stars"
+          }}</mat-option>
+        <mat-option [value]="ReviewRankEnum.FIVE_STARS">{{
+          "5 stars"
+          }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div class="items">
+    <div class="item">
+      <div class="desc">
+        <div class="image">
+          <img
+            src="../../../../../../assets/property/profile-photo.svg"
+            alt="profile-photo"
+          />
+        </div>
+        <div class="details">
+          <h3 class="title">Kathryn T.</h3>
+          <div class="rate">
+            <mat-icon *ngIf="showIcons" [svgIcon]="'reze:rate-star'"></mat-icon>
+            <div class="text text-big">
+              <p>5/5</p>
+              <p>Stayed May 2021</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="text text-mobile">
+        <p>5/5</p>
+        <p>Stayed May 2021</p>
+      </div>
+      <p class="comment">
+        Had a wonderful time being at the beach with family. Even though the
+        weather didn’t always cooperate, we had a blast! We were supposed to
+        stay at Quiet Surf townhomes, but because of hurricane Sally and some
+        plumbing issues, we found Costa del Sol which fit the bill just fine.
+        The location was perfect! Newman-Dailey will always be our choice for
+        our beach trips. Very helpful staff.
+      </p>
+    </div>
+    <div class="item">
+      <div class="desc">
+        <div class="image">
+          <img
+            src="../../../../../../assets/property/profile-photo.svg"
+            alt="profile-photo"
+          />
+        </div>
+        <div class="details">
+          <h3 class="title">Kathryn T.</h3>
+          <div class="rate">
+            <mat-icon *ngIf="showIcons" [svgIcon]="'reze:rate-star'"></mat-icon>
+            <div class="text text-big">
+              <p>5/5</p>
+              <p>Stayed May 2021</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="text text-mobile">
+        <p>5/5</p>
+        <p>Stayed May 2021</p>
+      </div>
+      <p class="comment">
+        Had a wonderful time being at the beach with family. Even though the
+        weather didn’t always cooperate, we had a blast! We were supposed to
+        stay at Quiet Surf townhomes, but because of hurricane Sally and some
+        plumbing issues, we found Costa del Sol which fit the bill just fine.
+        The location was perfect! Newman-Dailey will always be our choice for
+        our beach trips. Very helpful staff.
+      </p>
+    </div>
+    <p class="view-more" i18n="@@viewMore">View More</p>
+  </div>
+</div>

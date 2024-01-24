@@ -1,0 +1,46 @@
+<div mat-dialog-title style="display: flex; justify-content: space-between">
+  <h2 mat-dialog-title>{{ data.title }}</h2>
+  <mat-icon [mat-dialog-close]="true" style="cursor: pointer">cancel</mat-icon>
+</div>
+<div *ngIf="data?.info !== true">
+  <mat-divider style="margin-bottom: 32px"></mat-divider>
+
+  <mat-dialog-content
+    *ngIf="data.template && !data.content"
+    style="padding: 0 32px 0 32px"
+    [innerHtml]="data.template"
+  >
+  </mat-dialog-content>
+
+  <mat-dialog-content
+    *ngIf="!data.template && data.content"
+    style="padding: 0 32px 0 32px"
+  >
+    <p style="line-height: 16px">
+      {{ data.content }}
+    </p>
+  </mat-dialog-content>
+
+  <mat-dialog-footer
+    class="footer"
+    *ngIf="data.footerButtonName || data.secondFooterButtonName"
+  >
+    <button
+      *ngIf="data.secondFooterButtonName"
+      mat-button
+      color="primary"
+      class="second-button"
+      (click)="onSecondButtonClicked.emit()"
+    >
+      {{ data.secondFooterButtonName }}
+    </button>
+    <button
+      *ngIf="data.footerButtonName"
+      mat-raised-button
+      color="primary"
+      (click)="onButtonClicked.emit()"
+    >
+      {{ data.footerButtonName }}
+    </button>
+  </mat-dialog-footer>
+</div>

@@ -1,0 +1,38 @@
+<div class="spin-the-wheel background">
+  <div class="spin-button">
+    <h1 i18n="@@tryYourLuck">Try your luck and Spin the Wheel</h1>
+    <button
+      i18n="@@spinTheWheel"
+      mat-flat-button
+      color="primary"
+      (click)="onSpinComplete()"
+      [disabled]="isButtonDisabled"
+    >
+      SPIN
+    </button>
+  </div>
+  <div class="roulette">
+    <div class="spinner">
+      <span class="arrow"></span>
+      <div
+        class="container"
+        #container
+        (click)="!isButtonDisabled ? onSpinComplete() : null"
+      >
+        <div class="one"><span></span></div>
+        <div class="two"><span></span></div>
+        <div class="three"><span></span></div>
+        <div class="four"><span></span></div>
+        <div class="five"><span></span></div>
+        <div class="six"><span></span></div>
+        <div class="seven"><span></span></div>
+        <div class="eight"><span></span></div>
+        <div class="nine"><span></span></div>
+        <div class="ten"><span></span></div>
+        <div class="eleven"><span></span></div>
+        <div class="twelve"><span></span></div>
+      </div>
+    </div>
+    <img class="holder" src="assets/homePage/spinner-holder.png" />
+  </div>
+</div>

@@ -1,0 +1,161 @@
+<div class="rooms-prices-container">
+  <div class="headers">
+    <div class="first-header"></div>
+    <p class="second-header" i18n="@@roomPricesDiscount">Discount?</p>
+    <p class="third-header" i18n="@@roomPricesHowMuch">How much?</p>
+    <p class="fourth-header" i18n="@@roomPricesPeriod">Period</p>
+  </div>
+
+  <div class="room-container" *ngFor="let room of rooms">
+    <div class="room">
+      <div class="room-block">
+        <div class="room-name-price">
+          <div class="name">
+            {{
+              room.quantity +
+                " x " +
+                room.description +
+                ", price: " +
+                room.price +
+                " €"
+            }}
+          </div>
+          <div class="price">
+            <span i18n="@@roomPricesFits">Fits</span> {{ room.peopleQuantity }}
+            <span i18n="@@roomPricesPeople">people</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="include-discount">
+        <span i18n="@@roomPricesDiscount">Discount?</span>
+        <mat-radio-group (change)="roomDiscountSwitchChanged($event, room.id)">
+          <mat-radio-button
+            class="yes-option"
+            color="primary"
+            i18n="@@globalYes"
+            [checked]="room.discountPlan?.hasDiscount === true"
+            value="yes"
+            >Yes
+          </mat-radio-button>
+          <mat-radio-button
+            color="primary"
+            i18n="@@globalNo"
+            [checked]="room.discountPlan?.hasDiscount === false"
+            value="no"
+            >No
+          </mat-radio-button>
+        </mat-radio-group>
+      </div>
+
+      <div class="discount-percentage">
+        <span i18n="@@roomPricesHowMuch">How much?</span>
+        <app-single-line-field
+          type="number"
+          [class.read-only]="!room.discountPlan?.hasDiscount"
+          [initialValue]="
+            room.discountPlan && room.discountPlan.discountPercentage
+              ? room.discountPlan.discountPercentage + ''
+              : ''
+          "
+          [label]="'Discount'"
+          [placeholder]=""
+          [readOnly]="!room.discountPlan?.hasDiscount"
+          [symbol]="'%'"
+          [validators]="[validators.pattern('^\\d+(\\.\\d+)?$')]"
+          (onChange)="roomDiscountPercentageChanged($event, room.id)"
+        ></app-single-line-field>
+      </div>
+
+      <div class="date-container">
+        <span i18n="@@roomPricesPeriod">Period</span>
+        <div class="period">
+          <mat-form-field class="datepicker">
+            <input
+              matInput
+              [value]="
+                room.discountPlan && room.discountPlan.validFrom
+                  ? room.discountPlan.validFrom + ''
+                  : ''
+              "
+              [disabled]="room.discountPlan?.hasDiscount === false"
+              readonly="readonly"
+              [matDatepicker]="picker1"
+              [min]="minDateFrom"
+              type="text"
+              (dateChange)="roomDiscountValidFromChanged($event, room.id)"
+            />
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="picker1"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #picker1></mat-datepicker>
+          </mat-form-field>
+
+          <div i18n="roomPricesTo" class="to">to</div>
+
+          <mat-form-field class="datepicker">
+            <input
+              [disabled]="room.discountPlan.validFrom === null"
+              [value]="
+                room.discountPlan && room.discountPlan.validUntil
+                  ? room.discountPlan.validUntil + ''
+                  : ''
+              "
+              matInput
+              [disabled]="room.discountPlan?.hasDiscount === false"
+              readonly="readonly"
+              [matDatepicker]="picker2"
+              [min]="room.discountPlan.validFrom"
+              type="text"
+              (dateChange)="roomDiscountValidUntilChanged($event, room.id)"
+            />
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="picker2"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #picker2></mat-datepicker>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+    <mat-error
+      i18n="@@roomDiscountIsRequired"
+      *ngIf="room.discountPlan?.hasDiscount === null && (dirtyInputs | async)"
+    >
+      Define room discount is required
+    </mat-error>
+    <mat-error
+      i18n="@@roomDiscountPercentageIsRequired"
+      *ngIf="
+        room.discountPlan?.hasDiscount === true &&
+        (room.discountPlan?.discountPercentage === null ||
+          room.discountPlan?.discountPercentage === 0) &&
+        (dirtyInputs | async)
+      "
+    >
+      Room discount percentage is required
+    </mat-error>
+    <mat-error
+      i18n="@@roomDiscountDatesAreRequired"
+      *ngIf="
+        room.discountPlan?.hasDiscount === true &&
+        (room.discountPlan?.validFrom === null ||
+          room.discountPlan?.validUntil === null) &&
+        (dirtyInputs | async)
+      "
+    >
+      Room discount dates are required
+    </mat-error>
+  </div>
+
+  <div class="rooms-list-footer">
+    <mat-checkbox
+      color="primary"
+      i18n="@@roomPricesDiscountFirst5"
+      [checked]="discountForTheFirstFiveGuests === true"
+      (change)="discountForTheFirstFiveGuestsChanged($event)"
+      >Offer 20% discount for the first 5 guests
+    </mat-checkbox>
+  </div>
+</div>

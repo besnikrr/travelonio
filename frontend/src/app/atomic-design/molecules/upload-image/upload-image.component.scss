@@ -1,0 +1,58 @@
+@import "../../../style/colors";
+@import "../../../style/breaking-points";
+
+:host {
+  .file-drop-area {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    height: 160px;
+    width: 100%;
+    border: 1px dashed #cbbcdb;
+    cursor: pointer;
+    font-family: Lato;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 20px;
+
+    @media screen and (max-width: $small) {
+      height: 200px;
+    }
+
+    &.drag-over {
+      background: $gray;
+    }
+
+    mat-icon {
+      width: 44.94px;
+      height: 33.73px;
+      margin-bottom: 8px;
+    }
+
+    p {
+      display: flex;
+
+      @media screen and (max-width: $small) {
+        display: flex;
+        align-items: center;
+      }
+
+      span:nth-of-type(2) {
+        color: $primary;
+        margin: 0 4px;
+      }
+    }
+
+    .file-size {
+      font-weight: 500;
+      font-size: 12px;
+      line-height: 16px;
+
+      @media screen and (max-width: $small) {
+        width: 80%;
+      }
+    }
+  }
+}

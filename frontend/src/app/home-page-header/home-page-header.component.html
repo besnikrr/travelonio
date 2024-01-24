@@ -1,0 +1,183 @@
+<div
+  class="header container white-background"
+  [ngClass]="{ 'white-background': !transparent, custom: customPositioning }"
+>
+  <div class="left-side">
+    <div class="logo">
+      <a routerLink="/home">
+        <mat-icon *ngIf="showIcons" [svgIcon]="'reze:logo'"></mat-icon>
+      </a>
+    </div>
+  </div>
+
+  <div class="right-side">
+    <button
+      mat-flat-button
+      color="primary"
+      routerLink="/sign-up"
+      class="become-host"
+      (click)="clickBecomeAHostButton()"
+    >
+      <span i18n="@@becomeAHost">Become a Host</span>
+    </button>
+    <div class="item hide-in-phone">
+      <button mat-icon-button class="language-button">
+        <mat-icon *ngIf="showIcons" [svgIcon]="'reze:question-mark'"></mat-icon>
+      </button>
+    </div>
+    <div
+      [hidden]="true"
+      class="item hide-in-phone"
+      (click)="messagesDropdownOpened = !messagesDropdownOpened"
+      #messagesDropdown
+    >
+      <button mat-icon-button class="language-button">
+        <mat-icon *ngIf="showIcons" [svgIcon]="'reze:messages'"></mat-icon>
+      </button>
+    </div>
+    <div
+      [hidden]="true"
+      class="item hide-in-phone"
+      (click)="notifDropdownOpened = !notifDropdownOpened"
+      #notifDropdown
+    >
+      <button mat-icon-button class="language-button">
+        <mat-icon *ngIf="showIcons" [svgIcon]="'reze:notifications'"></mat-icon>
+      </button>
+    </div>
+    <div
+      class="item language-label"
+      #userLanguages
+      (click)="languageDropdownOpened = !languageDropdownOpened"
+    >
+      <button mat-icon-button class="language-button">
+        <mat-icon *ngIf="showIcons" [svgIcon]="'reze:languages'"></mat-icon>
+        <span>&nbsp;{{ currentLanguage }}</span>
+      </button>
+    </div>
+    <div class="item profile">
+      <button (click)="userDropdownOpened = !userDropdownOpened" #userMenu>
+        <mat-icon
+          *ngIf="showIcons"
+          class="lines-icon"
+          [svgIcon]="'reze:lines'"
+        ></mat-icon>
+        <mat-icon
+          *ngIf="showIcons"
+          class="user-profile-icon"
+          [svgIcon]="'reze:user-profile'"
+        ></mat-icon>
+      </button>
+    </div>
+  </div>
+</div>
+
+<ng-template
+  cdkConnectedOverlay
+  [cdkConnectedOverlayOrigin]="userLanguages"
+  [cdkConnectedOverlayPositions]="positions"
+  [cdkConnectedOverlayOpen]="languageDropdownOpened"
+  [cdkConnectedOverlayOffsetY]="15"
+  [cdkConnectedOverlayOffsetX]="20"
+  [cdkConnectedOverlayHasBackdrop]="true"
+  [cdkConnectedOverlayBackdropClass]="'cdk-overlay-transparent-backdrop'"
+  (backdropClick)="languageDropdownOpened = false"
+>
+  <div class="general-dropdown">
+    <div class="side-arrow-target"></div>
+
+    <button (click)="changeLanguage(CONST_LANGUAGES.ENGLISH)">
+      <span>English</span>
+    </button>
+    <button (click)="changeLanguage(CONST_LANGUAGES.ALBANIAN)">
+      <span>Shqip</span>
+    </button>
+  </div>
+</ng-template>
+
+<ng-template
+  cdkConnectedOverlay
+  [cdkConnectedOverlayOrigin]="userMenu"
+  [cdkConnectedOverlayPositions]="positions"
+  [cdkConnectedOverlayOpen]="userDropdownOpened"
+  [cdkConnectedOverlayOffsetY]="15"
+  [cdkConnectedOverlayOffsetX]="20"
+  [cdkConnectedOverlayHasBackdrop]="true"
+  [cdkConnectedOverlayBackdropClass]="'cdk-overlay-transparent-backdrop'"
+  (backdropClick)="userDropdownOpened = false"
+>
+  <div class="general-dropdown">
+    <div class="side-arrow-target"></div>
+    <a *ngIf="!session" class="link-without-style" routerLink="/login">
+      <span i18n="@@login">Login</span>
+    </a>
+
+    <a *ngIf="!session" class="link-without-style" routerLink="/register">
+      <span i18n="@@register">Register</span>
+    </a>
+
+    <button *ngIf="session" (click)="logoutPropertyUser()">
+      <span i18n="@@logout">Logout</span>
+    </button>
+  </div>
+</ng-template>
+
+<ng-template
+  cdkConnectedOverlay
+  [cdkConnectedOverlayOrigin]="notifDropdown"
+  [cdkConnectedOverlayPositions]="positions"
+  [cdkConnectedOverlayOpen]="notifDropdownOpened"
+  [cdkConnectedOverlayOffsetY]="15"
+  [cdkConnectedOverlayOffsetX]="18"
+  [cdkConnectedOverlayHasBackdrop]="true"
+  [cdkConnectedOverlayBackdropClass]="'cdk-overlay-transparent-backdrop'"
+  (backdropClick)="notifDropdownOpened = false"
+>
+  <div class="general-dropdown general-dropdown_notif">
+    <div class="side-arrow-target"></div>
+    <div class="notification-plc">
+      <div class="notification">
+        <p class="title">Notifications</p>
+        <!--        <div class="notification-li" *ngFor="let x of [1,2,3,4,5]">-->
+        <!--          <div>-->
+        <!--            <span>&bull;</span>-->
+        <!--            <p class="notification-text">Please Confirm email address By clicking on the link we just emailed you</p>-->
+        <!--          </div>-->
+        <!--          <p class="notification-date">November 10, 2021</p>-->
+        <!--        </div>-->
+        <div class="notification-li notification-li__no-messages">
+          <p class="notification-text">No messages</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template
+  cdkConnectedOverlay
+  [cdkConnectedOverlayOrigin]="messagesDropdown"
+  [cdkConnectedOverlayPositions]="positions"
+  [cdkConnectedOverlayOpen]="messagesDropdownOpened"
+  [cdkConnectedOverlayOffsetY]="15"
+  [cdkConnectedOverlayOffsetX]="18"
+  [cdkConnectedOverlayHasBackdrop]="true"
+  [cdkConnectedOverlayBackdropClass]="'cdk-overlay-transparent-backdrop'"
+  (backdropClick)="messagesDropdownOpened = false"
+>
+  <div class="general-dropdown general-dropdown_notif">
+    <div class="side-arrow-target"></div>
+    <div class="notification-plc">
+      <div class="notification">
+        <p class="title">Messages</p>
+        <!--        <div class="notification-li">-->
+        <!--          <p class="notification-text"><span>&bull;</span> Message 1 </p>-->
+        <!--          <p class="notification-date">November 10, 2021</p>-->
+        <!--        </div>-->
+
+        <div class="notification-li notification-li__no-messages">
+          <p class="notification-text">No messages</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>

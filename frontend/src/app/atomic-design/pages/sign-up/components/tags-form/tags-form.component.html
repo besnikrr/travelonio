@@ -1,0 +1,46 @@
+<div class="container">
+
+
+  <mat-form-field class="tag-input" appearance="outline">
+    <mat-label>{{ label }}</mat-label>
+    <div style="display: flex">
+      <input
+        type="text"
+        [placeholder]="placeholder"
+        aria-label="Room description"
+        matInput
+        #tagInput
+        name="tagInput"
+        [formControl]="myControl"
+        [matAutocomplete]="auto"
+        [value]=""
+        [matChipInputFor]="chipList"
+        [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+        [matChipInputAddOnBlur]="addOnBlur"
+        (matChipInputTokenEnd)="add($event)"
+      />
+      <mat-icon [svgIcon]="'reze:arrow-down'"></mat-icon>
+    </div>
+    <mat-autocomplete #auto="matAutocomplete">
+      <mat-option
+        *ngFor="let option of filteredOptions | async"
+        [value]="option"
+        (onSelectionChange)="change($event)"
+      >
+        {{ option }}
+      </mat-option>
+    </mat-autocomplete>
+
+    <mat-chip-list #chipList></mat-chip-list>
+  </mat-form-field>
+
+  <mat-chip
+    *ngFor="let tag of tags"
+    [selectable]="selectable"
+    [removable]="removable"
+    (removed)="remove(tag)"
+  >
+    {{ tag }}
+    <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+  </mat-chip>
+</div>

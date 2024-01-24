@@ -1,0 +1,119 @@
+@import "../../../../../style/colors";
+@import "../../../../../style/breaking-points";
+
+:host {
+  display: block;
+  height: 100%;
+
+  @media screen and (max-width: $medium) {
+    width: 100%;
+  }
+
+  .container {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    height: 100%;
+    background-color: white;
+    border-radius: 24px;
+
+    @media screen and (max-width: $medium) {
+      margin: 0 45px;
+    }
+
+    .sign-up-content {
+      flex: 1;
+      margin: 0 35.39px;
+      display: flex;
+      flex-direction: column;
+
+      @media screen and (max-width: $medium) {
+        margin: 20px;
+      }
+
+      .content {
+        app-property-types {
+          margin: 128px 0;
+        }
+
+        app-set-property-name {
+          margin: 128px 250px 0 150px;
+        }
+
+        app-insert-room-form {
+          margin: 0 150px 0 64px;
+        }
+
+        app-property-keyword {
+          margin: 0 400px 0 120px;
+        }
+
+        app-amenities {
+          margin: 32px 200px 0 64px;
+        }
+
+        app-breakfast-and-language-form {
+          margin: 128px 200px 0 64px;
+        }
+
+        app-property-policies {
+          margin: 128px 180px 0 180px;
+          border: 1px solid $border-light;
+          border-radius: 10px;
+          padding: 32px;
+        }
+
+        app-describe-property {
+          margin: 128px 250px 0 150px;
+        }
+      }
+    }
+
+    .sign-up-footer {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      position: sticky;
+      bottom: 0;
+      height: 72px;
+      min-height: 72px;
+      background: white;
+
+      @media screen and (max-width: $medium) {
+        justify-content: center;
+        border-radius: 24px;
+      }
+
+      button {
+        width: 100px;
+        height: 32px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .back-button {
+        margin-right: 7.55px;
+      }
+
+      .next-button {
+        margin-right: 35.39px;
+
+        @media screen and (max-width: $medium) {
+          margin-right: 0;
+        }
+      }
+    }
+
+    .transparent {
+      background: transparent !important;
+      z-index: 2 !important;
+    }
+  }
+
+  @media screen and (max-width: $small) {
+    .container {
+      margin: 0 10px;
+    }
+  }
+}

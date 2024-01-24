@@ -1,0 +1,61 @@
+<div class="bank-details-container">
+  <div class="bank-details-header">
+    <h5 i18n="@@bankDetailsTitle">Enter your bank details</h5>
+  </div>
+
+  <mat-card class="details-card">
+    <div class="details">
+      <mat-icon [svgIcon]="'reze:bank-details'"></mat-icon>
+      <div class="form-inputs">
+        <app-single-line-field
+          class="account"
+          label="*Account Owner"
+          i18n-label="@@accountOwner"
+          [initialValue]="bankDetails?.accountOwner"
+          [validators]="validators.pattern('^[a-zA-Z\\s]*$')"
+          (onChange)="updateBankDetails({ accountOwner: $event })"
+        ></app-single-line-field>
+        <app-single-line-field
+          label="*Account Number"
+          i18n-label="@@accountNumber"
+          [maxLength]="16"
+          [validators]="[validators.pattern('^[0-9]*$')]"
+          [initialValue]="bankDetails?.accountNumber"
+          (onChange)="updateBankDetails({ accountNumber: $event })"
+        ></app-single-line-field>
+        <app-single-line-field
+          label="*Bank Name"
+          i18n-label="@@bankName"
+          [initialValue]="bankDetails?.bankName"
+          (onChange)="updateBankDetails({ bankName: $event })"
+        ></app-single-line-field>
+        <app-single-line-field
+          label="*Swift Code"
+          i18n-label="@@swiftCode"
+          [initialValue]="bankDetails?.swiftCode"
+          (onChange)="updateBankDetails({ swiftCode: $event })"
+        ></app-single-line-field>
+      </div>
+      <mat-error i18n="@@accountOwnerIsRequired"
+                 *ngIf="(bankDetails?.accountOwner === null || bankDetails?.accountOwner === '') && (dirtyInputs | async)">
+        Account owner is required
+      </mat-error>
+      <mat-error i18n="@@accountNumberIsRequired"
+                 *ngIf="(bankDetails?.accountNumber === null || bankDetails?.accountNumber === '') && (dirtyInputs | async)">
+        Account number is required
+      </mat-error>
+      <mat-error i18n="@@bankNameIsRequired"
+                 *ngIf="(bankDetails?.bankName === null || bankDetails?.bankName === '') && (dirtyInputs | async)">
+        Bank name is required
+      </mat-error>
+      <mat-error i18n="@@swiftCodeIsRequired"
+                 *ngIf="(bankDetails?.swiftCode === null || bankDetails?.swiftCode === '') && (dirtyInputs | async)">
+        Swift Code is required
+      </mat-error>
+    </div>
+
+  </mat-card>
+  <h3 style="color: red" i18n="@@bankDetailsAreNotRequired">
+    If <b>Pay at Property</b> is selected, this page is optional
+  </h3>
+</div>

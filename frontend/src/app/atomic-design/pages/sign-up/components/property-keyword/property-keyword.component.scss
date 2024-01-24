@@ -1,0 +1,79 @@
+@import "../../../../../style/colors";
+@import "../../../../../style/breaking-points.scss";
+
+:host {
+  display: block;
+
+  .keywords-container {
+    display: flex;
+    flex-direction: column;
+
+    .select-keywords {
+      font-family: Lato, sans-serif;
+      font-size: 18px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: 24px;
+      letter-spacing: 0px;
+      text-align: left;
+      color: #101840;
+      margin: 0 0 42px;
+    }
+
+    .keywords {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+
+      .keyword {
+        height: 124.92px;
+        width: 179.32px;
+        border-radius: 16px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 30px;
+        cursor: pointer;
+        box-shadow: 0px 16px 32px 0px rgba(103, 27, 181, 0.1);
+        border: 1px solid white;
+
+        mat-icon {
+          font-size: 50px;
+          width: 50px;
+          height: 50px;
+          margin-bottom: 12px;
+          color: #696f8c;
+
+          &.selected {
+            color: #671bb5;
+          }
+        }
+
+        &.selected {
+          border: 1px solid #671bb5;
+        }
+
+        span {
+          font-family: Lato, sans-serif;
+          font-size: 14px;
+          font-weight: 500;
+          line-height: 20px;
+          letter-spacing: 0px;
+          text-align: center;
+          color: #696f8c;
+
+          &.selected {
+            color: #671bb5;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: $medium) {
+  .keywords {
+    justify-content: space-around !important;
+  }
+}

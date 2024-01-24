@@ -1,0 +1,92 @@
+<div class="container">
+  <h1 i18n="payment options text@@payment options text">Payment Options</h1>
+  <mat-accordion hideToggle="true">
+    <mat-expansion-panel>
+      <mat-expansion-panel-header #panelH (click)="panelH._toggle()">
+        <mat-radio-button
+          [checked]="true"
+          name="services"
+          id="pay-at-property"
+          value="pay-at-property"
+          color="primary"
+          i18n="
+            pay at property by cash or credit card
+            text@@byAtproeprtyByCashOrCreditCard"
+        >
+          Pay at property by cash or credit card</mat-radio-button
+        >
+      </mat-expansion-panel-header>
+    </mat-expansion-panel>
+    <mat-expansion-panel [disabled]="true">
+      <mat-expansion-panel-header>
+        <mat-radio-button
+          name="services"
+          id="bank-transfer"
+          value="bank-transfer"
+          [disabled]="true"
+        >
+          <mat-panel-title i18n="bank transfer text@@bankTransferText">
+            Bank Transfer</mat-panel-title
+          >
+        </mat-radio-button>
+      </mat-expansion-panel-header>
+    </mat-expansion-panel>
+    <mat-expansion-panel [disabled]="true">
+      <mat-expansion-panel-header>
+        <mat-radio-button
+          name="services"
+          id="credit-card"
+          value="credit-card"
+          [disabled]="true"
+          i18n="credit card text@@creditCardText"
+        >
+          Credit Card</mat-radio-button
+        >
+      </mat-expansion-panel-header>
+    </mat-expansion-panel>
+    <mat-expansion-panel [disabled]="true">
+      <mat-expansion-panel-header>
+        <mat-radio-button
+          name="services"
+          id="paypal-account"
+          value="paypal-account"
+          [disabled]="true"
+          i18n="paypal account text@@paypalAccountText"
+        >
+          Paypal Account</mat-radio-button
+        >
+      </mat-expansion-panel-header>
+    </mat-expansion-panel>
+    <mat-expansion-panel [disabled]="true">
+      <mat-expansion-panel-header>
+        <mat-radio-button
+          name="services"
+          id="paysera-account"
+          value="paysera-account"
+          [disabled]="true"
+          i18n="paysera account text@@payseraAccountText"
+        >
+          Paysera Account
+        </mat-radio-button>
+      </mat-expansion-panel-header>
+    </mat-expansion-panel>
+  </mat-accordion>
+
+  <mat-divider></mat-divider>
+
+  <div class="consent">
+    <mat-checkbox
+      [color]="'primary'"
+      [formControl]="consentControl"
+      i18n="By signing, I agree to Reze text@@bySigningIAgreeToRezeText"
+    >
+			By clicking “Confirm Booking” I agree to Travelonio’s
+      <a (click)="openTermsAndConditionsDialog($event)">Terms & Conditions</a>
+      and
+      <a (click)="openPolicyDialog($event)">Privacy Policy</a>
+      <mat-error *ngIf="!consentControl.value && consentControl.dirty">{{
+        getConsentErrorMessage()
+      }}</mat-error>
+    </mat-checkbox>
+  </div>
+</div>

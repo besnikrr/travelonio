@@ -1,0 +1,187 @@
+<div class="header">
+  <app-home-page-header [customPositioning]="true"></app-home-page-header>
+</div>
+<form [formGroup]="formGroup" (ngSubmit)="registerUser()">
+  <div class="body">
+  <div class="left">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Sign up</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="name">
+          <mat-form-field class="form-field firstname" appearance="outline">
+            <mat-label>First Name</mat-label>
+            <input
+              matInput
+              type="text"
+              [placeholder]="'Type Your First Name'"
+              autocomplete="false"
+              type="text"
+              onkeydown="return /[a-z]/i.test(event.key)"
+              formControlName="firstnameControl"
+            />
+            <mat-error *ngIf="formGroup.get('firstnameControl').invalid">{{
+              getFirstnameErrorMessage()
+            }}</mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="form-field lastname" appearance="outline">
+            <mat-label>Last Name</mat-label>
+            <input
+              matInput
+              type="text"
+              [placeholder]="'Type Your Last Name'"
+              autocomplete="false"
+              type="text"
+              onkeydown="return /[a-z]/i.test(event.key)"
+              formControlName="lastnameControl"
+            />
+            <mat-error *ngIf="formGroup.get('lastnameControl').invalid">{{
+              getLastnameErrorMessage()
+            }}</mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="email">
+          <mat-form-field class="form-field lastname" appearance="outline">
+            <mat-label>Email Address</mat-label>
+            <input
+              matInput
+              type="text"
+              [placeholder]="'Type Your Email Address'"
+              autocomplete="false"
+              [type]="'text'"
+              formControlName="emailControl"
+            />
+            <mat-error *ngIf="formGroup.get('emailControl').invalid">{{
+              getEmailErrorMessage()
+            }}</mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="password">
+          <mat-form-field class="form-field" appearance="outline">
+            <mat-label>Password</mat-label>
+            <input
+              matInput
+              type="text"
+              [placeholder]="'Type Your Password'"
+              autocomplete="false"
+              [type]="hideCharacters ? 'password' : 'text'"
+              formControlName="passwordControl"
+            />
+            <button
+              mat-icon-button
+              matSuffix
+              [attr.aria-label]="'Hide password'"
+              [attr.aria-pressed]="hideCharacters"
+              tabindex="-1"
+            >
+              <mat-icon (click)="hideCharacters = !hideCharacters">{{
+                hideCharacters ? "visibility_off" : "visibility"
+              }}</mat-icon>
+            </button>
+            <mat-error *ngIf="formGroup.get('passwordControl').invalid">{{
+              getPasswordErrorMessage()
+            }}</mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="phone">
+          <mat-form-field class="form-field" appearance="outline">
+            <mat-label>Phone</mat-label>
+            <input
+              matInput
+              type="text"
+              [placeholder]="'Type Your Phone Number'"
+              autocomplete="false"
+              [type]="'text'"
+              formControlName="phoneControl"
+            />
+            <mat-error *ngIf="formGroup.get('phoneControl').invalid">{{
+              getPhoneErrorMessage()
+            }}</mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="consent">
+          <mat-checkbox [color]="'primary'" formControlName="consentControl">
+            <span style="font-size: 16px" i18n="@@registerPropAgree"
+              >By signing in or creating an account, you agree with our</span
+            >
+            <a
+              style="font-size: 16px; margin: 0 4px"
+              i18n="@@registerPropTerms"
+              (click)="openTermsAndConditions($event)"
+              >Terms & Conditions</a
+            >
+            <span style="font-size: 16px" i18n="@@registerPropAnd">and</span>
+            <a
+              style="font-size: 16px; margin: 0 4px"
+              i18n="@@registerPropPrivacy"
+              (click)="openPolicyDialog($event)"
+              >Privacy statement</a
+            >
+            <mat-error *ngIf="formGroup.get('consentControl').invalid && formGroup.get('consentControl').dirty">{{
+              getConsentErrorMessage()
+            }}</mat-error>
+          </mat-checkbox>
+        </div>
+
+        <div class="sign-up-button">
+          <button
+            type="submit"
+            mat-raised-button
+            color="primary"
+            [class.disabled]="showLoadingIndicator"
+          >
+            <mat-spinner
+              [diameter]="30"
+              *ngIf="showLoadingIndicator"
+              [color]="'white'"
+            ></mat-spinner>
+            <span *ngIf="!showLoadingIndicator"> Sign up</span>
+          </button>
+        </div>
+
+        <div class="alternatives">
+          <p>or continue with</p>
+        </div>
+
+        <div class="sign-up-alternatives">
+          <div>
+            <button mat-stroked-button>
+              <mat-icon *ngIf="showIcons" [svgIcon]="'reze:google'"></mat-icon>
+              Google
+            </button>
+          </div>
+          <div>
+            <button mat-stroked-button>
+              <mat-icon
+                *ngIf="showIcons"
+                [svgIcon]="'reze:facebook'"
+              ></mat-icon>
+              Facebook
+            </button>
+          </div>
+        </div>
+      </mat-card-content>
+      <mat-card-actions>
+        <div class="sign-in-text">Already have an account?</div>
+        <div class="sign-in-button">
+          <a routerLink="/login">
+            <button mat-raised-button color="primary">Sign in</button>
+          </a>
+        </div>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+  <div class="right">
+    <img
+      class="sign-up-image"
+      src="../../../../../../assets/signUpImages/sign-up.png"
+    />
+  </div>
+</div>
+</form>

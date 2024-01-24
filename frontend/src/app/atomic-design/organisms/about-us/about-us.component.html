@@ -1,0 +1,144 @@
+<div class="header">
+  <app-home-page-header class="absolute"></app-home-page-header>
+</div>
+
+<div class="content-container" [class.background]="showIcons">
+  <div class="first-paragraph container">
+    <h2 i18n="who are we@@whoAreWeText">Who We Are</h2>
+    <p class="fp-content">{{ aboutUsText.firstParagraph1 }}</p>
+    <p class="fp-content">{{ aboutUsText.firstParagraph2 }}</p>
+    <p class="fp-content">{{ aboutUsText.firstParagraph3 }}</p>
+    <p class="fp-content">{{ aboutUsText.firstParagraph4 }}</p>
+    <p class="fp-content">{{ aboutUsText.firstParagraph5 }}</p>
+  </div>
+  <div class="picture-container">
+    <img src="assets/about-us/whoAreWe.png" />
+  </div>
+  <div class="second-paragraph container">
+    <p>{{ aboutUsText.secondParagraph }}</p>
+    <p class="sub-head">{{ aboutUsText.qoute1 }}</p>
+  </div>
+  <div class="third-paragraph">
+    <img class="first-picture" src="assets/about-us/about-photo-1.png" />
+    <img class="second-picture" src="assets/about-us/about-photo-2.png" />
+    <img class="third-picture" src="assets/about-us/about-photo-3.png" />
+    <img class="fourth-picture" src="assets/about-us/about-photo-4.png" />
+    <img class="fifth-picture" src="assets/about-us/about-photo-5.png" />
+  </div>
+
+  <div class="checklist container">
+    <h6>{{ aboutUsText.guests }}</h6>
+    <div class="second-paragraph custom">
+      <p>{{ aboutUsText.thirdParagraph }}</p>
+    </div>
+    <div class="checklist-item" *ngFor="let checklist of aboutUsText.checklist">
+      <ul>
+        <li class="checklist-item-content">
+          {{ checklist }}
+        </li>
+      </ul>
+    </div>
+    <p class="last-header">{{ aboutUsText.onlineAccommodation }}</p>
+  </div>
+
+  <button
+    mat-raised-button
+    color="primary"
+    i18n="@@bookNow"
+    (click)="navigateToHome()"
+  >
+    Book now
+  </button>
+
+  <div class="checklist container">
+    <h6>{{ aboutUsText.owners }}</h6>
+    <p>{{ aboutUsText.fourthParagraph }}</p>
+    <p>{{ aboutUsText.fifthParagraph }}</p>
+    <div class="second-paragraph custom">
+      <p>{{ aboutUsText.sixthParagraph }}</p>
+    </div>
+
+    <div
+      class="checklist-item checklist-item-owners"
+      *ngFor="let checklist of aboutUsText.checklistOwners"
+    >
+      <ul>
+        <li>
+          <p class="checklist-item-content">{{ checklist.title }}</p>
+          <div *ngIf="checklist.subtitles.length !== 0">
+            <p
+              class="checklist-item-content subitem"
+              *ngFor="let subCat of checklist.subtitles"
+            >
+              <mat-icon>check</mat-icon>
+              {{ subCat }}
+            </p>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="sixth-heading container">
+    <h4 i18n="how can i register text@@howCanIRegister">How can I register?</h4>
+    <ol>
+      <li *ngFor="let howToRegister of aboutUsText.howCanIRegister">
+        <p>
+          {{ howToRegister }}
+        </p>
+      </li>
+    </ol>
+  </div>
+
+  <button
+    mat-raised-button
+    color="primary"
+    i18n="@@registerYourPropertyHere"
+    (click)="navigateToSignUp()"
+  >
+    Register your property here
+  </button>
+
+  <div class="picture-container">
+    <img src="assets/about-us/last-picture-about-us.png" />
+  </div>
+
+  <div class="fourth-heading container">
+    <div class="description-header">
+      <h6 i18n="mission text@@missionText">Mission</h6>
+      <p>{{ aboutUsText.mission }}</p>
+    </div>
+
+    <div class="description-header">
+      <h6 i18n="vision text@@visionText">Vision</h6>
+      <p>{{ aboutUsText.vision }}</p>
+    </div>
+  </div>
+
+  <div class="fifth-heading container">
+    <h6 class="values-title" i18n="@@ourValuesText">Our Values</h6>
+    <div class="block">
+      <h5>{{ aboutUsText.aFairDealHeader }}</h5>
+      <p>{{ aboutUsText.aFairDealContent }}</p>
+    </div>
+    <div class="block">
+      <h5>{{ aboutUsText.stayHumbleHeader }}</h5>
+      <p>{{ aboutUsText.stayHumbleContent }}</p>
+    </div>
+    <div class="block">
+      <h5>{{ aboutUsText.soTheRightThingHeader }}</h5>
+      <p>{{ aboutUsText.soTheRightThingContent }}</p>
+    </div>
+  </div>
+
+  <!-- <div class="seventh-heading container">
+    <h3 i18n="accept payment quickly and cheaply text@@acceptPaymentText">
+      Accept payment quickly and cheaply!
+    </h3>
+    <p>{{ aboutUsText.acceptPayment }}</p>
+  </div> -->
+</div>
+
+<div class="footer">
+  <app-footer></app-footer>
+</div>

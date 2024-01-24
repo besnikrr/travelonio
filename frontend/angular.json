@@ -1,0 +1,217 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "cli": {
+    "analytics": "426722e5-e1f8-43e5-87d5-6151fb75c6ea"
+  },
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "frontend": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "i18n": {
+        "sourceLocale": "en-US",
+        "locales": {
+          "al": {
+            "translation": "src/locale/messages.al.xlf"
+          },
+          "en": {
+            "translation": "src/locale/messages.en.xlf"
+          }
+        }
+      },
+      "root": "",
+      "sourceRoot": "src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/frontend/browser",
+            "index": "src/index.html",
+            "main": "src/main.ts",
+            "polyfills": "src/polyfills.ts",
+            "tsConfig": "tsconfig.app.json",
+            "assets": ["src/favicon.ico", "src/assets"],
+            "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css",
+              "src/styles.scss"
+            ],
+            "scripts": [],
+            "vendorChunk": true,
+            "extractLicenses": false,
+            "buildOptimizer": false,
+            "sourceMap": true,
+            "optimization": false,
+            "namedChunks": true,
+            "aot": true,
+            "i18nMissingTranslation": "warning"
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "12kb",
+                  "maximumError": "20kb"
+                }
+              ]
+            },
+            "en": {
+              "localize": ["en"]
+            },
+            "al": {
+              "localize": ["al"]
+            }
+          },
+          "defaultConfiguration": ""
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "frontend:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "frontend:build:production"
+            },
+            "en": {
+              "browserTarget": "frontend:build:en"
+            },
+            "al": {
+              "browserTarget": "frontend:build:al"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "ng-extract-i18n-merge:ng-extract-i18n-merge",
+          "options": {
+            "browserTarget": "frontend:build",
+            "format": "xlf",
+            "outputPath": "src/locale",
+            "targetFiles": ["messages.al.xlf", "messages.en.xlf"]
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "src/test.ts",
+            "polyfills": "src/polyfills.ts",
+            "tsConfig": "tsconfig.spec.json",
+            "karmaConfig": "karma.conf.js",
+            "assets": ["src/favicon.ico", "src/assets"],
+            "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css",
+              "src/styles.scss"
+            ],
+            "scripts": []
+          }
+        },
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "e2e/protractor.conf.js",
+            "devServerTarget": "frontend:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "frontend:serve:production"
+            },
+            "en": {
+              "browserTarget": "frontend:build:en"
+            },
+            "al": {
+              "browserTarget": "frontend:build:al"
+            }
+          }
+        },
+        "server": {
+          "builder": "@angular-devkit/build-angular:server",
+          "options": {
+            "outputPath": "dist/frontend/server",
+            "main": "server.ts",
+            "tsConfig": "tsconfig.server.json",
+            "optimization": false,
+            "sourceMap": true,
+            "extractLicenses": false
+          },
+          "configurations": {
+            "production": {
+              "outputHashing": "media",
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "sourceMap": false,
+              "extractLicenses": true
+            },
+            "en": {
+              "browserTarget": "frontend:build:en"
+            },
+            "al": {
+              "browserTarget": "frontend:build:al"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve-ssr": {
+          "builder": "@nguniversal/builders:ssr-dev-server",
+          "configurations": {
+            "development": {
+              "browserTarget": "frontend:build",
+              "serverTarget": "frontend:server"
+            },
+            "production": {
+              "browserTarget": "frontend:build:production",
+              "serverTarget": "frontend:server:production"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "prerender": {
+          "builder": "@nguniversal/builders:prerender",
+          "options": {
+            "routes": ["/"]
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "frontend:build:production",
+              "serverTarget": "frontend:server:production"
+            },
+            "development": {
+              "browserTarget": "frontend:build:development",
+              "serverTarget": "frontend:server:development"
+            }
+          },
+          "defaultConfiguration": "production"
+        }
+      }
+    }
+  },
+  "defaultProject": "frontend"
+}

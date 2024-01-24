@@ -1,0 +1,32 @@
+<div class="describe-property-container">
+  <mat-form-field appearance="fill">
+    <mat-label i18n="@@describeDescription">Description</mat-label>
+    <textarea
+      #desc
+      matInput
+      placeholder="Type the description of your property in this space..."
+      i18n-placeholder="@@describePropertyDesc"
+      [value]="description ? description : ''"
+      (focusout)="update()"
+    ></textarea>
+  </mat-form-field>
+  <div class="text">
+    <p>
+      <span i18n="@@describeCheckArticle"
+        >Not sure what to write? Check out this article</span
+      >
+      <span i18n="@@describeHowtoWrite" class="how-too" (click)="openDialog()"
+        >"How to write your property description?"</span
+      >
+    </p>
+  </div>
+  <mat-error
+    i18n="@@propertyDescriptionIsRequired"
+    *ngIf="
+      (description === undefined || description.trim() === '') &&
+      (dirtyInputs | async)
+    "
+  >
+    Property description is required
+  </mat-error>
+</div>

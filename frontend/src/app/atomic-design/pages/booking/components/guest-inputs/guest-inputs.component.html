@@ -1,0 +1,36 @@
+<div class="inputs">
+  <div>
+    <mat-form-field appearance="outline">
+      <mat-select
+        color="primary"
+        [value]="+selectedGender"
+        (selectionChange)="genderSelected($event)"
+      >
+        <mat-option [value]="0" i18n="gender text@@genderText"
+          >Gender</mat-option
+        >
+        <mat-option *ngFor="let g of gender" [value]="g.value">
+          {{ g.title }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div>
+    <app-single-line-field
+      [label]="nameText"
+      [placeholder]="nameText"
+      [initialValue]="firstname"
+      [validators]="validators.pattern('^[a-zA-Z\\s]*$')"
+      (onChange)="nameChanged($event)"
+    ></app-single-line-field>
+  </div>
+  <div>
+    <app-single-line-field
+      [label]="lastNameText"
+      [placeholder]="lastNameText"
+      [initialValue]="lastname"
+      [validators]="validators.pattern('^[a-zA-Z\\s]*$')"
+      (onChange)="lastnameChanged($event)"
+    ></app-single-line-field>
+  </div>
+</div>

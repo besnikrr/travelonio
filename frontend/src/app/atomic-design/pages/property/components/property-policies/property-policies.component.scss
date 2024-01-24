@@ -1,0 +1,244 @@
+@import "../../../../../style/breaking-points.scss";
+
+:host {
+  .policies {
+    font-family: "Lato";
+    width: 65%;
+    margin: 45px 0;
+
+    .title {
+      font-style: normal;
+      font-weight: 700;
+      font-size: 24px;
+      line-height: 32px;
+      color: #304659;
+      margin-bottom: 30px;
+    }
+
+    .info {
+      line-height: 24px;
+      letter-spacing: 0px;
+      margin-bottom: 65px;
+
+      h3 {
+        font-size: 20px;
+        font-weight: 600;
+        text-align: left;
+        color: #671bb5;
+        margin-bottom: 30px;
+      }
+
+      p {
+        font-size: 16px;
+        font-weight: 300;
+        text-align: left;
+        margin-bottom: 30px;
+        color: #696f8c;
+      }
+
+      .learn {
+        font-size: 16px;
+        font-weight: 500;
+        letter-spacing: 1px;
+        text-align: left;
+
+        .diff {
+          font-size: 18px;
+          font-weight: 600;
+          line-height: 24px;
+          letter-spacing: 0px;
+          text-align: left;
+          color: #671bb5;
+          text-decoration: underline;
+          cursor: pointer;
+        }
+      }
+    }
+
+    .rules {
+      font-weight: 600;
+      font-size: 20px;
+      line-height: 24px;
+      color: #304659;
+      margin-bottom: 25px;
+
+      .title {
+        margin-bottom: 25px;
+        font-weight: 600;
+        font-size: 20px;
+      }
+
+      .check {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 45px;
+
+        p {
+          font-weight: 400;
+          font-size: 16px;
+          line-height: 24px;
+          color: #304659;
+          margin: 0;
+        }
+
+        mat-icon {
+          height: 36px;
+          width: 36px;
+          margin-right: 15px;
+        }
+
+        &-in {
+          display: flex;
+          align-items: center;
+        }
+
+        &-out {
+          display: flex;
+          align-items: center;
+        }
+      }
+
+      .list {
+        display: flex;
+        flex-wrap: wrap;
+        margin: -20px 0 0 -20px;
+        width: calc(100% + 20px);
+        padding-left: 20px;
+
+        li {
+          &::marker {
+            color: #671bb5;
+          }
+        }
+
+        .item {
+          margin: 20px 0 0 20px;
+          flex: 0 0 calc(33.333333% - 20px);
+
+          font-family: "Lato";
+          font-style: normal;
+          font-weight: 300;
+          font-size: 16px;
+          line-height: 24px;
+          color: #696f8c;
+        }
+      }
+    }
+  }
+
+  @media screen and (max-width: $medium) {
+    .policies {
+      width: 100%;
+
+      .title {
+        font-size: 20px;
+      }
+
+      .info {
+        margin-bottom: 35px;
+
+        h3 {
+          font-size: 16px;
+          margin-bottom: 8px;
+        }
+
+        p {
+          font-size: 14px;
+          margin-bottom: 8px;
+        }
+
+        .learn {
+          font-size: 14px;
+
+          span {
+            font-size: 16px;
+          }
+        }
+      }
+
+      .rules {
+        font-size: 20px;
+        margin-bottom: 25px;
+
+        .title {
+          margin-bottom: 25px;
+        }
+
+        .check {
+          margin-bottom: 20px;
+
+          p {
+            font-size: 14px;
+          }
+        }
+
+        .list {
+          margin-bottom: 45px;
+        }
+      }
+    }
+  }
+
+  @media screen and (max-width: $small) {
+    .policies {
+      width: 100%;
+
+      .title {
+        font-size: 20px;
+      }
+
+      .info {
+        margin-bottom: 35px;
+
+        h3 {
+          font-size: 16px;
+          margin-bottom: 8px;
+        }
+
+        p {
+          font-size: 14px;
+          margin-bottom: 8px;
+        }
+
+        .learn {
+          font-size: 14px;
+
+          span {
+            font-size: 16px;
+          }
+        }
+      }
+
+      .rules {
+        font-size: 20px;
+        margin-bottom: 25px;
+
+        .title {
+          margin-bottom: 25px;
+        }
+
+        .check {
+          margin-bottom: 20px;
+          flex-direction: column;
+
+          &-in {
+            margin-bottom: 20px;
+          }
+
+          p {
+            font-size: 14px;
+          }
+        }
+
+        .list {
+          margin-bottom: 45px;
+
+          .item {
+            flex: 0 0 calc(50% - 20px);
+          }
+        }
+      }
+    }
+  }
+}

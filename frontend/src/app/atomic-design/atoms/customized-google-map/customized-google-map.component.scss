@@ -1,0 +1,32 @@
+:host {
+  .button {
+    width: 30px;
+    height: 30px;
+    background: #696F8C;
+    cursor: pointer;
+    color: white;
+    font-size: 25px;
+    display: flex;
+    justify-content: center;
+    border-radius: 50%;
+    position: absolute;
+    right: 16px;
+    top: 70px;
+    z-index: 99;
+    line-height: 24px;
+  }
+  .map {
+    display: flex;
+    flex: 0 0 50%;
+    height: 100%;
+
+    google-map {
+      display: contents;
+    }
+  }
+  ::ng-deep .custom-marker-class {
+    color: #fff !important;
+    margin-top: -18px;
+    font-weight: 100;
+  }
+}

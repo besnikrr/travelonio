@@ -1,0 +1,134 @@
+<p *ngIf="showPhotoOptions" i18n="images uploaded text@@imagesUploadedText">
+  {{ imageIds.length }} images uploaded
+</p>
+<div class="images">
+  <div
+    class="image-box-container"
+    [class.horizontal-images]="horizontalImages"
+    *ngFor="let imageId of imageIds; let index = index"
+  >
+    <div
+      class="image-box"
+      *ngIf="!showAllImages && imageIds.length > 4 ? index < 4 : true"
+      [class.main]="index === 0 && showPhotoOptions"
+      [class.show-overlay]="showOverlay === index"
+      (mouseenter)="showOverlay = index"
+      (mouseleave)="showOverlay = undefined"
+      (click)="onImageClick(imageId, index)"
+      [ngStyle]="{
+        'background-image':
+          'url(' +
+          baseUrl +
+          '/attachments/properties/' +
+          propertyId +
+          '/images/' +
+          imageId +
+          ')'
+      }"
+    >
+      <div
+        *ngIf="index === 0 && showPhotoOptions"
+        class="centered"
+        i18n="primary image text@@primaryImageText"
+      >
+        Primary Image
+      </div>
+      <div class="options" *ngIf="showPhotoOptions">
+        <mat-icon
+          matTooltip="Set as primary image"
+          i18n-matTooltip="set as primary image text@@setAsPrimaryText"
+          (click)="setImageAsPrimary(propertyId, roomId, imageId)"
+          *ngIf="index !== 0"
+          class="icons primary"
+        >
+          check_circle_outline
+        </mat-icon>
+        <mat-icon
+          matTooltip="Delete image"
+          i18n-matTooltip="delete image@@deleteImageText"
+          (click)="deleteImage(propertyId, roomId, imageId, $event)"
+          class="icons delete"
+        >
+          delete
+        </mat-icon>
+      </div>
+    </div>
+  </div>
+
+  <p
+    *ngIf="!showAllImages && imageIds.length > 4"
+    class="counter"
+    (click)="showAllImages = true"
+  >
+    {{ "+ " + (imageIds.length - 4) }}
+  </p>
+</div>
+
+<div *ngIf="showModal" class="overlay">
+  <mat-card class="details-card">
+    <div class="before" (click)="previous()" *ngIf="!hidePreviousIcon">
+      <mat-icon [svgIcon]="'reze:left-arrow-slider'"></mat-icon>
+    </div>
+    <div class="details">
+      <div class="close" (click)="onClose()">
+        <mat-icon style="cursor: pointer">cancel</mat-icon>
+      </div>
+      <div class="preview">
+        <img
+          [ngClass]="{ 'main-image': index === 0 }"
+          src="{{ baseUrl }}/attachments/properties/{{ propertyId }}/images/{{
+            imageId
+          }}{{ roomId ? '?roomId=' + roomId : '' }}"
+          alt=""
+        />
+      </div>
+      <p>{{ index + 1 }} / {{ imageIds.length }}</p>
+      <div class="images images--preview">
+        <div
+          class="image-box image-box--preview"
+          *ngFor="let image of imageIds; let index = index; trackBy: trackByFn"
+          [class.main]="index === 0 && showPhotoOptions"
+          [class.show-overlay]="showOverlay === index"
+          [class.not-selected]="image !== imageId"
+          (mouseenter)="showOverlay = index"
+          (mouseleave)="showOverlay = undefined"
+          (click)="onImageClick(image, index)"
+        >
+          <img
+            [ngClass]="{ 'main-image': index === 0 }"
+            src="{{ baseUrl }}/attachments/properties/{{ propertyId }}/images/{{
+              image
+            }}{{ roomId ? '?roomId=' + roomId : '' }}"
+            alt=""
+            (click)="onImageClick(imageId, index)"
+          />
+          <div *ngIf="index === 0 && showPhotoOptions" class="centered">
+            Primary Image
+          </div>
+          <div class="options" *ngIf="showPhotoOptions">
+            <mat-icon
+              matTooltip="Set as primary image"
+              i18n-matTooltip="set as primary image text@@setAsPrimaryText"
+              (click)="setImageAsPrimary(propertyId, roomId, image)"
+              *ngIf="index !== 0"
+              class="icons primary"
+            >
+              check_circle_outline
+            </mat-icon>
+            <mat-icon
+              matTooltip="Delete image"
+              i18n-matTooltip="delete image@@deleteImageText"
+              (click)="deleteImage(propertyId, roomId, image, $event)"
+              class="icons delete"
+            >
+              delete
+            </mat-icon>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="after" (click)="next()" *ngIf="!hideNextIcon">
+      <mat-icon [svgIcon]="'reze:right-arrow-slider'"></mat-icon>
+    </div>
+  </mat-card>
+</div>

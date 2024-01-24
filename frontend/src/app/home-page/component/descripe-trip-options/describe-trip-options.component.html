@@ -1,0 +1,11 @@
+<div class="describe-trip-container">
+  <div class="trip-icon-text" (click)="clickEvent()">
+    <mat-icon
+      [class.selected]="selectedTripOption === tripId"
+      *ngIf="showIcons"
+      [svgIcon]="'reze:' + icon"
+    ></mat-icon>
+    <p class="trip-option">{{ tripOption }}</p>
+  </div>
+  <div class="divider" *ngIf="selectedTripOption === tripId"></div>
+</div>

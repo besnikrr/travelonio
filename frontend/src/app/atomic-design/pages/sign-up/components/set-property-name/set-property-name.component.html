@@ -1,0 +1,71 @@
+<div class="container">
+  <p class="website-name-desc" i18n="@@setPropNameDesc">
+    This will be the name shown in your website
+  </p>
+  <p class="change-later" i18n="@@setPropNameLater">
+    *You can change it later in property settings
+  </p>
+  <pre>{{ selectedProperty.name | json }}</pre>
+  <app-single-line-field
+    [initialValue]="selectedProperty?.name"
+    placeholder="Type your preferred name"
+    i18n-placeholder="Type your preferred name@@preferredPropertyTypeText"
+    [label]="
+      PropertyTypes.convertFromApiValue(
+        selectedProperty?.propertyType.toString()
+      ) === PropertyTypes.Apartment ||
+      PropertyTypes.convertFromApiValue(
+        selectedProperty?.propertyType.toString()
+      ) === PropertyTypes.HomeVilla
+        ? apartmentPlaceHolder
+        : hotelPlaceHolder
+    "
+    (onChange)="propertyNameChanged($event)"
+    class="hotel-name"
+  ></app-single-line-field>
+  <mat-error
+    i18n="@@propertyNameIsRequired"
+    *ngIf="
+      (selectedProperty?.name === undefined || selectedProperty?.name === '') &&
+        dirtyInputs | async
+    "
+  >
+    Property name is required
+  </mat-error>
+  <div class="suggestion">
+    <a
+      href=""
+      (click)="openSuggestionsDialog($event)"
+      i18n="@@suggestionName"
+      class="suggestion-name"
+      >Need help filling the name of your property?</a
+    >
+  </div>
+
+  <div class="upload-room-images">
+    <p i18n="@@setPropNameUploadImages">Upload images of your property</p>
+    <p class="hint-primary-image" i18n="@@setPropNameFirstImage">
+      Your first selected image will be used as a primary image.
+    </p>
+    <app-upload-image
+      [propertyId]="selectedProperty?.propertyId"
+      (imageUploaded)="imageUploaded($event)"
+    ></app-upload-image>
+  </div>
+
+  <div *ngIf="selectedProperty?.imageIds">
+    <app-image-renderer
+      [propertyId]="selectedProperty?.propertyId"
+      [imageIds]="selectedProperty?.imageIds"
+      [horizontalImages]="true"
+      (deleteImageEmitter)="deletePropertyImage($event)"
+      (setImageAsPrimaryEmitter)="setImageAsPrimary($event)"
+    ></app-image-renderer>
+  </div>
+  <mat-error
+    i18n="@@atLeastOnePropertyImageIsRequired"
+    *ngIf="selectedProperty?.imageIds?.length === 0 && (dirtyInputs | async)"
+  >
+    At least one property image is required
+  </mat-error>
+</div>

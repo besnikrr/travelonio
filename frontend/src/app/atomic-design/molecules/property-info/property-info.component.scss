@@ -1,0 +1,104 @@
+@import "../../../style/responsivness";
+
+:host {
+  display: block;
+  height: fit-content;
+
+  .img-ratio {
+    aspect-ratio: 4 / 3;
+    height: 150px;
+    border-radius: 10px;
+    position: relative;
+
+    img {
+      width: 100%;
+      height: 100%;
+      border-radius: 10px;
+      margin: 0;
+      position: absolute;
+      top: 50%;
+      -ms-transform: translateY(-50%);
+      transform: translateY(-50%);
+    }
+  }
+
+  .container {
+    display: flex;
+    padding: 24px 0;
+
+    .property-info {
+      display: flex;
+      padding: 0 20px;
+      flex: 1;
+      flex-direction: column;
+      justify-content: space-between;
+
+      .top-row {
+        display: flex;
+        justify-content: space-between;
+
+        .location {
+          font-weight: 400;
+          font-size: 12px;
+          line-height: 16px;
+          color: #696f8c;
+        }
+
+        .price {
+          font-style: normal;
+          font-weight: 500;
+          font-size: 14px;
+          line-height: 20px;
+          text-align: right;
+
+          color: #671bb5;
+        }
+
+        .divider {
+          margin: 0 10px;
+        }
+      }
+
+      .title-row {
+        font-style: normal;
+        font-weight: 500;
+        font-size: 18px;
+        line-height: 24px;
+        color: #304659;
+      }
+
+      .additional-info-row {
+        font-style: normal;
+        font-weight: 400;
+        font-size: 12px;
+        line-height: 16px;
+        color: #696f8c;
+      }
+
+      .bottom-row {
+        display: flex;
+        justify-content: flex-end;
+      }
+    }
+    &.change-style {
+      padding: 0;
+      .img-ratio {
+        height: 200px;
+      }
+    }
+  }
+  @media screen and (max-width: $desktop) {
+    .img-ratio {
+      height: 120px;
+    }
+  }
+  @media screen and (max-width: $tablet) {
+    .container {
+      &.change-style {
+        .img-ratio {
+          height: 150px;
+        }
+      }
+    }
+  }
+}

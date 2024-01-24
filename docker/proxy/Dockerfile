@@ -1,0 +1,13 @@
+FROM  nginx:1.17.4-alpine as proxy
+
+COPY html/ 				   /usr/share/nginx/html/
+COPY conf/nginx.conf       /etc/nginx/nginx.conf
+COPY conf/listen.conf      /etc/nginx/listen.conf
+COPY conf/api-gateway.conf /etc/nginx/api-gateway.conf
+
+#RUN nginx -t -c /etc/nginx/nginx.conf
+
+VOLUME [ "/var/log/nginx/" ]
+
+EXPOSE 80
+EXPOSE 443

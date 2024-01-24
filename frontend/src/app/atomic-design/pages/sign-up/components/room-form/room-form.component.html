@@ -1,0 +1,170 @@
+<div class="rooms">
+  <div class="room-container">
+    <mat-expansion-panel
+      (opened)="panelOpenState = true; selectedRoomId = room.id"
+      (closed)="panelOpenState = false"
+    >
+      <mat-expansion-panel-header
+        (mouseover)="showDeleteIcon = true"
+        (mouseleave)="showDeleteIcon = false"
+      >
+        <mat-panel-title>
+          <span>
+            <span style="font-weight: 600">{{ roomOrderNumber }}.</span>
+            {{ room.price ? " €" + room.price + ", " : "" }}
+            {{ room.quantity ? room.quantity + " x " : "" }}
+            {{ room.description === '' || room.description === undefined ? " Room" : room.description  }}
+          </span>
+          <div
+            *ngIf="showDeleteIcon || panelOpenState"
+            (click)="deleteRoom($event, propertyId, room.id, room.description)"
+            class="delete-room-icon"
+          >
+            <mat-icon>delete</mat-icon>
+          </div>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+
+      <div
+        class="description-quantity-people"
+        *ngIf="selectedRoomId === room.id"
+      >
+        <div class="description">
+          <form>
+            <mat-form-field class="example-full-width" appearance="fill">
+              <mat-label i18n="@@roomFormDescription"
+              >Room description
+              </mat-label>
+              <div style="display: flex">
+                <input
+                  type="text"
+                  placeholder="Select your room description"
+                  i18n-placeholder="
+                    Select your room description test@@selectYourRoomDescription"
+                  aria-label="Room description"
+                  i18n-aria-label="Room description text@@roomDescriptionText"
+                  matInput
+                  #roomDescription
+                  name="roomDescription"
+                  [formControl]="myControl"
+                  [matAutocomplete]="auto"
+                  [value]="room.description"
+                  (change)="onRoomDescription(room.id)"
+                />
+                <mat-icon [svgIcon]="'reze:arrow-down'"></mat-icon>
+              </div>
+              <mat-autocomplete #auto="matAutocomplete">
+                <mat-option
+                  *ngFor="let option of filteredOptions | async"
+                  [value]="option"
+                  (onSelectionChange)="selectRoomDescription($event, room.id)"
+                >
+                  {{ option }}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+
+          </form>
+          <mat-error i18n="@@roomDescriptionIsRequired" *ngIf="room.description === '' && (dirtyInputs | async)">
+            Room description is required
+          </mat-error>
+        </div>
+        <div class="quantity-people">
+          <div class="quantity" style="margin-bottom: 14.75px">
+            <div class="quantity-of">
+              <p i18n="@@roomFormRooms">Rooms</p>
+            </div>
+            <app-quantity
+              [elementId]="room.id"
+              [quantity]="room.quantity ? room.quantity : 0"
+              (newQuantity)="newRoomQuantity($event)"
+            ></app-quantity>
+          </div>
+          <div class="quantity">
+            <div class="quantity-of">
+              <p i18n="@@roomFormPeople">People</p>
+            </div>
+            <app-quantity
+              [elementId]="room.id"
+              [showIcon]="true"
+              [quantity]="room.peopleQuantity ? room.peopleQuantity : 0"
+              (newQuantity)="newPeopleQuantity($event)"
+            ></app-quantity>
+          </div>
+        </div>
+      </div>
+      <mat-error i18n="@@roomQuantityIsRequired" *ngIf="room.quantity === 0 && (dirtyInputs | async)">
+        Room quantity is required
+      </mat-error>
+      <mat-error i18n="@@peopleQuantityIsRequired" *ngIf="room.peopleQuantity === 0 && (dirtyInputs | async)">
+        People quantity is required
+      </mat-error>
+      <div class="bed-types-info" *ngIf="selectedRoomId === room.id">
+        <p i18n="@@roomInfoForm">Beds included in this room:</p>
+        <div class="bed-types">
+          <app-bed-type-info
+            *ngFor="let bed of allBedTypes"
+            [propertyId]="propertyId"
+            [roomId]="room.id"
+            [roomBeds]="room.beds"
+            [bed]="bed"
+            (updateRoomEmitter)="updateRoom($event)"
+          ></app-bed-type-info>
+        </div>
+      </div>
+      <div class="night-price" *ngIf="selectedRoomId === room.id">
+        <div class="price-hint-text">
+          <p class="label" i18n="@@roomFormPricePerNight">Price per night:</p>
+          <p class="placeholder" i18n="@@roomFormPricePerNightEnter">
+            Enter your price per night
+          </p>
+        </div>
+        <div class="price-input">
+          <app-single-line-field
+            [initialValue]="'' + (room.price ? room.price : 0)"
+            [label]="pricePerNightText"
+            [placeholder]="enterPriceText"
+            [validators]="[validators.pattern('[+-]?([0-9]*[.])?[0-9]+')]"
+            (onChange)="pricePerNightChanged($event, propertyId, room.id)"
+          ></app-single-line-field>
+          <h2 class="currency">€</h2>
+        </div>
+      </div>
+      <mat-error i18n="@@roomsPriceIsRequired" *ngIf="room.price === 0 && (dirtyInputs | async)">
+        Room price is required
+      </mat-error>
+      <div class="property-tags" *ngIf="selectedRoomId === room.id">
+        <app-tags-form
+          [propertyId]="propertyId"
+          [roomId]="room.id"
+          [label]="otherAmenitiesLabelText"
+          [placeholder]="selectYourAmenitiesText"
+          [tags]="tags"
+          [options]="roomTags"
+          (tagUpdated)="tagUpdated($event)"
+        ></app-tags-form>
+      </div>
+      <div class="upload-room-images" *ngIf="selectedRoomId === room.id">
+        <p i18n="@@uploadRoomImages">Upload images of the room</p>
+        <app-upload-image
+          [propertyId]="propertyId"
+          (imageUploaded)="imageUploaded($event, room.id)"
+        ></app-upload-image>
+      </div>
+      <div *ngIf="room.imageIds && selectedRoomId === room.id">
+        <app-image-renderer
+          [propertyId]="propertyId"
+          [roomId]="room.id"
+          [imageIds]="room.imageIds"
+          [horizontalImages]="true"
+          (setImageAsPrimaryEmitter)="setImageAsPrimary($event)"
+          (deleteImageEmitter)="deleteImage($event)"
+        ></app-image-renderer>
+      </div>
+
+      <mat-error i18n="@@atLeastOneRoomImageIsRequired" *ngIf="room.imageIds?.length === 0 && (dirtyInputs | async)">
+        At least one room image is required
+      </mat-error>
+    </mat-expansion-panel>
+  </div>
+</div>

@@ -1,0 +1,145 @@
+@import "../../../../../style/colors";
+@import "../../../../../style/breaking-points.scss";
+
+.map {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+
+.overlay {
+  border-radius: 6px;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 3;
+}
+
+.details-card {
+  position: absolute;
+  top: 156px;
+  left: 38px;
+  height: 430.64337158203125px;
+  width: 533.0947265625px;
+  border-radius: 24px;
+  box-shadow: 0px 16px 32px rgba(103, 27, 181, 0.25);
+
+  .details {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+
+    h1 {
+      color: #304659;
+      margin-bottom: 10px;
+    }
+
+    p {
+      color: $primary;
+    }
+
+    .form-inputs {
+      display: flex;
+      width: 100%;
+      flex-direction: column;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      app-search-location-field {
+        height: 52px;
+        width: 100%;
+        border-radius: 10px;
+        border: 1px solid #c1c4d6;
+        margin-bottom: 1.6rem;
+      }
+      app-single-line-field {
+        &.account {
+          ::ng-deep .mat-form-field-infix {
+            .mat-input-element {
+              text-transform: capitalize;
+            }
+          }
+        }
+      }
+
+      app-single-line-field {
+        ::ng-deep .mat-form-field-outline {
+          background: #f9fafc;
+          border: 1px solid #e6e8f0;
+          border-radius: 10px;
+        }
+      }
+    }
+
+    .dialog-buttons {
+      width: 100%;
+      display: flex;
+      justify-content: flex-end;
+
+      .back-button {
+        margin-right: 10px;
+      }
+    }
+  }
+}
+
+.dialog-buttons-map {
+  position: absolute;
+  bottom: 30px;
+  right: 30px;
+
+  .back-button {
+    margin-right: 10px;
+  }
+}
+
+.edit-address {
+  position: absolute;
+  top: 50%;
+  left: 20%;
+
+  button {
+    border: 0;
+    background: white;
+  }
+}
+
+@media screen and (max-width: $medium) {
+  :host {
+    position: relative;
+    display: flex;
+    height: 704.047px;
+    width: 100%;
+
+    .map {
+      left: 50%;
+      transform: translate(-50%, 0);
+    }
+
+    .details-card {
+      height: 430.19px;
+      width: 345px;
+      left: 50%;
+      transform: translate(-50%, 0);
+    }
+  }
+}
+
+@media screen and (max-width: $small) {
+  :host {
+    height: 664.047px;
+
+    .map {
+      left: 50%;
+      width: 100%;
+    }
+
+    .details-card {
+      height: 430.19px;
+      width: 230px;
+    }
+  }
+}

@@ -1,0 +1,118 @@
+<div class="header">
+  <app-home-page-header [customPositioning]="true"></app-home-page-header>
+</div>
+<form [formGroup]="formGroup" (ngSubmit)="loginUser()">
+  <div class="body">
+    <div class="left">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title i18n="@@login">Login</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+          <div class="email">
+            <mat-form-field class="form-field" appearance="outline">
+              <mat-label i18n="@@emailAddress">Email Address</mat-label>
+              <input
+                matInput
+                type="text"
+                placeholder="Type Your Email Address"
+                i18n-placeholder="@@typeYourEmailAddress"
+                autocomplete="false"
+                [type]="'text'"
+                formControlName="emailControl"
+              />
+              <mat-error *ngIf="formGroup.get('emailControl').invalid">{{
+                getEmailErrorMessage()
+                }}</mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="password">
+          <mat-form-field class="form-field" appearance="outline">
+            <mat-label i18n="@@password">Password</mat-label>
+            <input
+              matInput
+              type="text"
+              placeholder="Type Your Password"
+              i18n-placeholder="@@typeYourPassword"
+              autocomplete="false"
+              [type]="hideCharacters ? 'password' : 'text'"
+              formControlName="passwordControl"
+            />
+            <button
+              mat-icon-button
+              matSuffix
+              tabindex="-1"
+            >
+              <mat-icon (click)="togglePasswordVisibility($event)">{{
+                hideCharacters ? "visibility_off" : "visibility"
+                }}</mat-icon>
+            </button>
+
+            <mat-error *ngIf="formGroup.get('passwordControl').invalid">{{
+              getPasswordErrorMessage()
+              }}</mat-error>
+          </mat-form-field>
+        </div>
+
+          <div class="forgot-password">
+            <p>
+              <a style="text-decoration: none; color: #671BB5; font-size: 16px; font-weight: 400" routerLink="/forgot-password" i18n="@@forgotPassword">Forgot Password?</a>
+            </p>
+          </div>
+
+          <div class="sign-up-button">
+            <button
+              type="submit"
+              mat-raised-button
+              color="primary"
+              [class.disabled]="showLoadingIndicator"
+            >
+              <mat-spinner
+                [diameter]="30"
+                *ngIf="showLoadingIndicator"
+                [color]="'white'"
+              ></mat-spinner>
+              <span *ngIf="!showLoadingIndicator" i18n="@@signIn">Sign in</span>
+            </button>
+          </div>
+
+          <div class="alternatives">
+            <p>
+              <span i18n="@@notAnAccountYet">Not an account yet?</span> <a routerLink="/register" i18n="@@createAccount">Create an account</a>
+            </p>
+          </div>
+
+          <div class="alternatives">
+            <p i18n="@@continueWith">or continue with</p>
+          </div>
+
+          <div class="sign-up-alternatives">
+          <div>
+            <button mat-stroked-button>
+              <mat-icon *ngIf="showIcons" [svgIcon]="'reze:google'"></mat-icon>
+              Google
+            </button>
+          </div>
+          <div>
+            <button mat-stroked-button>
+              <mat-icon
+                *ngIf="showIcons"
+                [svgIcon]="'reze:facebook'"
+              ></mat-icon>
+              Facebook
+            </button>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+    <div class="right">
+    <img
+      class="login-image"
+      src="../../../../../../assets/signUpImages/login.png"
+      alt=""
+    />
+  </div>
+  </div>
+</form>

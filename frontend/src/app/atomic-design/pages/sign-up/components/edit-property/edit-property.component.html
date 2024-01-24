@@ -1,0 +1,19 @@
+<div class="container" [ngSwitch]="currentStep">
+  <app-property-types *ngSwitchCase="1"></app-property-types>
+  <app-set-property-name *ngSwitchCase="2"></app-set-property-name>
+  <app-insert-room-form *ngSwitchCase="3"></app-insert-room-form>
+  <app-property-location *ngSwitchCase="4"></app-property-location>
+  <app-property-keyword *ngSwitchCase="5"></app-property-keyword>
+  <app-amenities *ngSwitchCase="6"></app-amenities>
+  <app-breakfast-and-language-form *ngSwitchCase="7"></app-breakfast-and-language-form>
+  <app-property-policies *ngSwitchCase="8"></app-property-policies>
+  <app-describe-property *ngSwitchCase="9"></app-describe-property>
+  <app-rooms-prices *ngSwitchCase="10"></app-rooms-prices>
+  <app-rate-plan *ngSwitchCase="11"></app-rate-plan>
+  <app-property-overview *ngSwitchCase="12"></app-property-overview>
+  <app-payment-options *ngSwitchCase="13"></app-payment-options>
+  <app-bank-details *ngSwitchCase="14"></app-bank-details>
+  <app-review-info *ngSwitchCase="15"></app-review-info>
+  <app-sign-up-completed-form *ngSwitchCase="16"></app-sign-up-completed-form>
+  <app-listing-overview *ngSwitchCase="17"></app-listing-overview>
+</div>

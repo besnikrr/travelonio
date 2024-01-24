@@ -1,0 +1,80 @@
+<div class="listing-overview-container">
+  <div
+    class="thank-you-quote"
+    *ngIf="!readyForBooking && startBookingDate !== ''"
+  >
+    <p i18n="@@acceptingBookingsFrom">
+      You will be available to accept bookings from {{ startDate }}
+    </p>
+    <p i18n="@@goodLuckJourney">Good luck with your journey!</p>
+  </div>
+  <div
+    class="thank-you-quote"
+    *ngIf="!readyForBooking && startBookingDate === ''"
+  >
+    <p i18n="@@listingOverviewTitle">
+      When you are ready, you can edit your Profile to allow bookings.
+    </p>
+  </div>
+  <div class="card">
+    <div class="card-header">
+      <h5 i18n="@@listingOverview">Listing Overview</h5>
+      <p>
+        <span i18n="@@listingOverviewListing">You are listing</span>
+        {{ numberOfRooms }} <span i18n="@@listingOverviewRooms">Rooms</span>
+      </p>
+    </div>
+    <div class="listing-image">
+      <app-image-renderer
+        *ngIf="image"
+        [propertyId]="propertyId"
+        [imageIds]="[image]"
+        [showPhotoOptions]="false"
+      ></app-image-renderer>
+    </div>
+    <div class="listing-info">
+      <app-single-line-field
+        label="Country"
+        i18n-label="country generic text@@countryGeneric"
+        [initialValue]="location?.country"
+        [readOnly]="true"
+      ></app-single-line-field>
+      <app-single-line-field
+        label="City"
+        i18n-label="city generic text@@cityGeneric"
+        [initialValue]="location?.city"
+        [readOnly]="true"
+      ></app-single-line-field>
+      <app-single-line-field
+        label="Street"
+        i18n-label="street generic text@@streetGeneric"
+        [initialValue]="location?.address"
+        [readOnly]="true"
+      ></app-single-line-field>
+      <app-single-line-field
+        label="Postal Code"
+        i18n-label="postal code generic text@@postalCodeGeneric"
+        [initialValue]="location?.zipCode"
+        [readOnly]="true"
+      ></app-single-line-field>
+    </div>
+
+    <div class="card-footer">
+      <button
+        mat-stroked-button
+        (click)="backToRegistration()"
+        i18n="@@listingOverviewBack"
+      >
+        Back to registration
+      </button>
+    </div>
+  </div>
+
+  <div class="thank-you-quote" *ngIf="readyForBooking">
+    <p i18n="@@listingOverviewThanks">Thanks for your time!</p>
+
+    <p i18n="@@listingOverviewVisible">
+      Your property information are now visible in our platform.
+    </p>
+  </div>
+</div>

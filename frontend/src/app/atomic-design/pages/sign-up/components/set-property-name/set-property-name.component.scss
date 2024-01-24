@@ -1,0 +1,61 @@
+@import "../../../../../style/colors";
+
+:host {
+  display: block;
+
+  .container {
+    font-family: Lato, sans-serif;
+    font-weight: 500;
+    color: #101840;
+    font-style: normal;
+
+    .website-name-desc {
+      font-size: 18px;
+      line-height: 24px;
+    }
+
+    .change-later {
+      font-size: 12px;
+      line-height: 16px;
+    }
+
+    .hotel-name {
+      margin-top: 31.22px;
+      margin-bottom: 10px;
+    }
+
+    ::ng-deep.mat-form-field-wrapper {
+      padding-bottom: 0px !important;
+    }
+
+    .suggestion {
+      display: flex;
+      font-size: 12px;
+      line-height: 16px;
+      margin-bottom: 35px;
+
+      .suggestion-name {
+        color: $primary;
+      }
+    }
+
+    .upload-room-images {
+      height: 100%;
+      width: 100%;
+
+      p {
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 24px;
+        color: #304659;
+      }
+
+      .hint-primary-image {
+        font-weight: 500;
+        font-size: 12px;
+        line-height: 16px;
+        color: #ff6647;
+      }
+    }
+  }
+}

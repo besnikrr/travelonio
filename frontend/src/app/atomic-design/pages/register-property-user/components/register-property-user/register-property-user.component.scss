@@ -1,0 +1,248 @@
+@import "../../../../../style/colors";
+@import "../../../../../style/responsivness";
+
+:host {
+  display: block;
+  height: 1177px;
+  background-color: #fafbff;
+
+  .header {
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .body {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: center;
+
+    .left {
+      max-height: 921.25px;
+      margin-top: 34.39px;
+      @include full-width-in-phone;
+
+      mat-card {
+        @include full-width-in-phone;
+        @include remove-padding-in-phone;
+        @include padding-bottom-in-phone;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        box-shadow: 0 12px 14px rgb(67 83 138 / 6%);
+        border-radius: 20px;
+        width: 480px;
+        min-height: 649.2px;
+        box-sizing: content-box;
+
+        mat-card-header {
+          display: flex;
+          justify-content: center;
+
+          .mat-card-title {
+            margin-top: 40px;
+            margin-bottom: 40px;
+            font-size: 48px;
+            font-family: Lato, sans-serif;
+            font-style: normal;
+            font-weight: bold;
+            line-height: 56px;
+          }
+        }
+
+        mat-card-content {
+          @include almost-full-width-in-phone;
+
+          .name {
+            @include half-width-in-phone;
+            display: flex;
+          }
+
+          .email,
+          .password,
+          .firstname,
+          .lastname,
+          .organisation,
+          .phone {
+            width: 100%;
+
+            mat-form-field {
+              width: 100%;
+
+              ::ng-deep .mat-form-field-flex {
+                background-color: #ffffff;
+              }
+            }
+          }
+
+          .consent {
+            @include set-width-to-340px-in-phone;
+            font-family: Lato, sans-serif;
+            font-style: normal;
+            font-weight: normal;
+            font-size: 14px;
+            line-height: 24px;
+            color: #474d66;
+
+            ::ng-deep .mat-checkbox-layout {
+              white-space: normal !important;
+            }
+          }
+
+          .sign-up-button {
+            text-align: center;
+            padding-top: 10px;
+
+            button {
+              width: 478px;
+              @include full-width-in-phone;
+              height: 72px;
+              background: #671bb5;
+              border-radius: 5px;
+              flex: none;
+              order: 0;
+              flex-grow: 0;
+              margin: 10px 0;
+              font-family: Lato, sans-serif;
+              font-style: normal;
+              font-weight: bold;
+              font-size: 18px;
+              line-height: 24px;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+
+              &.disabled {
+                pointer-events: none;
+              }
+            }
+
+            ::ng-deep .mat-progress-spinner circle,
+            .mat-spinner circle {
+              stroke: white;
+            }
+          }
+
+          .forgot-password {
+            font-family: Lato, sans-serif;
+            font-style: normal;
+            font-weight: normal;
+            font-size: 16px;
+            line-height: 24px;
+            text-align: right;
+            color: #671bb5;
+            padding-top: 10px;
+            padding-bottom: 7px;
+          }
+
+          .alternatives {
+            text-align: center;
+            padding-top: 10px;
+            font-family: Lato, sans-serif;
+            font-style: normal;
+            font-weight: 500;
+            font-size: 18px;
+            line-height: 24px;
+          }
+
+          .sign-up-alternatives {
+            display: flex;
+            justify-content: space-around;
+            padding-top: 10px;
+
+            div {
+              width: 45%;
+
+              button {
+                width: 100%;
+                //@include full-width-in-phone;
+                height: 75px;
+                background: #ffffff;
+                /* Neutral / N300 */
+
+                border: 1px solid #e6e8f0;
+                box-sizing: border-box;
+                border-radius: 10px;
+
+                ::ng-deep .mat-button-wrapper {
+                  font-family: Lato, sans-serif;
+                  font-style: normal;
+                  font-weight: normal;
+                  font-size: 16px;
+                  line-height: 24px;
+                  color: #696f8c;
+                }
+
+                mat-icon {
+                  padding-right: 5px;
+                }
+              }
+            }
+          }
+        }
+
+        mat-card-actions {
+          width: 100%;
+          //box-shadow: 0 12px 14px rgb(67 83 138 / 6%);
+          border-bottom-left-radius: 20px;
+          border-bottom-right-radius: 20px;
+          //background: #f6f6f6;
+          display: flex;
+          align-items: center;
+          justify-content: space-evenly;
+          height: 69px;
+          padding: 0;
+
+          .sign-in-button {
+            padding-top: 15px;
+
+            button {
+              width: 96px;
+              height: 36px;
+              background: #671bb5;
+              border-radius: 4px;
+
+              span {
+                font-family: Lato, sans-serif;
+                font-style: normal;
+                font-weight: 600;
+                font-size: 14px;
+                line-height: 20px;
+              }
+            }
+          }
+
+          .sign-in-text {
+            padding-top: 15px;
+          }
+        }
+      }
+    }
+
+    ::ng-deep.mat-checkbox-inner-container {
+      margin-top: 4px;
+    }
+    .right {
+      @include dont-show-under-1150px;
+      height: 100%;
+      margin-top: 34.39px;
+      margin-left: -65px;
+
+      .login-image {
+        height: 705px;
+      }
+
+      .sign-up-image {
+        height: 837.5px;
+      }
+
+      .forgot-password-image {
+        height: 705px;
+      }
+    }
+  }
+}

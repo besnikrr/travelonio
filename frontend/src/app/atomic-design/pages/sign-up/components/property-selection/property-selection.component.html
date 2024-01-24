@@ -1,0 +1,79 @@
+<div class="container">
+  <div
+    class="properties"
+    *ngFor="let property of properties"
+    (mouseover)="showDeleteIcon = property?.propertyId"
+    (mouseleave)="showDeleteIcon = undefined"
+  >
+    <div class="property-info-container">
+      <div class="property-image">
+        <app-image-renderer
+          *ngIf="property?.imageIds?.length"
+          [propertyId]="property?.propertyId"
+          [imageIds]="[property?.imageIds[0]]"
+          [showPhotoOptions]="false"
+          [horizontalImages]="true"
+        ></app-image-renderer>
+      </div>
+      <div class="property-info">
+        <div class="property-name">
+          {{
+            property?.name === "" || property?.name === undefined
+              ? "Property Name"
+              : property.name
+          }}
+        </div>
+        <div class="property-updated-at">
+          <span i18n="@@propertySelectionLastEdited">Last edited:</span>
+          {{ formatDate(property?.updatedAt) }}
+        </div>
+        <div class="property-updated-at">
+          <span>ID</span>
+          <span
+            class="property-id"
+            [cdkCopyToClipboard]="property.propertyId"
+            (click)="copyAlert()"
+            >{{ ": " + property.propertyId }}</span
+          >
+        </div>
+      </div>
+    </div>
+
+    <div class="select-property-button">
+      <div class="delete-property">
+        <mat-icon
+          *ngIf="showDeleteIcon === property?.propertyId"
+          (click)="
+            deleteProperty({
+              propertyId: property?.propertyId,
+              propertyName:
+                property?.name === '' || property?.name === undefined
+                  ? property?.name
+                  : 'Property Name'
+            })
+          "
+          >delete
+        </mat-icon>
+      </div>
+
+      <button
+        mat-raised-button
+        color="primary"
+        i18n="@@generalContinue"
+        (click)="selectProperty(property?.propertyId)"
+      >
+        Continue
+      </button>
+    </div>
+  </div>
+  <div class="create-property-button">
+    <button
+      mat-raised-button
+      color="primary"
+      i18n="@@propertyAdd"
+      (click)="createProperty()"
+    >
+      Add Property
+    </button>
+  </div>
+</div>

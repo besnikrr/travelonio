@@ -1,0 +1,113 @@
+<div class="completed-container">
+  <div
+    class="completed"
+    (click)="update(true, dateNow)"
+    [class.selected]="readyToStartBooking?.ready === true"
+  >
+    <p i18n="@@signUpCompleteReadyAccept">I’m ready to accept bookings</p>
+  </div>
+  <div
+    class="completed"
+    (click)="update(false, dateNow)"
+    [class.selected]="readyToStartBooking?.ready === false"
+  >
+    <p i18n="@@signUpCompleteNotReady">I’m not ready yet</p>
+  </div>
+
+  <mat-error
+    i18n="@@readyToSTartBookingIsRequired"
+    *ngIf="readyToStartBooking?.ready === null && (dirtyInputs | async)"
+  >
+    Define availability for booking is required
+  </mat-error>
+
+  <p
+    *ngIf="readyToStartBooking?.ready === false"
+    class="when-to-start"
+    i18n="@@signUpCompleteReceiveBooking"
+  >
+    When do you want to start receiving bookings?
+  </p>
+
+  <div class="select-date" *ngIf="readyToStartBooking?.ready === false">
+    <mat-form-field appearance="fill">
+      <mat-label i18n="@@signupCompleteFrom">From</mat-label>
+      <input
+        matInput
+        [value]="!notSure ? readyToStartBooking.startDate : ''"
+        [matDatepicker]="datepicker"
+        (dateChange)="readyForBooking(false, $event)"
+        [disabled]="this.notSure"
+      />
+      <mat-datepicker-toggle matSuffix [for]="datepicker">
+        <mat-icon matDatepickerToggleIcon [svgIcon]="'reze:calendar'"
+          >keyboard_arrow_down
+        </mat-icon>
+      </mat-datepicker-toggle>
+      <mat-datepicker #datepicker>
+        <mat-datepicker-actions>
+          <button
+            mat-button
+            matDatepickerCancel
+            i18n="@@signupCompleteCancel"
+            l
+          >
+            Cancel
+          </button>
+          <button
+            mat-raised-button
+            color="primary"
+            matDatepickerApply
+            i18n="@@signupCompleteApply"
+          >
+            Apply
+          </button>
+        </mat-datepicker-actions>
+      </mat-datepicker>
+    </mat-form-field>
+    <div
+      class="not-sure completed"
+      [class.selected]="notSure"
+      (click)="updateNotSure()"
+    >
+      <p i18n="@@signUpCompleteNotSure">Not Sure</p>
+    </div>
+  </div>
+
+  <mat-checkbox
+    color="primary"
+    [checked]="readyToStartBooking?.termsAndConditionAccepted"
+    (change)="acceptTermsAndConditions($event)"
+  >
+    <span i18n="@@signupCompleteAgree">By signing, I agree to Travelonio </span>
+    <a
+      href=""
+      (click)="openTermsAndConditionsDialog($event)"
+      i18n="@@signupCompleteDeliveryTerms"
+      >General Delivery Terms
+    </a>
+    <span i18n="@@signupCompleteAnd" style="margin: 0 2px">and</span>
+    <a i18n="@@signupCompletePrivacy" href="" (click)="openPolicyDialog($event)"
+      >Privacy statement</a
+    >
+  </mat-checkbox>
+  <br />
+  <mat-error
+    i18n="@@acceptingTermsAndConditionsIsRequired"
+    *ngIf="
+      readyToStartBooking?.termsAndConditionAccepted === false &&
+      (dirtyInputs | async)
+    "
+  >
+    Terms and conditions must be accepted!
+  </mat-error>
+  <br />
+
+  <mat-slide-toggle
+    class="deactivate"
+    [checked]="!isPropertyActive"
+    (change)="deactivateProperty($event)"
+    i18n="@@deactivateProperty"
+    >Deactivate this property
+  </mat-slide-toggle>
+</div>

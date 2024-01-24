@@ -1,0 +1,2437 @@
+openapi: 3.0.0
+info:
+  title: "Reze"
+  description: "Reze Service"
+  contact:
+    email: info@reze.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.0
+
+servers:
+  - url: http://localhost
+
+paths:
+  /api/users/register:
+    post:
+      tags:
+        - Property User Login
+      summary: Registers a user for the first time in a company.
+      operationId: registerUser
+      requestBody:
+        description: Register user data.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegisterUser'
+        required: true
+      responses:
+        '200':
+          description: Registered user data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserData'
+
+  /api/users/login:
+    post:
+      tags:
+        - Property User Login
+      summary: Logs in a user.
+      operationId: loginUser
+      requestBody:
+        description: Login credintials.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginUser'
+        required: true
+      responses:
+        '200':
+          description: Logged in user data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoggedInUser'
+
+  /api/users/logout:
+    post:
+      tags:
+        - Property User Login
+      summary: Logs out a user.
+      operationId: logoutUser
+      responses:
+        '200':
+          description: userId
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoggedOutUser'
+      security:
+        - UserSessionToken: [ ]
+
+  /api/users/forgotPassword:
+    post:
+      tags:
+        - Property User Utils
+      summary: Send reset password link to email.
+      operationId: forgotPassword
+      requestBody:
+        description: Send reset password link to email.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ForgotPassword'
+        required: true
+      responses:
+        '200':
+          description: Logged in user data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoggedInUser'
+  /api/users/resetPassword:
+    post:
+      tags:
+        - Property User Utils
+      summary: Resets user password.
+      operationId: resetPasswordPassword
+      requestBody:
+        description: Resets user password.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ResetPassword'
+        required: true
+      responses:
+        '200':
+          description: Logged in user data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoggedInUser'
+  /api/users/superAdmin:
+    get:
+      tags:
+        - Administrator Users Data
+      security:
+        - UserSessionToken: [ ]
+      summary: Returns all user data registered in system.
+      operationId: readAllUsersSuperAdmin
+      responses:
+        '200':
+          description: Get all user data
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserData'
+
+  /api/users/activate/{companyId}/{userId}/{activationToken}:
+    get:
+      tags:
+        - Property User Utils
+      summary: Activates registered account.
+      description: Activates registered account.
+      operationId: activateAccount
+      parameters:
+        - name: companyId
+          in: path
+          description: CompanyId to activate.
+          required: true
+          schema:
+            type: string
+        - name: userId
+          in: path
+          description: UserId to activate.
+          required: true
+          schema:
+            type: string
+        - name: activationToken
+          in: path
+          description: Activation token.
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: OK
+          content: { }
+
+  /api/users/session:
+    get:
+      tags:
+        - Property User Management
+      summary: Returns the logged in data of a user.
+      operationId: sessionUser
+      responses:
+        '200':
+          description: Logged in user data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoggedInUser'
+      security:
+        - UserSessionToken: [ ]
+
+  /api/users/self:
+    patch:
+      tags:
+        - Property User Management
+      summary: Updates data of yourself.
+      operationId: updateYourSelf
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateYourself'
+        required: true
+      responses:
+        '200':
+          description: Updates data of yourself.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateYourself'
+      security:
+        - UserSessionToken: [ ]
+
+  /api/users:
+    post:
+      tags:
+        - Property User Management
+      summary: Registers a new user in a company.
+      operationId: addUser
+      requestBody:
+        description: User data.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InsertUser'
+        required: true
+      responses:
+        '201':
+          description: User has been inserted
+        '405':
+          description: Invalid input
+          content: { }
+      security:
+        - UserSessionToken: [ ]
+
+    get:
+      tags:
+        - Property User Management
+      summary: Get all users of a company.
+      operationId: getUsers
+      parameters:
+        - in: query
+          name: role
+          schema:
+            type: string
+          required: false
+          description: Filter users based on their role, if no role given every user of the company will be returned!
+      responses:
+        '200':
+          description: Get all user data
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserData'
+      security:
+        - UserSessionToken: [ ]
+
+  /api/users/{userId}:
+    patch:
+      tags:
+        - Property User Management
+      parameters:
+        - in: path
+          name: userId
+          schema:
+            type: string
+          required: true
+          description: User id to update.
+      summary: Updates a user in your company.
+      operationId: updateUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateOtherUser'
+        required: true
+      responses:
+        '200':
+          description: Updated user
+      security:
+        - UserSessionToken: [ ]
+
+    delete:
+      tags:
+        - Property User Management
+      parameters:
+        - in: path
+          name: userId
+          schema:
+            type: string
+          required: true
+          description: User id to delete.
+      summary: Deletes a user in a company.
+      operationId: deletesUser
+      responses:
+        '200':
+          description: User deleted
+      security:
+        - UserSessionToken: [ ]
+
+  /api/companies:
+    post:
+      tags:
+        - Company
+      summary: Registers a new company (only administrators can use this call).
+      operationId: addCompany
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InsertCompany'
+        required: true
+      responses:
+        '200':
+          description: Company inserted data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompanyInsertedResponse'
+      security:
+        - UserSessionToken: [ ]
+
+    get:
+      tags:
+        - Company
+      summary: List of companies (only administrators can use this call).
+      operationId: getCompanies
+      responses:
+        '200':
+          description: Companies data
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CompanyData'
+      security:
+        - UserSessionToken: [ ]
+
+  /api/companies/{companyId}:
+    get:
+      tags:
+        - Company
+      summary: Data of a company.
+      parameters:
+        - in: path
+          name: companyId
+          schema:
+            type: string
+          required: true
+          description: Company id.
+      operationId: getCompanyData
+      responses:
+        '200':
+          description: Company data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompanyData'
+      security:
+        - UserSessionToken: [ ]
+
+    delete:
+      tags:
+        - Company
+      summary: Deletes a company (only administrators can use this call).
+      operationId: deleteCompany
+      parameters:
+        - in: path
+          name: companyId
+          schema:
+            type: string
+          required: true
+          description: Company Id in which the user belongs.
+      responses:
+        '200':
+          description: Company deleted
+      security:
+        - UserSessionToken: [ ]
+
+    patch:
+      tags:
+        - Company
+      security:
+        - UserSessionToken: [ ]
+      parameters:
+        - in: path
+          name: companyId
+          schema:
+            type: string
+          required: true
+          description: Company Id in
+      summary: Update the company.
+      operationId: updateCompany
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateCompany'
+        required: true
+      responses:
+        '200':
+          description: Updated company
+  /api/properties:
+    post:
+      tags:
+        - Property
+      summary: Registers a new property.
+      operationId: addProperty
+      responses:
+        '200':
+          description: Property inserted data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PropertyInsertedResponse'
+      security:
+        - UserSessionToken: [ ]
+    get:
+      tags:
+        - Property
+      summary: List of properties
+      operationId: getPropertyList
+      responses:
+        '200':
+          description: Property list.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PropertyData'
+      security:
+        - UserSessionToken: [ ]
+  /api/properties/{propertyId}:
+    get:
+      tags:
+        - Property
+      summary: Data of a property.
+      parameters:
+        - in: path
+          name: propertyId
+          schema:
+            type: string
+          required: true
+          description: Property id.
+      operationId: getPropertyData
+      responses:
+        '200':
+          description: Property data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PropertyData'
+      security:
+        - UserSessionToken: [ ]
+    delete:
+      tags:
+        - Property
+      summary: Deletes a property.
+      operationId: deleteProperty
+      parameters:
+        - in: path
+          name: propertyId
+          schema:
+            type: string
+          required: true
+          description: Property Id in which the user belongs.
+      responses:
+        '200':
+          description: Property deleted
+      security:
+        - UserSessionToken: [ ]
+
+    patch:
+      tags:
+        - Property
+      security:
+        - UserSessionToken: [ ]
+      parameters:
+        - in: path
+          name: propertyId
+          schema:
+            type: string
+          required: true
+          description: Property Id in which the user belongs.
+      summary: Update the property.
+      operationId: updateProperty
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateProperty'
+        required: true
+      responses:
+        '200':
+          description: Updated company
+  /api/properties/{propertyId}/images/{imageId}:
+    patch:
+      tags:
+        - Property
+      security:
+        - UserSessionToken: [ ]
+      parameters:
+        - in: path
+          name: propertyId
+          schema:
+            type: string
+          required: true
+          description: Property Id in which the user belongs.
+        - in: path
+          name: imageId
+          schema:
+            type: string
+          required: true
+          description: Image Id of the property.
+      summary: Reorder images based on image id.
+      operationId: updatePropertyImagesOrder
+      responses:
+        '200':
+          description: Updated images in property
+  /api/rooms/properties/{propertyId}/rooms:
+    post:
+      tags:
+        - Property Room
+      summary: Registers a new room.
+      operationId: addRoom
+      parameters:
+        - in: path
+          name: propertyId
+          schema:
+            type: string
+          required: true
+          description: Property id.
+      responses:
+        '200':
+          description: Room inserted data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RoomInsertedResponse'
+      security:
+        - UserSessionToken: [ ]
+    get:
+      tags:
+        - Property Room
+      summary: List of rooms.
+      operationId: getRooms
+      parameters:
+        - in: path
+          name: propertyId
+          schema:
+            type: string
+          required: true
+          description: Property id.
+      responses:
+        '200':
+          description: Rooms data
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RoomData'
+      security:
+        - UserSessionToken: [ ]
+  /api/rooms/properties/{propertyId}/rooms/{roomId}:
+    get:
+      tags:
+        - Property Room
+      summary: Data of a room.
+      operationId: getRoom
+      parameters:
+        - in: path
+          name: propertyId
+          schema:
+            type: string
+          required: true
+          description: Property id.
+        - in: path
+          name: roomId
+          schema:
+            type: string
+          required: true
+          description: Room id.
+      responses:
+        '200':
+          description: Room data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RoomData'
+      security:
+        - UserSessionToken: [ ]
+    delete:
+      tags:
+        - Property Room
+      summary: Deletes a room.
+      operationId: deleteRoom
+      parameters:
+        - in: path
+          name: propertyId
+          schema:
+            type: string
+          required: true
+          description: Property id.
+        - in: path
+          name: roomId
+          schema:
+            type: string
+          required: true
+          description: Room id.
+      responses:
+        '200':
+          description: Room deleted
+      security:
+        - UserSessionToken: [ ]
+    patch:
+      tags:
+        - Property Room
+      security:
+        - UserSessionToken: [ ]
+      parameters:
+        - in: path
+          name: propertyId
+          schema:
+            type: string
+          required: true
+          description: Property id.
+        - in: path
+          name: roomId
+          schema:
+            type: string
+          required: true
+          description: Room id.
+      summary: Update the Room.
+      operationId: updateRoom
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateRoom'
+        required: true
+      responses:
+        '200':
+          description: Updated room
+  /api/rooms/properties/{propertyId}/rooms/{roomId}/images/{imageId}:
+    patch:
+      tags:
+        - Property Room
+      security:
+        - UserSessionToken: [ ]
+      parameters:
+        - in: path
+          name: propertyId
+          schema:
+            type: string
+          required: true
+          description: Property Id in which the user belongs.
+        - in: path
+          name: roomId
+          schema:
+            type: string
+          required: true
+          description: Room Id.
+        - in: path
+          name: imageId
+          schema:
+            type: string
+          required: true
+          description: Image Id of the room.
+      summary: Reorder images based on image id.
+      operationId: updateRoomImagesOrder
+      responses:
+        '200':
+          description: Updated images in room
+  /api/beds:
+    post:
+      tags:
+        - Bed Type
+      summary: Registers a new Bed.
+      operationId: addBedType
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InsertBed'
+        required: true
+      responses:
+        '200':
+          description: Bed inserted.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BedTypeInsertedResponse'
+      security:
+        - UserSessionToken: [ ]
+    get:
+      tags:
+        - Bed Type
+      summary: List of beds.
+      operationId: getBedTypes
+      responses:
+        '200':
+          description: Bed data.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BedData'
+      security:
+        - UserSessionToken: [ ]
+  /api/beds/{bedId}:
+    get:
+      tags:
+        - Bed Type
+      summary: Data of a Bed.
+      operationId: getBed
+      parameters:
+        - in: path
+          name: bedId
+          schema:
+            type: string
+          required: true
+          description: Bed id.
+      responses:
+        '200':
+          description: Bed data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BedData'
+      security:
+        - UserSessionToken: [ ]
+    delete:
+      tags:
+        - Bed Type
+      summary: Deletes a Bed.
+      operationId: deleteBed
+      parameters:
+        - in: path
+          name: bedId
+          schema:
+            type: string
+          required: true
+          description: Bed Id.
+      responses:
+        '200':
+          description: Bed deleted.
+      security:
+        - UserSessionToken: [ ]
+
+    patch:
+      tags:
+        - Bed Type
+      security:
+        - UserSessionToken: [ ]
+      parameters:
+        - in: path
+          name: bedId
+          schema:
+            type: string
+          required: true
+          description: Bed Id.
+      summary: Update the Bed.
+      operationId: updateBed
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateBed'
+        required: true
+      responses:
+        '200':
+          description: Updated bed data.
+  /api/attachments/properties/{propertyId}/images:
+    post:
+      tags:
+        - Attachments
+      summary: Uploads an image for room.
+      operationId: uploadImage
+      security:
+        - UserSessionToken: [ ]
+      parameters:
+        - name: propertyId
+          in: path
+          description: The identifier of the property.
+          required: true
+          schema:
+            type: string
+        - name: roomId
+          in: query
+          description: The identifier of the room.
+          required: false
+          schema:
+            type: string
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+                - image
+              properties:
+                image:
+                  description: The image of the room. Only png, jpeg and gif image types are allowed.
+                  type: string
+                  format: binary
+        required: true
+      responses:
+        "204":
+          description: The image was uploaded.
+        "404":
+          description: Property could not be found.
+  /api/attachments/properties/{propertyId}/images/{imageId}:
+    delete:
+      tags:
+        - Attachments
+      summary: Deletes images.
+      operationId: deleteImages
+      security:
+        - UserSessionToken: [ ]
+      parameters:
+        - name: propertyId
+          in: path
+          description: The identifier of the property.
+          required: true
+          schema:
+            type: string
+        - name: roomId
+          in: query
+          description: The identifier of the room.
+          required: false
+          schema:
+            type: string
+        - name: imageId
+          in: path
+          description: The identifier of the images.
+          required: true
+          schema:
+            type: string
+      responses:
+        "204":
+          description: The image has been deleted.
+        "404":
+          description: Property could not be found.
+    get:
+      tags:
+        - Attachments
+      summary: Downloads images.
+      operationId: downloadImages.
+      security:
+        - UserSessionToken: [ ]
+      parameters:
+        - name: propertyId
+          in: path
+          description: The identifier of the property.
+          required: true
+          schema:
+            type: string
+        - name: roomId
+          in: query
+          description: The identifier of the room.
+          required: false
+          schema:
+            type: string
+        - name: imageId
+          in: path
+          description: The identifier of the image.
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: The image has been downloaded.
+        "404":
+          description: Property or room could not be found.
+  /api/properties/{propertyId}/review:
+    get:
+      tags:
+        - Property Public Calls
+      summary: Data of a property.
+      parameters:
+        - in: path
+          name: propertyId
+          schema:
+            type: string
+          required: true
+          description: Property id.
+      operationId: getPropertyDataForPublic
+      responses:
+        '200':
+          description: Property data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PropertyWithRoomsAndBeds'
+        '404':
+          description: Property could not be found.
+  /api/properties/search:
+    post:
+      tags:
+        - Property Public Calls
+      summary: List of rooms.
+      operationId: postPropertyRoomFilters
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PropertyFilters'
+        required: true
+      responses:
+        '200':
+          description: Property data
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PropertyFilteredData'
+        '404':
+          description: Property could not be found.
+  /api/properties/locations:
+    get:
+      tags:
+        - Property Public Calls
+      summary: Returns all countries with their municipalities.
+      operationId: getAllCountriesAndCities
+      parameters:
+        - in: query
+          name: place
+          schema:
+            type: string
+          required: false
+          description: Name of the place to filter villages or cities.
+      responses:
+        '200':
+          description: All countries with their municipalities.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MunicipalityInfo'
+
+  /api/rooms/properties/{propertyId}/rooms/{roomId}/booking:
+    post:
+      tags:
+        - Property Room
+      summary: Reserve a room in a time.
+      operationId: booking
+      security:
+        - UserSessionToken: [ ]
+      parameters:
+        - name: propertyId
+          in: path
+          description: The identifier of the property.
+          required: true
+          schema:
+            type: string
+        - name: roomId
+          in: path
+          description: The identifier of the room.
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BookingInfos'
+        required: true
+      responses:
+        '200':
+          description: Booking is done successfully.
+        '404':
+          description: Property could not be found.
+  /api/rooms/bookings/properties/{propertyId}/booking:
+    post:
+      tags:
+        - Property Room
+      summary: Check for available room.
+      operationId: getInfoForAvailableRoom
+      parameters:
+        - name: propertyId
+          in: path
+          description: The identifier of the property.
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RoomForBooking'
+        required: true
+      responses:
+        '200':
+          description: Property data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PropertyWithRoomsAndBeds'
+        '404':
+          description: Property could not be found.
+  /api/rooms/properties/{propertyId}/rooms/{roomId}/booking/{bookingId}:
+    get:
+      tags:
+        - Property Room
+      summary: Booking infos for a room.
+      operationId: getBookingInfoForRoom
+      security:
+        - UserSessionToken: [ ]
+      parameters:
+        - name: propertyId
+          in: path
+          description: The identifier of the property.
+          required: true
+          schema:
+            type: string
+        - name: roomId
+          in: path
+          description: The identifier of the room.
+          required: true
+          schema:
+            type: string
+        - name: bookingId
+          in: path
+          description: The identifier of the booking.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Booking informations.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BookingInfo'
+components:
+  schemas:
+    InsertUser:
+      type: object
+      required:
+        - email
+        - name
+        - lastname
+        - password
+        - phone
+        - role
+      properties:
+        email:
+          type: string
+        name:
+          type: string
+        lastname:
+          type: string
+        password:
+          type: string
+        phone:
+          type: string
+        role:
+          type: string
+
+    LoginUser:
+      type: object
+      required:
+        - email
+        - password
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+
+    ForgotPassword:
+      type: object
+      required:
+        - email
+      properties:
+        email:
+          type: string
+
+    ResetPassword:
+      type: object
+      required:
+        - userId
+        - resetPasswordToken
+        - newPassword
+      properties:
+        userId:
+          type: string
+        resetPasswordToken:
+          type: string
+        newPassword:
+          type: string
+
+    RegisterUser:
+      type: object
+      required:
+        - email
+        - name
+        - lastname
+        - password
+        - phone
+      properties:
+        email:
+          type: string
+        name:
+          type: string
+        lastname:
+          type: string
+        password:
+          type: string
+        phone:
+          type: string
+
+    UserRegistered:
+      type: object
+      required:
+        - userId
+      properties:
+        userId:
+          type: string
+
+    UpdateOtherUser:
+      type: object
+      properties:
+        setRole:
+          type: string
+
+    UpdateYourself:
+      type: object
+      properties:
+        name:
+          type: string
+        lastname:
+          type: string
+        password:
+          type: string
+        language:
+          type: string
+
+    UserData:
+      type: object
+      required:
+        - userId
+        - companyId
+        - name
+        - lastname
+        - email
+        - phone
+        - role
+        - emailConfirmed
+        - accountActivated
+        - propertyAccess
+        - language
+      properties:
+        userId:
+          type: string
+        companyId:
+          type: string
+        name:
+          type: string
+        lastname:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
+        role:
+          type: string
+        emailConfirmed:
+          type: boolean
+        accountActivated:
+          type: boolean
+        propertyAccess:
+          type: array
+          items:
+            $ref: '#/components/schemas/PropertyIdAndAccess'
+        language:
+          type: string
+    LoggedOutUser:
+      type: object
+      required:
+        - userId
+      properties:
+        userId:
+          type: string
+
+    LoggedInUser:
+      type: object
+      required:
+        - sessionToken
+        - userData
+      properties:
+        sessionToken:
+          type: string
+        userData:
+          $ref: "#/components/schemas/UserData"
+
+    InsertCompany:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+
+    CompanyInsertedResponse:
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+
+    UpdateCompany:
+      type: object
+      properties:
+        name:
+          type: string
+
+    InsertOtherUser:
+      type: object
+      required:
+        - email
+        - role
+      properties:
+        email:
+          type: string
+        role:
+          type: string
+
+
+    Session:
+      type: object
+      required:
+        - token
+        - userId
+        - companyId
+        - email
+        - role
+      properties:
+        token:
+          type: string
+        userId:
+          type: string
+        companyId:
+          type: string
+        email:
+          type: string
+        role:
+          type: string
+
+    CompanyData:
+      type: object
+      required:
+        - companyId
+        - name
+      properties:
+        companyId:
+          type: string
+        name:
+          type: string
+    PropertyData:
+      type: object
+      required:
+        - companyId
+        - propertyId
+        - name
+        - description
+        - propertyType
+        - postalCode
+        - aminityIds
+        - imageIds
+        - keywords
+        - propertyPoliciesData
+        - ratePlan
+        - paymentOptions
+        - discountForTheFirstFiveGuests
+        - bankDetails
+        - startBookingDate
+        - acceptedTermAndConditions
+        - amenitiesDescription
+        - tags
+        - createdAt
+        - updatedAt
+        - location
+        - reviewed
+        - businessInfo
+      properties:
+        companyId:
+          type: string
+        propertyId:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        propertyType:
+          type: string
+        postalCode:
+          type: string
+        aminityIds:
+          type: array
+          items:
+            $ref: "#/components/schemas/AminityPropertyValues"
+        imageIds:
+          type: array
+          items:
+            type: string
+        keywords:
+          type: array
+          items:
+            type: string
+        propertyPoliciesData:
+          $ref: "#/components/schemas/PropertyPoliciesData"
+        ratePlan:
+          $ref: "#/components/schemas/RatePlan"
+        paymentOptions:
+          $ref: "#/components/schemas/PaymentOptions"
+        discountForTheFirstFiveGuests:
+          type: boolean
+        bankDetails:
+          $ref: "#/components/schemas/BankDetails"
+        readyForBooking:
+          type: boolean
+        startBookingDate:
+          type: string
+        acceptedTermAndConditions:
+          type: boolean
+        amenitiesDescription:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+        createdAt:
+          type: string
+        updatedAt:
+          type: string
+        location:
+          $ref: "#/components/schemas/Location"
+        reviewed:
+          type: boolean
+        businessInfo:
+          $ref: "#/components/schemas/BusinessInfo"
+        active:
+          type: boolean
+        completed:
+          type: boolean
+    UpdateProperty:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        propertyType:
+          type: string
+          description: "The type of the property. Valid values are: Hotel, Apartment, HomeVilla, Other."
+        postalCode:
+          type: string
+        aminityIds:
+          $ref: "#/components/schemas/AminityPropertyForUpdate"
+        addKeyword:
+          type: string
+        removeKeyword:
+          type: string
+        propertyPoliciesData:
+          $ref: "#/components/schemas/PropertyPoliciesDataForUpdate"
+        ratePlan:
+          $ref: "#/components/schemas/RatePlanForUpdate"
+        paymentOptions:
+          $ref: "#/components/schemas/PaymentOptionsForUpdate"
+        discountForTheFirstFiveGuests:
+          type: boolean
+        bankDetails:
+          $ref: "#/components/schemas/BankDetails"
+        readyForBooking:
+          type: boolean
+        startBookingDate:
+          type: string
+        acceptedTermAndConditions:
+          type: boolean
+        amenitiesDescription:
+          type: string
+        addTag:
+          type: string
+        removeTag:
+          type: string
+        location:
+          $ref: "#/components/schemas/LocationForUpdate"
+        businessInfo:
+          $ref: "#/components/schemas/BusinessInfo"
+        active:
+          type: boolean
+        completed:
+          type: boolean
+    PropertyInsertedResponse:
+      type: object
+      required:
+        - id
+      properties:
+        id:
+          type: string
+    PropertyIdAndAccess:
+      type: object
+      required:
+        - propertyId
+        - permission
+      properties:
+        propertyId:
+          type: string
+        permission:
+          type: string
+    PropertyPoliciesDataForUpdate:
+      type: object
+      properties:
+        breakfastIncluded:
+          type: boolean
+        buyBreakfastPossibility:
+          type: boolean
+        breakfastPricePerPerson:
+          type: number
+          format: double
+        potentialGuestNumber:
+          type: integer
+          format: int32
+        propertySquareSize:
+          type: number
+          format: double
+        isRoomInsideApartment:
+          type: boolean
+        staffLanguages:
+          type: array
+          items:
+            type: string
+        smokingAllowed:
+          type: boolean
+        eventsAllowed:
+          type: boolean
+        petsAllowed:
+          type: boolean
+        checkIn:
+          $ref: "#/components/schemas/CheckInAndOut"
+        checkOut:
+          $ref: "#/components/schemas/CheckInAndOut"
+        lateCheckout:
+          type: boolean
+    PropertyPoliciesData:
+      type: object
+      required:
+        - checkIn
+        - checkOut
+      properties:
+        breakfastIncluded:
+          type: boolean
+        buyBreakfastPossibility:
+          type: boolean
+        breakfastPricePerPerson:
+          type: number
+          format: double
+        potentialGuestNumber:
+          type: integer
+          format: int32
+        propertySquareSize:
+          type: number
+          format: double
+        isRoomInsideApartment:
+          type: boolean
+        staffLanguages:
+          type: array
+          items:
+            type: string
+        smokingAllowed:
+          type: boolean
+        eventsAllowed:
+          type: boolean
+        petsAllowed:
+          type: boolean
+        checkIn:
+          $ref: "#/components/schemas/CheckInAndOut"
+        checkOut:
+          $ref: "#/components/schemas/CheckInAndOut"
+        lateCheckout:
+          type: boolean
+    CheckInAndOut:
+      type: object
+      properties:
+        from:
+          type: string
+        to:
+          type: string
+    BankDetails:
+      type: object
+      properties:
+        accountOwner:
+          type: string
+        accountNumber:
+          type: string
+        bankName:
+          type: string
+        swiftCode:
+          type: string
+    RoomDiscountData:
+      type: object
+      properties:
+        hasDiscount:
+          type: boolean
+        discountPercentage:
+          type: number
+          format: double
+        validFrom:
+          type: string
+        validUntil:
+          type: string
+    AminityPropertyForUpdate:
+      type: object
+      required:
+        - name
+        - option
+      properties:
+        name:
+          type: string
+          description: The aminity name.
+        option:
+          $ref: "#/components/schemas/AminityOptions"
+
+    AminityPropertyValues:
+      type: object
+      required:
+        - name
+        - option
+      properties:
+        name:
+          type: string
+          description: The aminity name.
+        option:
+          type: array
+          items:
+            $ref: "#/components/schemas/AminityOptions"
+    AminityOptions:
+      type: object
+      required:
+        - name
+        - selected
+      properties:
+        name:
+          type: string
+        selected:
+          type: boolean
+        distance:
+          type: number
+          format: double
+    InsertRoom:
+      type: object
+      required:
+        - roomType
+      properties:
+        roomType:
+          type: string
+    RoomInsertedResponse:
+      type: object
+      required:
+        - id
+      properties:
+        id:
+          type: string
+    RoomData:
+      type: object
+      required:
+        - propertyId
+        - id
+        - roomType
+        - totalRooms
+        - bookedRooms
+        - description
+        - price
+        - beds
+        - imageIds
+        - quantity
+        - peopleQuantity
+        - discountPlan
+        - tags
+      properties:
+        propertyId:
+          type: string
+        id:
+          type: string
+        roomType:
+          type: string
+        totalRooms:
+          type: integer
+          format: int32
+        bookedRooms:
+          type: integer
+          format: int32
+        description:
+          type: string
+        price:
+          type: number
+          format: double
+        beds:
+          type: array
+          items:
+            $ref: '#/components/schemas/Beds'
+        imageIds:
+          type: array
+          items:
+            type: string
+        quantity:
+          type: integer
+          format: int32
+        peopleQuantity:
+          type: integer
+          format: int32
+        discountPlan:
+          $ref: "#/components/schemas/RoomDiscountData"
+        tags:
+          type: array
+          items:
+            type: string
+    Beds:
+      type: object
+      required:
+        - bedId
+        - bedQuantity
+      properties:
+        bedId:
+          type: string
+        bedQuantity:
+          type: integer
+          format: int32
+    UpdateRoom:
+      type: object
+      properties:
+        roomType:
+          type: string
+        totalRooms:
+          type: integer
+          format: int32
+        bookedRooms:
+          type: integer
+          format: int32
+        description:
+          type: string
+        price:
+          type: number
+          format: double
+        addBed:
+          $ref: '#/components/schemas/BedIdAndQuantity'
+        removeBed:
+          $ref: '#/components/schemas/BedIdAndQuantity'
+        addImageIds:
+          type: array
+          items:
+            type: string
+        removeImageIds:
+          type: array
+          items:
+            type: string
+        quantity:
+          type: integer
+          format: int32
+        peopleQuantity:
+          type: integer
+          format: int32
+        discountPlan:
+          $ref: "#/components/schemas/RoomDiscountData"
+        addTag:
+          type: string
+        removeTag:
+          type: string
+    InsertBed:
+      type: object
+      required:
+        - bedType
+        - adults
+        - children
+        - infants
+        - dimensions
+        - icon
+      properties:
+        bedType:
+          type: string
+        adults:
+          type: integer
+          format: int32
+        children:
+          type: integer
+          format: int32
+        infants:
+          type: integer
+          format: int32
+        dimensions:
+          type: string
+        icon:
+          type: string
+    BedIdAndQuantity:
+      type: object
+      required:
+        - bedId
+        - bedQuantity
+      properties:
+        bedId:
+          type: string
+        bedQuantity:
+          type: integer
+          format: int32
+    BedTypeInsertedResponse:
+      type: object
+      required:
+        - bed
+      properties:
+        bed:
+          $ref: '#/components/schemas/BedData'
+    BedData:
+      type: object
+      required:
+        - bedId
+        - bedType
+        - adults
+        - children
+        - infants
+        - dimensions
+        - icon
+      properties:
+        bedId:
+          type: string
+        bedType:
+          type: string
+        adults:
+          type: integer
+          format: int32
+        children:
+          type: integer
+          format: int32
+        infants:
+          type: integer
+          format: int32
+        dimensions:
+          type: string
+        icon:
+          type: string
+    UpdateBed:
+      properties:
+        bedType:
+          type: string
+        adults:
+          type: integer
+          format: int32
+        children:
+          type: integer
+          format: int32
+        infants:
+          type: integer
+          format: int32
+        dimensions:
+          type: string
+        icon:
+          type: string
+    RatePlan:
+      required:
+        - refundable
+        - nonRefundable
+        - pricePerGroup
+        - weeklyPlan
+      properties:
+        refundable:
+          $ref: '#/components/schemas/RefundableData'
+        nonRefundable:
+          $ref: '#/components/schemas/NonRefundableData'
+        pricePerGroup:
+          $ref: '#/components/schemas/PricePerGroup'
+        weeklyPlan:
+          $ref: '#/components/schemas/WeeklyPlan'
+    RatePlanForUpdate:
+      properties:
+        refundable:
+          $ref: '#/components/schemas/RefundableData'
+        nonRefundable:
+          $ref: '#/components/schemas/NonRefundableData'
+        pricePerGroup:
+          $ref: '#/components/schemas/PricePerGroup'
+        weeklyPlan:
+          $ref: '#/components/schemas/WeeklyPlan'
+    RefundableData:
+      properties:
+        fullyRefundable:
+          type: boolean
+        cancellationPolicy:
+          type: integer
+          format: int32
+        pricePerNight:
+          type: number
+          format: double
+    NonRefundableData:
+      properties:
+        setNonRefundable:
+          type: boolean
+        discount:
+          type: integer
+          format: int32
+        pricePerNight:
+          type: number
+          format: double
+    PricePerGroup:
+      properties:
+        discountForThree:
+          type: integer
+          format: int32
+        discountForTwo:
+          type: integer
+          format: int32
+        discountForOne:
+          type: integer
+          format: int32
+        pricePerNight:
+          type: number
+          format: double
+        discountPerGroup:
+          type: boolean
+    WeeklyPlan:
+      properties:
+        setWeeklyPlan:
+          type: boolean
+        discount:
+          type: integer
+          format: int32
+        pricePerNight:
+          type: number
+          format: double
+    PaymentOptions:
+      required:
+        - payWhenBooking
+        - payAtProperty
+      properties:
+        payWhenBooking:
+          $ref: '#/components/schemas/PayWhenBooking'
+        payAtProperty:
+          $ref: '#/components/schemas/PayAtProperty'
+    PaymentOptionsForUpdate:
+      properties:
+        payWhenBooking:
+          $ref: '#/components/schemas/PayWhenBooking'
+        payAtProperty:
+          $ref: '#/components/schemas/PayAtPropertyForUpdate'
+    PayWhenBooking:
+      properties:
+        selected:
+          type: boolean
+        upFrontPayPercentage:
+          type: integer
+          format: int32
+    PayAtProperty:
+      required:
+        - paymentMethods
+      properties:
+        selected:
+          type: boolean
+        paymentMethods:
+          type: array
+          items:
+            $ref: '#/components/schemas/PaymentMethods'
+    PayAtPropertyForUpdate:
+      properties:
+        selected:
+          type: boolean
+        paymentMethods:
+          $ref: '#/components/schemas/PaymentMethodsForUpdate'
+    PaymentMethods:
+      required:
+        - name
+        - selected
+      properties:
+        name:
+          type: string
+        selected:
+          type: boolean
+        value:
+          type: string
+    PaymentMethodsForUpdate:
+      required:
+        - name
+      properties:
+        name:
+          type: string
+        selected:
+          type: boolean
+        value:
+          type: string
+    Places:
+      required:
+        - countryId
+        - cityId
+      properties:
+        countryId:
+          type: integer
+          format: int32
+        cityId:
+          type: integer
+          format: int32
+        villageId:
+          type: integer
+          format: int32
+    LocationForUpdate:
+      properties:
+        places:
+          $ref: '#/components/schemas/Places'
+        address:
+          type: string
+        zipCode:
+          type: string
+        longitude:
+          type: number
+          format: double
+        latitude:
+          type: number
+          format: double
+    Location:
+      properties:
+        country:
+          type: string
+        city:
+          type: string
+        village:
+          type: string
+        address:
+          type: string
+        zipCode:
+          type: string
+        longitude:
+          type: number
+          format: double
+        latitude:
+          type: number
+          format: double
+    BusinessInfo:
+      properties:
+        name:
+          type: string
+        address:
+          type: string
+        licenseNumber:
+          type: string
+        vatNumber:
+          type: string
+        businessRegistrationNumber:
+          type: string
+    PropertiesForSuperAdmin:
+      required:
+        - userId
+        - propertyId
+        - propertyName
+        - propertyType
+        - createdAt
+        - updatedAt
+        - location
+        - ratePlan
+        - paymentOptions
+        - rooms
+      properties:
+        userId:
+          type: string
+        propertyId:
+          type: string
+        propertyName:
+          type: string
+        propertyType:
+          type: string
+        createdAt:
+          type: string
+        updatedAt:
+          type: string
+        location:
+          $ref: "#/components/schemas/Location"
+        ratePlan:
+          $ref: "#/components/schemas/RatePlan"
+        paymentOptions:
+          $ref: "#/components/schemas/PaymentOptions"
+        rooms:
+          type: array
+          items:
+            $ref: "#/components/schemas/RoomData"
+    UsersAndPropertyData:
+      required:
+        - username
+        - email
+        - companyId
+        - listOfProperties
+      properties:
+        username:
+          type: string
+        email:
+          type: string
+        companyId:
+          type: string
+        listOfProperties:
+          type: array
+          items:
+            $ref: "#/components/schemas/PropertiesForSuperAdmin"
+    PropertyWithRoomsAndBeds:
+      type: object
+      required:
+        - companyId
+        - propertyId
+        - name
+        - description
+        - propertyType
+        - postalCode
+        - aminityIds
+        - imageIds
+        - keywords
+        - propertyPoliciesData
+        - ratePlan
+        - paymentOptions
+        - discountForTheFirstFiveGuests
+        - startBookingDate
+        - acceptedTermAndConditions
+        - amenitiesDescription
+        - tags
+        - location
+        - rooms
+        - beds
+      properties:
+        companyId:
+          type: string
+        propertyId:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        propertyType:
+          type: string
+        postalCode:
+          type: string
+        aminityIds:
+          type: array
+          items:
+            $ref: "#/components/schemas/AminityPropertyValues"
+        imageIds:
+          type: array
+          items:
+            type: string
+        keywords:
+          type: array
+          items:
+            type: string
+        propertyPoliciesData:
+          $ref: "#/components/schemas/PropertyPoliciesData"
+        ratePlan:
+          $ref: "#/components/schemas/RatePlan"
+        paymentOptions:
+          $ref: "#/components/schemas/PaymentOptions"
+        discountForTheFirstFiveGuests:
+          type: boolean
+        readyForBooking:
+          type: boolean
+        startBookingDate:
+          type: string
+        acceptedTermAndConditions:
+          type: boolean
+        amenitiesDescription:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+        location:
+          $ref: "#/components/schemas/Location"
+        rooms:
+          type: array
+          items:
+            $ref: "#/components/schemas/RoomDataForPublic"
+        beds:
+          type: array
+          items:
+            $ref: "#/components/schemas/BedData"
+    PropertySummaryData:
+      type: object
+      required:
+        - propertyId
+        - propertyPrimaryImageId
+        - description
+        - propertyType
+        - location
+        - totalRooms
+        - cheapestRoomPrice
+      properties:
+        propertyId:
+          type: string
+        propertyPrimaryImageId:
+          type: string
+        propertyType:
+          type: string
+        description:
+          type: string
+        location:
+          $ref: "#/components/schemas/Location"
+        totalRooms:
+          type: integer
+          format: int32
+        cheapestRoomPrice:
+          type: number
+          format: double
+    PropertyFilteredData:
+      type: object
+      required:
+        - propertyId
+        - propertyType
+        - propertyName
+        - price
+        - primaryImageId
+        - location
+      properties:
+        propertyId:
+          type: string
+        propertyType:
+          type: string
+        propertyName:
+          type: string
+        price:
+          type: number
+          format: double
+        primaryImageId:
+          type: string
+        location:
+          $ref: "#/components/schemas/Location"
+    BedsDataForRoom:
+      type: object
+      required:
+        - bedId
+        - bedQuantity
+        - bedType
+      properties:
+        bedId:
+          type: string
+        bedQuantity:
+          type: integer
+          format: int32
+        bedType:
+          type: string
+    PropertyFilters:
+      type: object
+      required:
+        - startDate
+        - endDate
+      properties:
+        propertyType:
+          type: array
+          items:
+            type: string
+        location:
+          $ref: "#/components/schemas/LocationForUpdate"
+        startDate:
+          type: string
+        endDate:
+          type: string
+        adults:
+          type: integer
+          format: int32
+        children:
+          type: integer
+          format: int32
+        infants:
+          type: integer
+          format: int32
+        minPrice:
+          type: integer
+          format: int32
+        maxPrice:
+          type: integer
+          format: int32
+        sort:
+          $ref: "#/components/schemas/SortFilter"
+        selectedSurroundings:
+          type: array
+          items:
+            type: string
+        selectedTrips:
+          type: array
+          items:
+            type: string
+        propertyIds:
+          type: array
+          items:
+            type: string
+    SortFilter:
+      type: object
+      properties:
+        price:
+          type: string
+        rating:
+          type: integer
+          format: int32
+        bestValue:
+          type: boolean
+    Municipalities:
+      type: object
+      required:
+        - municipalities
+      properties:
+        municipalities:
+          type: array
+          items:
+            $ref: "#/components/schemas/MunicipalityInfo"
+    MunicipalityInfo:
+      type: object
+      required:
+        - villageName
+        - cityId
+        - cityName
+        - countryId
+        - countryName
+      properties:
+        villageId:
+          type: integer
+          format: int32
+        villageName:
+          type: string
+        cityId:
+          type: integer
+          format: int32
+        cityName:
+          type: string
+        countryId:
+          type: integer
+          format: int32
+        countryName:
+          type: string
+    BookingInfos:
+      type: object
+      required:
+        - startDate
+        - endDate
+        - guestsInfo
+        - guests
+        - rooms
+      properties:
+        startDate:
+          type: string
+        endDate:
+          type: string
+        guestsInfo:
+          type: string
+        rooms:
+          type: integer
+          format: int32
+        guests:
+          $ref: "#/components/schemas/Guests"
+
+    RoomDataForPublic:
+      type: object
+      required:
+        - propertyId
+        - id
+        - roomType
+        - totalRooms
+        - bookedRooms
+        - description
+        - price
+        - beds
+        - imageIds
+        - quantity
+        - peopleQuantity
+        - discountPlan
+        - tags
+      properties:
+        propertyId:
+          type: string
+        id:
+          type: string
+        roomType:
+          type: string
+        totalRooms:
+          type: integer
+          format: int32
+        bookedRooms:
+          type: integer
+          format: int32
+        description:
+          type: string
+        price:
+          type: number
+          format: double
+        beds:
+          type: array
+          items:
+            $ref: '#/components/schemas/RoomBedInfo'
+        imageIds:
+          type: array
+          items:
+            type: string
+        quantity:
+          type: integer
+          format: int32
+        peopleQuantity:
+          type: integer
+          format: int32
+        discountPlan:
+          $ref: "#/components/schemas/RoomDiscountData"
+        tags:
+          type: array
+          items:
+            type: string
+    RoomBedInfo:
+      required:
+        - bedId
+        - bedQuantity
+        - bedType
+        - adults
+        - children
+        - infants
+        - dimensions
+        - icon
+      properties:
+        bedId:
+          type: string
+        bedQuantity:
+          type: integer
+          format: int32
+        bedType:
+          type: string
+        adults:
+          type: integer
+          format: int32
+        children:
+          type: integer
+          format: int32
+        infants:
+          type: integer
+          format: int32
+        dimensions:
+          type: string
+        icon:
+          type: string
+    PropertyFrozenData:
+      required:
+        - property
+        - room
+        - user
+        - termsAndConditions
+      properties:
+        property:
+          $ref: "#/components/schemas/PropertyData"
+        room:
+          $ref: "#/components/schemas/RoomData"
+        user:
+          $ref: "#/components/schemas/UserData"
+        termsAndConditions:
+          type: string
+    BookingInfo:
+      required:
+        - bookingId
+        - propertyId
+        - roomId
+        - startDate
+        - endDate
+        - guestsInfo
+        - guests
+        - accessPin
+        - propertyFrozenData
+        - createdAt
+        - updatedAt
+      properties:
+        bookingId:
+          type: string
+        propertyId:
+          type: string
+        roomId:
+          type: string
+        startDate:
+          type: string
+        endDate:
+          type: string
+        guestsInfo:
+          type: string
+        guests:
+          $ref: "#/components/schemas/Guests"
+        accessPin:
+          type: integer
+          format: int32
+        propertyFrozenData:
+          $ref: "#/components/schemas/PropertyFrozenData"
+        createdAt:
+          type: string
+        updatedAt:
+          type: string
+    RoomForBooking:
+      required:
+        - roomIds
+        - startDate
+        - endDate
+        - adults
+        - children
+        - infants
+      properties:
+        roomIds:
+          type: array
+          items:
+            type: string
+        startDate:
+          type: string
+        endDate:
+          type: string
+        adults:
+          type: integer
+          format: int32
+        children:
+          type: integer
+          format: int32
+        infants:
+          type: integer
+          format: int32
+        rooms:
+          type: integer
+          format: int32
+    Guests:
+      required:
+        - adults
+        - children
+        - infants
+      properties:
+        adults:
+          type: integer
+          format: int32
+        children:
+          type: integer
+          format: int32
+        infants:
+          type: integer
+          format: int32
+  securitySchemes:
+    UserSessionToken:
+      type: apiKey
+      description: For authentication, provide a session token.
+      in: header
+      name: Authorization
+

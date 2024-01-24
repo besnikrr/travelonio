@@ -1,0 +1,163 @@
+@import "../../../style/responsivness";
+
+:host {
+  display: flex;
+  .container {
+    background-image: url("../../../../assets/homePage/welcomeText.svg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-width: 500px;
+    min-height: 300px;
+    max-width: 840px;
+    max-height: 400px;
+    padding: 50px 100px;
+    h1 {
+      font-weight: 700;
+      font-size: 40px;
+      color: #304659;
+      text-align: center;
+    }
+    p {
+      margin-bottom: 5px;
+    }
+  }
+
+  .room {
+    display: flex;
+    flex-direction: row;
+    background-color: white;
+    border-radius: 20px;
+    padding: 25px;
+    box-shadow: 0px 12px 14px rgba(67, 83, 138, 0.06);
+    @include columns-in-tablet;
+    @include full-width-in-tablet;
+
+    .left {
+      width: 40%;
+      @include full-width-in-tablet;
+    }
+
+    .right {
+      width: 60%;
+      @include full-width-in-tablet;
+      display: flex;
+      flex-direction: column;
+      padding-left: 20px;
+      .row-1 {
+        display: flex;
+        justify-content: space-between;
+        .price {
+          font-family: Lato, sans-serif;
+          font-style: normal;
+          font-weight: 500;
+          font-size: 14px;
+          line-height: 20px;
+          color: #671bb5;
+        }
+      }
+      .property-name {
+        font-size: 18px;
+        font-weight: 400;
+        color: #304659;
+        margin-bottom: 24px;
+      }
+      .room-name {
+        font-size: 12px;
+        font-weight: 400;
+        color: #696f8c;
+      }
+      .book-button {
+        display: flex;
+        justify-content: end;
+        margin-top: 10px;
+        button {
+          padding: 0 16px;
+          border-radius: 10px;
+          font-weight: 700;
+          font-size: 14px;
+        }
+      }
+    }
+  }
+
+  .image {
+    height: 150px;
+    width: 100%;
+    border-radius: 20px;
+    object-fit: cover;
+  }
+
+  .joke {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    .text {
+      margin-bottom: 40px;
+      font-size: 30px;
+    }
+  }
+
+  @media screen and (max-width: $desktop) {
+    padding: 30px 50px !important;
+    .container {
+      h1 {
+        font-size: 35px;
+      }
+    }
+  }
+
+  @media screen and (max-width: $tablet) {
+    padding: 30px 30px !important;
+    .container {
+      min-width: auto;
+      h1 {
+        font-size: 30px;
+      }
+      p {
+        font-size: 14px;
+      }
+      .right {
+        padding-left: 0;
+      }
+      .joke {
+        .text {
+          font-size: 24px;
+        }
+      }
+    }
+  }
+  @media screen and (max-width: $phone) {
+    padding: 30px 0px !important;
+    .container {
+      padding: 0px;
+      h1 {
+        font-size: 20px;
+      }
+      button {
+        padding: 8px 16px;
+      }
+      .right {
+        padding-left: 0;
+        .row-1 {
+          flex-direction: column;
+        }
+        .property-name {
+          margin-bottom: 10px;
+        }
+      }
+      .room {
+        padding: 10px;
+      }
+      .joke {
+        .text {
+          font-size: 20px;
+        }
+      }
+    }
+  }
+}

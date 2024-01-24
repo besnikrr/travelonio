@@ -1,0 +1,94 @@
+<div class="field">
+  <p class="field-label" *ngIf="showPlaceholder" i18n="@@guestsText">
+    Guests<span *ngIf="!preventGuestChange">*</span>
+  </p>
+  <form class="field-input">
+    <mat-form-field [class.no-background]="!showPlaceholder" appearance="fill">
+      <input
+        type="text"
+        matInput
+        [value]="searchPlaceholder"
+        [matMenuTriggerFor]="menu"
+        placeholder="Add guests"
+        i18n-placeholder="@@addGuestsText"
+        autocomplete="off"
+        readonly
+        [matTooltip]="searchPlaceholder"
+        [disabled]="preventGuestChange"
+      />
+      <mat-menu
+        #menu="matMenu"
+        yPosition="below"
+        panelWidth="420px"
+        class="test"
+        disableRipple
+      >
+        <div mat-menu-item (click)="$event.stopPropagation()" class="menu-item">
+          <div>
+            <span class="type" i18n="@@adultsText">Adults</span>
+            <span class="age-info" i18n="@@ageRestrictionsText"
+              >17 years or above</span
+            >
+          </div>
+          <div class="counter">
+            <button
+              mat-icon-button
+              (click)="decreaseFn('adult')"
+              [disabled]="adultsCounter <= 0"
+            >
+              -
+            </button>
+            <span type="number" minlength="0" autocomplete="off">{{
+              adultsCounter
+            }}</span>
+            <button mat-icon-button (click)="increaseFn('adult')">+</button>
+          </div>
+        </div>
+
+        <div mat-menu-item (click)="$event.stopPropagation()" class="menu-item">
+          <div>
+            <span class="type" i18n="@@childrenText">Children</span>
+            <span class="age-info" i18n="@@childrenAgeRestriction"
+              >2-16 years</span
+            >
+          </div>
+          <div class="counter">
+            <button
+              mat-icon-button
+              (click)="decreaseFn('children')"
+              [disabled]="childrenCounter <= 0"
+            >
+              -
+            </button>
+            <span type="number" minlength="0" autocomplete="off">{{
+              childrenCounter
+            }}</span>
+            <button mat-icon-button (click)="increaseFn('children')">+</button>
+          </div>
+        </div>
+
+        <div mat-menu-item (click)="$event.stopPropagation()" class="menu-item">
+          <div>
+            <span class="type" i18n="@@infantsText">Infants</span>
+            <span class="age-info" i18n="@@infantsAgeRestriction"
+              >0-2 years</span
+            >
+          </div>
+          <div class="counter">
+            <button
+              mat-icon-button
+              (click)="decreaseFn('infant')"
+              [disabled]="infantCounter <= 0"
+            >
+              -
+            </button>
+            <span type="number" minlength="0" autocomplete="off">{{
+              infantCounter
+            }}</span>
+            <button mat-icon-button (click)="increaseFn('infant')">+</button>
+          </div>
+        </div>
+      </mat-menu>
+    </mat-form-field>
+  </form>
+</div>

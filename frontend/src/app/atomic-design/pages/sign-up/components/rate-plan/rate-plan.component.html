@@ -1,0 +1,348 @@
+<div class="rate-plan-container">
+  <div class="plan-header">
+    <h5 i18n="@@ratePlanChoose">Choose your rate plan</h5>
+  </div>
+  <mat-divider></mat-divider>
+  <div class="section">
+    <div class="rate-plan cancellation">
+      <mat-checkbox
+        class="rate"
+        color="primary"
+        i18n="@@ratePlanStandard"
+        [checked]="ratePlan?.refundable.fullyRefundable"
+        (change)="
+          updateRatePlan({
+            refundable: { fullyRefundable: $event.checked }
+          })
+        "
+        >Fully Refundable
+      </mat-checkbox>
+      <p class="cancellation-question" i18n="@@ratePlanManyDays">
+        How many days before their arrival can your guests cancel their booking
+        for free?
+      </p>
+      <div class="cancel-booking">
+        <p i18n="@@ratePlanCancellation">Cancellation Policy</p>
+        <div style="display: flex">
+          <app-quantity
+            [quantity]="
+              ratePlan?.refundable.cancellationPolicy
+                ? ratePlan?.refundable.cancellationPolicy
+                : 0
+            "
+            (newQuantity)="
+              updateRatePlan({
+                refundable: { cancellationPolicy: $event.newQuantity }
+              })
+            "
+          ></app-quantity>
+          <p i18n="@@ratePlanDays">Days</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="rate-plan room-price">
+      <p class="rate" i18n="@@ratePlanPricePerNight">
+        Price per night (for a double room) would be:
+      </p>
+    </div>
+    <div class="discount-percentage">
+      <app-single-line-field
+        [initialValue]="priceAfterDiscount"
+        [readOnly]="true"
+      ></app-single-line-field>
+      <p class="percentage">€</p>
+    </div>
+  </div>
+  <mat-divider></mat-divider>
+
+  <div class="section">
+    <div class="rate-plan">
+      <mat-checkbox
+        class="rate"
+        color="primary"
+        [checked]="ratePlan?.nonRefundable.setNonRefundable"
+        (change)="
+          updateRatePlan({
+            nonRefundable: {
+              setNonRefundable: $event.checked,
+              discount: 0
+            }
+          })
+        "
+        i18n="@@ratePlanNonRefundable"
+        >Non-Refundable
+      </mat-checkbox>
+    </div>
+    <div class="discount-percentage">
+      <p class="input-label" i18n="@@ratePlanDiscount">Discount</p>
+      <app-single-line-field
+        [initialValue]="
+          ratePlan?.nonRefundable.setNonRefundable
+            ? ratePlan?.nonRefundable.discount
+            : ''
+        "
+        [readOnly]="!ratePlan?.nonRefundable.setNonRefundable"
+        [validators]="[validators.pattern('^[0-9]*$')]"
+        (onChange)="updateRatePlan({ nonRefundable: { discount: +$event } })"
+      ></app-single-line-field>
+      <p class="percentage">%</p>
+    </div>
+  </div>
+
+  <div class="section custom" *ngIf="ratePlan?.nonRefundable.setNonRefundable">
+    <div class="rate-plan room-price">
+      <p class="rate" i18n="@@ratePlanPricePerNight">
+        Price per night (for a double room) would be:
+      </p>
+    </div>
+
+    <div class="discount-percentage">
+      <app-single-line-field
+        [initialValue]="priceAfterNonRefundableDiscount"
+        [readOnly]="true"
+      ></app-single-line-field>
+      <p class="percentage">€</p>
+    </div>
+  </div>
+  <mat-divider></mat-divider>
+
+  <span class="rate-offer" i18n="@@ratePlanOfferLower"
+    >Offering lower rate for groups of less than 3 makes your property more
+    attractive to potential guests.</span
+  >
+  <mat-divider></mat-divider>
+
+  <div class="plan-header custom">
+    <h5 i18n="@@ratePlanGroupSize">Price per group size</h5>
+    <div class="choose-weekly-plan">
+      <mat-radio-group
+        color="primary"
+        (change)="
+          updateRatePlan({
+            pricePerGroup: {
+              discountPerGroup: $event.value === 'yes',
+              discountForOne: 0,
+              discountForTwo: 0,
+              discountForThree: 0
+            }
+          })
+        "
+      >
+        <mat-radio-button
+          [checked]="ratePlan?.pricePerGroup.discountPerGroup === true"
+          value="yes"
+          >Yes
+        </mat-radio-button>
+        <mat-radio-button
+          [checked]="ratePlan?.pricePerGroup.discountPerGroup === false"
+          value="no"
+          >No
+        </mat-radio-button>
+      </mat-radio-group>
+    </div>
+  </div>
+  <mat-error
+    i18n="@@definingPricePerGroupIsRequired"
+    *ngIf="
+      ratePlan?.pricePerGroup.discountPerGroup === null && (dirtyInputs | async)
+    "
+  >
+    Defining group price possibility is required
+  </mat-error>
+
+  <mat-divider></mat-divider>
+
+  <div *ngIf="ratePlan?.pricePerGroup.discountPerGroup">
+    <div class="section">
+      <div class="rate-plan">
+        <p class="rate">3 <span i18n="@@ratePlanGuests">guests</span></p>
+      </div>
+      <div class="discount-percentage">
+        <p class="input-label hide-in-desktop" i18n="@@ratePlanDiscount">
+          Discount
+        </p>
+        <app-single-line-field
+          [initialValue]="ratePlan?.pricePerGroup.discountForThree"
+          [validators]="[validators.pattern('^[0-9]*$')]"
+          (onChange)="
+            updateRatePlan({
+              pricePerGroup: { discountForThree: +$event }
+            })
+          "
+        ></app-single-line-field>
+        <p class="percentage">%</p>
+      </div>
+    </div>
+    <div class="section">
+      <div class="rate-plan">
+        <p class="rate">2 <span i18n="@@ratePlanGuests">guests</span></p>
+      </div>
+      <div class="discount-percentage">
+        <p class="input-label hide-in-desktop" i18n="@@ratePlanDiscount">
+          Discount
+        </p>
+        <app-single-line-field
+          [initialValue]="ratePlan?.pricePerGroup.discountForTwo"
+          [validators]="[validators.pattern('^[0-9]*$')]"
+          (onChange)="
+            updateRatePlan({
+              pricePerGroup: { discountForTwo: +$event }
+            })
+          "
+        ></app-single-line-field>
+        <p class="percentage">%</p>
+      </div>
+    </div>
+    <div class="section">
+      <div class="rate-plan">
+        <p class="rate">1 <span i18n="@@ratePlanGuest">guest</span></p>
+      </div>
+      <div class="discount-percentage">
+        <p class="input-label hide-in-desktop" i18n="@@ratePlanDiscount">
+          Discount
+        </p>
+        <app-single-line-field
+          [initialValue]="ratePlan?.pricePerGroup.discountForOne"
+          [validators]="[validators.pattern('^[0-9]*$')]"
+          (onChange)="
+            updateRatePlan({
+              pricePerGroup: { discountForOne: +$event }
+            })
+          "
+        ></app-single-line-field>
+        <p class="percentage">%</p>
+      </div>
+    </div>
+    <mat-error
+      i18n="@@discountPerGroupPersonIsRequired"
+      *ngIf="
+        ratePlan?.pricePerGroup.discountPerGroup === true &&
+        ratePlan?.pricePerGroup.discountForOne === 0 &&
+        ratePlan?.pricePerGroup.discountForTwo === 0 &&
+        ratePlan?.pricePerGroup.discountForThree === 0 &&
+        (dirtyInputs | async)
+      "
+    >
+      At least one of the discount should be set
+    </mat-error>
+    <div class="section">
+      <div class="rate-plan room-price">
+        <p class="rate" i18n="@@ratePlanPricePerNight">
+          Price per night (for a double room) with one guest would be:
+        </p>
+      </div>
+      <div class="discount-percentage">
+        <app-single-line-field
+          [initialValue]="priceWithGroupDiscount"
+          [validators]="[validators.pattern('^[0-9]*$')]"
+          [readOnly]="true"
+        ></app-single-line-field>
+        <p class="percentage">€</p>
+      </div>
+    </div>
+    <mat-error
+      i18n="@@discountPerGroupIsRequired"
+      *ngIf="
+        ratePlan?.pricePerGroup?.discountPerGroup === null &&
+        (dirtyInputs | async)
+      "
+    >
+      Discount per group need to be defined
+    </mat-error>
+    <mat-divider></mat-divider>
+  </div>
+
+  <div>
+    <div class="weekly-plan custom">
+      <h5 i18n="set up weekly plan text@@setUpWeeklyPlan">
+        Set-up a weekly plan
+      </h5>
+      <div class="choose-weekly-plan">
+        <mat-radio-group
+          color="primary"
+          (change)="
+            updateRatePlan({
+              weeklyPlan: { setWeeklyPlan: $event.value === 'yes', discount: 0 }
+            })
+          "
+        >
+          <mat-radio-button
+            [checked]="ratePlan?.weeklyPlan.setWeeklyPlan === true"
+            value="yes"
+            i18n="globalYes"
+            >Yes
+          </mat-radio-button>
+          <mat-radio-button
+            [checked]="ratePlan?.weeklyPlan?.setWeeklyPlan === false"
+            value="no"
+            i18n="globalNo"
+            >No
+          </mat-radio-button>
+        </mat-radio-group>
+      </div>
+    </div>
+    <mat-error
+      i18n="@@weeklyPlanIsRequiredToBeSet"
+      *ngIf="
+        ratePlan?.weeklyPlan?.setWeeklyPlan === null && (dirtyInputs | async)
+      "
+    >
+      Weekly plan is required to be set
+    </mat-error>
+    <mat-divider></mat-divider>
+
+    <div class="section" *ngIf="ratePlan?.weeklyPlan.setWeeklyPlan === true">
+      <div class="rate-plan">
+        <p class="rate custom" i18n="@@ratePlanCheaper">
+          How much cheaper than the standard rate would you like this plan to be
+        </p>
+      </div>
+      <div class="discount-percentage">
+        <p class="input-label hide-in-desktop" i18n="@@ratePlanDiscount">
+          Discount
+        </p>
+        <app-single-line-field
+          [initialValue]="ratePlan?.weeklyPlan.discount"
+          [validators]="[validators.pattern('^[0-9]*$')]"
+          (onChange)="updateRatePlan({ weeklyPlan: { discount: +$event } })"
+        ></app-single-line-field>
+        <p class="percentage">%</p>
+      </div>
+    </div>
+    <mat-error
+      i18n="@@weeklyDiscountIsRequiredToBeSet"
+      *ngIf="
+        ratePlan?.weeklyPlan?.setWeeklyPlan === true &&
+        (ratePlan?.weeklyPlan?.discount === null ||
+          ratePlan?.weeklyPlan?.discount === 0) &&
+        (dirtyInputs | async)
+      "
+    >
+      Weekly discount is required
+    </mat-error>
+    <div
+      class="section custom"
+      *ngIf="ratePlan?.weeklyPlan.setWeeklyPlan === true"
+    >
+      <div class="rate-plan room-price">
+        <p class="rate" i18n="@@ratePlanPricePerNight">
+          Price per night (for a double room) for more than 7 days stay would
+          be:
+        </p>
+      </div>
+      <div class="discount-percentage">
+        <app-single-line-field
+          [initialValue]="priceWithWeeklyPlanDiscount"
+          [readOnly]="true"
+        ></app-single-line-field>
+        <p class="percentage">€</p>
+      </div>
+    </div>
+    <span class="rate-offer" i18n="@@ratePlanPercentageDependent"
+      >*Prices will change depending on the percentage</span
+    >
+  </div>
+</div>

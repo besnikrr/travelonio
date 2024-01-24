@@ -1,0 +1,25 @@
+@import "../../../style/colors";
+@import "../../../style/breaking-points.scss";
+
+:host {
+  display: block;
+  .container {
+    .header {
+      background: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .main {
+      background: #fafbff;
+    }
+
+    .footer {
+      background-color: white;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+    }
+  }
+}

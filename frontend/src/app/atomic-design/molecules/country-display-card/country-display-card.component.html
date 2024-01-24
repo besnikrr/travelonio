@@ -1,0 +1,21 @@
+<div class="container">
+  <div class="destination-image">
+    <img [src]="country.image" class="country-image" />
+    <div class="pills">
+      <div class="most-popular"><p>Most popular</p></div>
+      <div class="save-rate"><p>Save €{{country.originalPrice - country.salePrice}}</p></div>
+    </div>
+  </div>
+  <div class="destination-rate">
+    <mat-icon *ngIf="showIcons" [svgIcon]="'reze:rate-star'"></mat-icon>
+    <p>{{country.rate + ' (' + country.reviewsNo + ' reviews)'}}</p>
+  </div>
+
+  <h6>{{country.name}}</h6>
+  <p class="destination-description">{{country.description}}</p>
+
+  <div class="destination-price">
+    <h5>€{{country.salePrice}}</h5>
+    <h4>€{{country.originalPrice}}</h4>
+  </div>
+</div>

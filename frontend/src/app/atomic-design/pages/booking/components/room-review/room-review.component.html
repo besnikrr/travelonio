@@ -1,0 +1,70 @@
+<div class="container">
+  <div class="section">
+    <div class="section-content">
+      <h5 class="header" i18n="house rules generic text@@houseRulesText">
+        House Rules
+      </h5>
+      <div class="dates">
+        <div class="check-in">
+          <p class="text" i18n="check in after text@@checkInAfterText">
+            Check in after:
+          </p>
+          <p class="hours">{{ reviewData?.checkIn }}</p>
+        </div>
+        <div class="check-out">
+          <p class="text" i18n="check out before text@@checkOutBeforeText">
+            Check out before:
+          </p>
+          <p class="hours">{{ reviewData?.checkOut }}</p>
+        </div>
+      </div>
+      <div class="amenities">
+        <ul>
+          <div *ngFor="let amenity of reviewData?.amenities">
+            <div *ngFor="let o of amenity.option">
+              <li *ngIf="o.selected">
+                {{
+                  o?.selected
+                    ? Amenities.convertToString(
+                        Amenities.convertFromApiValue(o.name)
+                      ) + (o.distance ? ": " + o.distance + "km" : "")
+                    : ""
+                }}
+              </li>
+            </div>
+          </div>
+          <li
+            i18n="max guests text@@maxGuestsText"
+            *ngIf="reviewData?.propertyType === 'Apartment'"
+          >
+            Max guests: {{ reviewData?.maxGuest }}
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="image-container">
+      <img
+        class="image"
+        src="{{ baseUrl }}/attachments/properties/{{
+          reviewData?.propertyId
+        }}/images/{{ reviewData?.roomImageId }}{{
+          '?roomId=' + reviewData?.roomId
+        }}"
+      />
+    </div>
+  </div>
+  <mat-divider></mat-divider>
+  <div class="section">
+    <div class="section-content policies">
+      <h5
+        class="header"
+        i18n="policies generic text@@policiesText"
+        i18n="policities text@@policies"
+      >
+        Policies
+      </h5>
+      <h3 i18n="@@cancellationPolicy">Cancellation Policy</h3>
+      <p>{{ ratePlanType() }}</p>
+    </div>
+  </div>
+</div>

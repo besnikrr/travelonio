@@ -1,0 +1,138 @@
+<div class="header">
+  <app-home-page-header [customPositioning]="true"></app-home-page-header>
+</div>
+<div class="sign-up-container">
+  <div class="sign-up">
+    <div class="left">
+      <div class="stepper" *ngIf="currentStep !== 0">
+        <div
+          *ngFor="let step of stepsCount"
+          class="stepCount"
+          [class.selected]="step <= currentStep"
+          (click)="navigateFromBreadCrumb(step)"
+          (mouseover)="showStepInfo = step"
+          (mouseleave)="showStepInfo = undefined"
+        >
+          <mat-card
+            *ngIf="showStepInfo === step"
+            class="info-card"
+            [class.to-the-left]="step > 11"
+            ><p class="step-number">
+              {{ "Step " + step }}
+            </p>
+            <p class="step-description">
+              {{ signUpShortDesc[step] }}
+            </p></mat-card
+          >
+        </div>
+      </div>
+      <div class="sign-up-left-header">
+        <div class="spinner">
+          <div class="circle">
+            <span>{{ currentStep }}/17</span>
+            <mat-progress-spinner
+              class="progress-spinner"
+              mode="determinate"
+              [value]="currentStep * 5.882"
+            >
+            </mat-progress-spinner>
+          </div>
+          <h6
+            *ngIf="
+              +this.currentRoute.state.params.stepId > 0 &&
+              this.currentRoute.state.params.propertyId
+            "
+            class="title"
+          >
+            {{ getPropertyName() }}
+          </h6>
+        </div>
+
+        <div class="sign-up-header-mobile">
+          <span (click)="reviewProperty()">
+            <h3 *ngIf="currentStep !== 0" i18n="@@propertyDetails">
+              Property details
+            </h3>
+          </span>
+          <div class="help">
+            <h3 i18n="@@signupDifficulties">Having difficulties?</h3>
+            <a href="#" (click)="openHelpDialog($event)"
+              ><h3 i18n="@@signupHelp">Help</h3></a
+            >
+          </div>
+        </div>
+      </div>
+
+      <app-sign-up-step-description [signUpJourneyStep]="currentStep">
+      </app-sign-up-step-description>
+
+      <div class="sign-up-content-mobile">
+        <ng-container *ngTemplateOutlet="propertyForm"></ng-container>
+      </div>
+
+      <div class="sign-up-left-footer">
+        <div class="copyright-mobile">
+          <mat-icon
+            *ngIf="isBrowser"
+            class="logo-white"
+            [svgIcon]="'reze:logo-white'"
+          ></mat-icon>
+          <p class="site">@2022 travelonio.com</p>
+        </div>
+
+        <div class="copyright">
+          <p class="site">@2022 travelonio.com</p>
+          <div class="terms">
+            <p i18n="@@privacy" (click)="openPolicyDialog($event)">
+              Privacy Statement
+            </p>
+            <p i18n="@@terms" (click)="openTermsAndConditionsDialog($event)">
+              General Delivery Terms
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="right">
+      <div class="sign-up-header">
+        <h3
+          *ngIf="currentStep !== 0"
+          i18n="@@propertyDetails"
+          (click)="reviewProperty()"
+          class="property-details"
+        >
+          Property details
+        </h3>
+        <div class="help">
+          <h3 i18n="@@signupDifficulties">Having difficulties?</h3>
+          <a href="#" (click)="openHelpDialog($event)"
+            ><h3 i18n="@@signupHelp">Help</h3></a
+          >
+        </div>
+      </div>
+
+      <ng-container *ngTemplateOutlet="propertyForm"></ng-container>
+    </div>
+  </div>
+</div>
+
+<ng-template #propertyForm>
+  <app-sign-up-content
+    class="right-side-content"
+    [propertyId]="propertyId"
+    [myProperties]="myProperties"
+    [signUpJourneyStep]="currentStep"
+    [selectedPropertyId]="selectedPropertyId"
+    [currentRoute]="currentRoute"
+    [currentStep]="currentStep"
+    (changeStepperValue)="changeStepperValue($event)"
+    (onSignUpStepsCompleted)="onSignUpCompleted($event)"
+    (showTermsAndConditionsErrorInSignUp)="
+      onShowTermsAndConditionsErrorInSignUp($event)
+    "
+    (createProperty)="createProperty()"
+    (deleteProperty)="deleteProperty($event)"
+    (selectProperty)="selectProperty($event)"
+  ></app-sign-up-content>
+</ng-template>

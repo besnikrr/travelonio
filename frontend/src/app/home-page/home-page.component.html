@@ -1,0 +1,175 @@
+<div class="hp-container" [class.background]="showIcons">
+  <app-home-page-header
+    class="absolute"
+    [transparent]="true"
+  ></app-home-page-header>
+
+  <div class="hp-content">
+    <div class="hp-first-section">
+      <div class="headline-heading">
+        <h2>Find Your Best Stay</h2>
+      </div>
+      <div class="hp-search-fields-container">
+        <div class="filters">
+          <mat-chip-list>
+            <mat-chip
+              *ngFor="
+                let filter of SearchPropertyFilters.getAllSearchPropertyFilters()
+              "
+              [class.selected]="selectedProperties.includes(filter)"
+              (click)="changeSelectedPropertyType(filter)"
+            >
+              <div class="filter-chip">
+                {{
+                  SearchPropertyFilters.getSearchPropertyFiltersNames(filter)
+                }}
+              </div>
+            </mat-chip>
+          </mat-chip-list>
+        </div>
+
+        <div class="hp-search-fields">
+          <div class="extra-margin">
+            <div
+              class="field-container location"
+              [ngClass]="{ 'invalid-field': isSearchLocationInvalid }"
+            >
+              <app-search-location-field
+                label="Location*"
+                i18n-label="searchLocationLabel@@searchLocationLabel"
+                placeholder="Where are you going?"
+                i18n-placeholder="
+                  searchLocationPlaceholder@@searchLocationPlaceholder"
+                [selectedValue]="selectedPropertyFiltersFromStore"
+                [filteredLocations]="filteredLocations | async"
+                (searchChange)="locationChange($event)"
+                (locationSelected)="locationSelected($event)"
+              ></app-search-location-field>
+            </div>
+
+            <div
+              class="field-container dates"
+              [ngClass]="{ 'invalid-field': isCheckInOutInvalid }"
+            >
+              <app-check-in-out
+                (startDate)="filterChanged($event, 'startDate')"
+                (endDate)="filterChanged($event, 'endDate')"
+                [showPlaceholder]="true"
+              ></app-check-in-out>
+            </div>
+
+            <div
+              class="field-container guests"
+              [ngClass]="{ 'invalid-field': isGuestInvalid }"
+            >
+              <app-guests-filter
+                (searchChange)="guestsChanged($event)"
+                [showPlaceholder]="true"
+              ></app-guests-filter>
+            </div>
+
+            <button
+              mat-raised-button
+              color="primary"
+              class="field-container search-button"
+              [class.disabled]="!disableSearchButton"
+              (click)="onSearchClick()"
+              i18n="@@searchProperty"
+            >
+              Search
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="hp-second-section">
+      <h3 i18n="@@whatBestDescribesYourTrip">What best describes your trip</h3>
+      <div class="trip-icon-container">
+        <div class="trip-icons">
+          <app-describe-trip-options
+            *ngFor="let trip of TripOptions"
+            [icon]="trip.icon"
+            [tripOption]="trip.name"
+            [tripId]="trip.id"
+            [selectedTripOption]="selectedTripOption"
+            (select)="selectTripOption($event)"
+          ></app-describe-trip-options>
+        </div>
+        <div class="divider"></div>
+      </div>
+      <p i18n="@@whatBestDescribesYourTripComment">
+        *This will help you find your first personalised vacation/surroundings
+        based on your interests
+      </p>
+      <div class="destination-close" (click)="goToSearchProperties()">
+        <h3 i18n="@@destinactionsCloseToYou">Destinations close to you</h3>
+        <div class="destinations-carousel hide-in-phone">
+          <carousel
+            *ngIf="showIcons"
+            [cellsToShow]="3"
+            [margin]="8"
+            [arrowsOutside]="true"
+          >
+            <div class="carousel-cell" *ngFor="let option of carouselImages">
+              <app-carousel-item
+                [data]="option"
+                [width]="372"
+              ></app-carousel-item>
+            </div>
+          </carousel>
+        </div>
+        <div class="destinations-scroll">
+          <app-carousel-item
+            *ngFor="let option of carouselImages"
+            [data]="option"
+            [width]="228.9"
+          ></app-carousel-item>
+        </div>
+      </div>
+
+      <div
+        class="popular-destinations-section"
+        (click)="goToSearchProperties()"
+      >
+        <h5 i18n="@@popularDestinations">Popular Destinations</h5>
+        <div class="destination-cards-container">
+          <div
+            *ngFor="let country of countryData; let index = index"
+            class="destination-card"
+          >
+            <app-country-display-card
+              [country]="country"
+            ></app-country-display-card>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonials-gallery">
+        <h3 i18n="@@testimonialsAndGalery">Testimonials & Gallery</h3>
+        <div class="testimonials">
+          <app-testimonial-picture
+            [image]="testimonials[0].image"
+            [testimonial]="testimonials[0].testimonial"
+          ></app-testimonial-picture>
+          <app-testimonial-picture
+            class="hide-in-phone"
+            [image]="testimonials[1].image"
+            [testimonial]="testimonials[1].testimonial"
+          ></app-testimonial-picture>
+          <div class="just-pictures hide-in-phone">
+            <app-testimonial-picture
+              [image]="testimonials[2].image"
+            ></app-testimonial-picture>
+            <app-testimonial-picture
+              [image]="testimonials[3].image"
+            ></app-testimonial-picture>
+          </div>
+        </div>
+      </div>
+      <app-roulette></app-roulette>
+    </div>
+  </div>
+  <div class="hp-footer">
+    <app-footer></app-footer>
+  </div>
+</div>

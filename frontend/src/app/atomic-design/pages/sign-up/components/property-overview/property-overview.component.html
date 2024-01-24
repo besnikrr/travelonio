@@ -1,0 +1,120 @@
+<div class="rooms-prices-container">
+  <div class="overview-header">
+    <h5 i18n="@@propOverview">Property overview</h5>
+  </div>
+  <mat-divider></mat-divider>
+  <div class="headers">
+    <div class="first-header"></div>
+    <p class="second-header">
+      <span i18n="@@propOverviewPrice">Price</span> <br /><span
+        i18n="@@propOverviewPerNight"
+        >per Night</span
+      >
+    </p>
+    <div class="header">
+      <p class="third-header" i18n="@@roomPricesDiscount">Discount?</p>
+      <mat-icon *ngIf="showIcons" [svgIcon]="'reze:info'"></mat-icon>
+    </div>
+    <div class="header">
+      <p class="fourth-header">
+        <span i18n="@@propOverviewOur">Our</span> <br />
+        <span i18n="@@propOverviewCommission">Commission</span>
+      </p>
+      <mat-icon *ngIf="showIcons" [svgIcon]="'reze:info'"></mat-icon>
+    </div>
+
+    <div class="header">
+      <p class="fourth-header">
+        <span i18n="@@propOverviewYour">Your</span> <br />
+        <span i18n="@@propOverviewProfit">Profit</span>
+      </p>
+      <mat-icon *ngIf="showIcons" [svgIcon]="'reze:info'"></mat-icon>
+    </div>
+  </div>
+
+  <div class="room" *ngFor="let room of rooms">
+    <div class="room-block">
+      <div class="room-name-price">
+        <div class="name">
+          {{
+            room.quantity +
+              " x " +
+              room.description +
+              ", price: " +
+              room.price +
+              " €"
+          }}
+        </div>
+        <div class="price">
+          <span i18n="@@roomPricesFits">Fits</span> {{ room.peopleQuantity }}
+          <span i18n="@@roomPricesPeople">people</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="discount-percentage">
+      <span>Place per night</span>
+      <app-single-line-field
+        [readOnly]="true"
+        [initialValue]="floatString(room.price)"
+        [symbol]="'€'"
+        [validators]="[validators.pattern('^[0-9]*$')]"
+      ></app-single-line-field>
+    </div>
+
+    <div class="discount-percentage">
+      <span>Discount?</span>
+      <app-single-line-field
+        [readOnly]="true"
+        [symbol]="'%'"
+        [initialValue]="calculateRoomDiscount(room)"
+        [validators]="[validators.pattern('^[0-9]*$')]"
+      ></app-single-line-field>
+    </div>
+
+    <div class="discount-percentage">
+      <span>Our Commission</span>
+      <app-single-line-field
+        [readOnly]="true"
+        [symbol]="'%'"
+        [initialValue]="floatString(7)"
+        [validators]="[validators.pattern('^[0-9]*$')]"
+      ></app-single-line-field>
+    </div>
+
+    <div class="discount-percentage">
+      <span>Your Profit</span>
+      <app-single-line-field
+        [readOnly]="true"
+        [symbol]="'€'"
+        [initialValue]="calculateEarnings()"
+        [validators]="[validators.pattern('^[0-9]*$')]"
+      ></app-single-line-field>
+    </div>
+
+    <mat-divider class="hide"></mat-divider>
+  </div>
+
+  <div class="benefits-from-platform">
+    <mat-icon *ngIf="showIcons" [svgIcon]="'reze:check-icon-green'"></mat-icon>
+    <p class="benefits" i18n="@@propOverviewBenefits">
+      Benefits of being on our platform
+    </p>
+    <ul>
+      <li i18n="@@propOverviewGreatCustomer">
+        Great customer service in Albanian and English
+      </li>
+      <li i18n="@@propOverviewExperienced">
+        Experienced local team with years of international experience to bring
+        you the latest technology
+      </li>
+      <li i18n="@@propOverviewPromote">
+        We promote your place on google and social media
+      </li>
+      <li i18n="@@propOverviewPayments">
+        We take payments from guests and transfer them to you from a local
+        bank.Saving you time and money.
+      </li>
+    </ul>
+  </div>
+</div>

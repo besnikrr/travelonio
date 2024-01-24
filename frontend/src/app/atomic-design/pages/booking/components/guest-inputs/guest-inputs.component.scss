@@ -1,0 +1,21 @@
+@import "../../../../../style/responsivness";
+
+:host {
+  .inputs {
+    display: flex;
+    flex-direction: row;
+    @include columns-in-tablet;
+    width: 100%;
+    padding-bottom: 20px;
+    div {
+      width: 100%;
+      padding: 0 20px 0 20px;
+      mat-form-field {
+        width: 100%;
+      }
+    }
+  }
+  ::ng-deep .mat-form-field-outline {
+    background: white !important;
+  }
+}

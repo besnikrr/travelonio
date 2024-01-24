@@ -1,0 +1,16 @@
+<mat-card class="container" (click)="onClick.emit()">
+  <mat-card-content>
+    <img [src]="placeData.image" class="image" />
+    <div class="content">
+      <div class="name-and-price">
+        <h2>{{ placeData.name }}</h2>
+        <h2 class="price">{{ placeData.pricePerNight }}/night</h2>
+      </div>
+      <span class="details">{{ placeData.details }}</span>
+      <div class="info">
+        <h3>{{ placeData.distance }} away</h3>
+        <h3>see more</h3>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>

@@ -1,0 +1,125 @@
+@import "../style/responsivness";
+
+:host {
+  display: block;
+  width: 1440px;
+
+  .container {
+    display: flex;
+    justify-content: space-between;
+    padding: 60px 80px 0 80px;
+
+    @media screen and (max-width: $phone) {
+      padding: 60px 20px 0 20px;
+    }
+
+    .first-column {
+      .logo {
+        height: 32px;
+        width: 136px;
+        left: 79.69140625px;
+        top: 66.150390625px;
+        margin-bottom: 28px;
+      }
+
+      .socials {
+        display: flex;
+        justify-content: flex-start;
+        margin-bottom: 36px;
+
+        @media screen and(max-width: $tablet) {
+          margin: 10px 0;
+        }
+
+        mat-icon {
+          margin-right: 32px;
+        }
+
+        &.hide-in-desktop {
+          @include dont-show-in-desktop;
+        }
+
+        &.hide-in-phone {
+          @include dont-show-in-phone;
+        }
+      }
+
+      .contact {
+        display: flex;
+        margin-bottom: 11px;
+
+        mat-icon {
+          margin-right: 11px;
+        }
+
+        p {
+          font-family: Lato, sans-serif;
+          font-size: 14px;
+          font-style: normal;
+          font-weight: 400;
+          line-height: 20px;
+          letter-spacing: 0px;
+          text-align: left;
+        }
+      }
+
+      .easy-reservation {
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 20px;
+        text-align: left;
+        color: #671bb5;
+        cursor: pointer;
+      }
+    }
+
+    .columns {
+      display: flex;
+
+      &.hide-in-desktop {
+        @include dont-show-in-desktop;
+      }
+    }
+
+    .column {
+      display: flex;
+      flex-direction: column;
+
+      @media screen and (max-width: $desktop) {
+        padding: 0 15px;
+
+        &:first-of-type {
+          padding-left: 0;
+        }
+
+        &:last-of-type {
+          padding-right: 0;
+        }
+      }
+
+      &.hide-in-phone {
+        @include dont-show-in-tablet;
+      }
+
+      .heading {
+        font-size: 18px;
+        font-weight: 500;
+        line-height: 24px;
+        text-align: left;
+      }
+
+      p {
+        margin-bottom: 0 !important;
+      }
+
+      .item {
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 20px;
+        text-align: left;
+        color: #474d66;
+        cursor: pointer;
+      }
+    }
+  }
+}

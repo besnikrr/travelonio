@@ -1,0 +1,17 @@
+<div class="container" [style.width.px]="width">
+  <img [src]="data.image"/>
+  <div class="info">
+    <h5>{{data.place}}</h5>
+<!--    <p>124 km away</p>-->
+    <div class="item-footer">
+      <div class="price-per-night">
+        <h4 class="price">€{{data.price}}</h4>
+        <p class="night">/night</p>
+      </div>
+      <div class="rate">
+        <mat-icon *ngIf="showIcons" [svgIcon]="'reze:rate-star'"></mat-icon>
+        <p>5.0</p>
+      </div>
+    </div>
+  </div>
+</div>

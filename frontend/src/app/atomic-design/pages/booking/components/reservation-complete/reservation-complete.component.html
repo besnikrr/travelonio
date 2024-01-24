@@ -1,0 +1,73 @@
+<div class="hp-container">
+  <app-home-page-header
+    class="absolute"
+    [transparent]="true"
+  ></app-home-page-header>
+
+  <div class="hp-content">
+    <mat-card>
+      <mat-card-title>
+        <h1 i18n="@@reservationComplete">Your reservation is complete!</h1>
+        <h3 i18n="@@enjoyYourHoliday">Enjoy your holiday!</h3>
+      </mat-card-title>
+      <div class="content">
+        <h2 i18n="@@reservationOverview">Reservation Overview</h2>
+        <div class="property-info">
+          <div class="property">
+            <app-property-info
+              [property]="propertyInfo"
+              [displayBookNowAndPrice]="false"
+            ></app-property-info>
+            <div>
+              <p class="bold" i18n="@@reservationNumber">Reservation Number:</p>
+              <p>{{ overallInfo?.bookingId }}</p>
+            </div>
+          </div>
+          <div class="guest-and-dates">
+            <div class="field-container dates">
+              <app-check-in-out
+                [selectedStartDate]="overallInfo?.startDate"
+                [selectedEndDate]="overallInfo?.endDate"
+                [preventDateChange]="true"
+                [showPlaceholder]="true"
+              ></app-check-in-out>
+            </div>
+            <div class="field-container dates">
+              <app-guests-filter
+                [selectedGuests]="overallInfo?.guests"
+                [showPlaceholder]="true"
+                [preventGuestChange]="true"
+              >
+              </app-guests-filter>
+            </div>
+            <div class="calculation">
+              <span>
+                € {{ propertyInfo?.price }} x {{ propertyInfo?.nights }}
+                <span i18n="@@nightsText"> nights</span>
+                x {{ roomCount }}
+                <span i18n="@@rooms">rooms</span>
+              </span>
+
+              <span class="purple-color price"
+                >€ {{ propertyInfo?.price * roomCount }}</span
+              >
+            </div>
+          </div>
+        </div>
+        <button
+          mat-raised-button
+          color="primary"
+          class="field-container continue"
+          (click)="goHome()"
+          i18n="@@continueHome"
+        >
+          Continue Home
+        </button>
+      </div>
+    </mat-card>
+  </div>
+
+  <div class="hp-footer">
+    <app-footer></app-footer>
+  </div>
+</div>

@@ -1,0 +1,31 @@
+<div
+  [ngClass]="{ 'file-drop-area': true, 'drag-over': isDragOver }"
+  appFileDrop
+  (dragOver)="onDragOver()"
+  (dragLeave)="onDragLeave()"
+  (filesDropped)="onFilesDropped($event)"
+  (invalidExtensionsDropped)="onInvalidFileExtensionsDropped($event)"
+  (oversizeFilesDropped)="overSizeFilesDropped($event)"
+  (click)="openFileUploadDialog()"
+>
+  <mat-icon *ngIf="showIcons" [svgIcon]="'reze:add-attachment'"></mat-icon>
+  <p>
+    <span i18n="@@uploadImageDrag">Drag and drop or</span>
+    <span i18n="@@uploadImageBrowse">browse</span>
+    <span i18n="@@uploadImageYourPhotos">your photos</span>
+  </p>
+
+  <p class="file-size" i18n="@@uploadImageFileSize">
+    Supported files are: JPG, JPEG or PNG with max size of 15 MB
+  </p>
+</div>
+<form>
+  <input
+    type="file"
+    #file
+    data-cy="file-input"
+    style="display: none"
+    multiple
+    (change)="fileChange($event)"
+  />
+</form>

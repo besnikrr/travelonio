@@ -1,0 +1,99 @@
+<div class="map">
+  <mat-error
+    i18n="@@propertyPinIsRequired"
+    *ngIf="location.latitude === null && (dirtyInputs | async)"
+  >
+    Setting the pin in map is required
+  </mat-error>
+  <google-map
+    [height]="mapHeight"
+    [width]="mapWidth"
+    [zoom]="zoom"
+    [center]="center"
+    [options]="options"
+    (mapClick)="addMarker($event)"
+  >
+    <map-marker
+      [position]="markerPosition"
+      [options]="markerOptions"
+      (positionChanged)="onFinalContinue()"
+    >
+    </map-marker>
+  </google-map>
+  <div *ngIf="showModal" class="overlay">
+    <mat-card class="details-card">
+      <div class="details">
+        <h1 color="primary" i18n="@@propLocationTitle">Location overview</h1>
+        <p>{{ getAddress() }}</p>
+        <div class="form-inputs">
+          <app-search-location-field
+            placeholder="Location"
+            i18n-placeholder="country generic text@@countryGeneric"
+            [filteredLocations]="filteredLocations | async"
+            [selectedValue]="selectedLocationDisplayName"
+            (locationSelected)="locationUpdate($event)"
+            (searchChange)="searchLocation($event)"
+          ></app-search-location-field>
+          <mat-error
+            i18n="@@propertyCountryIsRequired"
+            *ngIf="location.country === null && (dirtyInputs | async)"
+          >
+            Location is required
+          </mat-error>
+          <app-single-line-field
+            [initialValue]="location?.address ? location.address : ''"
+            class="street"
+            label="Street"
+            i18n-label="@@streetGenericText"
+            i18n-placeholder="@@propLocationAddress"
+            placeholder="Street where your property is"
+            (onChange)="locationUpdate({ address: $event })"
+          ></app-single-line-field>
+          <mat-error
+            i18n="@@propertyAddressIsRequired"
+            *ngIf="location.address === null && (dirtyInputs | async)"
+          >
+            Address is required
+          </mat-error>
+          <app-single-line-field
+            [initialValue]="location?.zipCode ? location.zipCode : ''"
+            class="zip-code"
+            [type]="'number'"
+            label="Postal Code"
+            i18n-label="@@propLocationPostalCode"
+            i18n-placeholder="@@postalCodeWhereYourPropertyIs"
+            placeholder="Postal Code where your property is"
+            (onChange)="locationUpdate({ zipCode: $event })"
+          ></app-single-line-field>
+          <mat-error
+            i18n="@@propertyPostalCodeIsRequired"
+            *ngIf="location.zipCode === null && (dirtyInputs | async)"
+          >
+            Postal Code is required
+          </mat-error>
+        </div>
+        <div class="dialog-buttons">
+          <button
+            mat-flat-button
+            class="next-button"
+            color="primary"
+            i18n="@@propLocationContinue"
+            (click)="onSetAddress()"
+          >
+            Continue
+          </button>
+        </div>
+      </div>
+    </mat-card>
+  </div>
+  <div class="edit-address">
+    <mat-card *ngIf="!showModal">
+      <button
+        (click)="showModal = !showModal"
+        i18n="edit address text@@editAddressText"
+      >
+        Edit address
+      </button>
+    </mat-card>
+  </div>
+</div>

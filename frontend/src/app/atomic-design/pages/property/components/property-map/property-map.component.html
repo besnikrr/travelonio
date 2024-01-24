@@ -1,0 +1,14 @@
+<div class="map">
+  <h1 class="title" i18n="@@map">Map</h1>
+  <google-map
+    [height]="mapHeight"
+    [width]="mapWidth"
+    [zoom]="zoom"
+    [center]="setLocation()"
+    [options]="options"
+  >
+    <map-marker [position]="setLocation()" [options]="markerOptions">
+    </map-marker
+    >
+  </google-map>
+</div>

@@ -1,0 +1,155 @@
+@import "../style/colors";
+@import "../style/responsivness";
+@import "../style/breaking-points.scss";
+
+:host {
+  width: 100%;
+
+  .white-background {
+    background-color: white;
+  }
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 111px;
+    width: 100%;
+    padding: 0 80px;
+    max-width: 1440px;
+    margin: 0 auto;
+
+    @media screen and (max-width: $tablet) {
+      padding: 0 20px;
+    }
+
+    @media screen and (max-width: $phone) {
+      padding: 0 5px;
+    }
+
+    .left-side {
+      mat-icon {
+        @include logo-size-in-phone;
+        @include logo-size-in-tablet;
+      }
+    }
+
+    .right-side {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #304659;
+      font-weight: 700;
+
+      .become-host {
+        @include become-host-button-in-tablet;
+        @include become-host-button-in-phone;
+      }
+
+      .item {
+        &.profile {
+          @include left-padding-in-phone;
+          @include left-padding-in-tablet;
+
+          button {
+            border: 1px solid #304659;
+            background-color: transparent;
+            box-sizing: border-box;
+            border-radius: 26px;
+            @include profile-icon-size-in-phone;
+            @include profile-icon-size-in-tablet;
+
+            .user-profile-icon {
+              width: 32px;
+              height: 32px;
+              margin-right: 2px;
+            }
+
+            .lines-icon {
+              width: 18px;
+              height: 26px;
+              margin: 0 8px;
+            }
+          }
+        }
+
+        &.language-label {
+          margin-left: 8px;
+          button {
+            width: 45px;
+          }
+        }
+      }
+    }
+
+    .hide-in-phone {
+      @include dont-show-in-phone;
+    }
+  }
+
+  .general-dropdown_notif {
+    padding-left: 0;
+    padding-right: 0;
+    border-radius: 20px;
+
+    .side-arrow-target {
+      right: 19px;
+    }
+  }
+
+  .notification-plc {
+    max-width: 480px;
+
+    //p {
+    //  font-family: Lato, sans-serif;
+    //}
+
+    .title {
+      font-weight: 600;
+      border-bottom: 1px solid #dbdbdb;
+      padding: 5px 10px 10px 20px;
+      margin: 0;
+    }
+
+    .notification {
+      &-li {
+        border-bottom: 1px solid #dbdbdb;
+        padding: 10px 15px;
+
+        div {
+          display: flex;
+
+          span {
+            padding-right: 5px;
+          }
+        }
+
+        &:last-of-type {
+          border-bottom: 0;
+        }
+
+        p {
+          margin: 0;
+        }
+
+        .notification-text {
+          font-weight: 600;
+        }
+
+        .notification-date {
+          color: #696f8c;
+          padding-left: 10px;
+        }
+
+        span {
+          color: $primary;
+        }
+
+        &__no-messages {
+          color: #696f8c;
+          font-size: 12px;
+        }
+      }
+    }
+  }
+}

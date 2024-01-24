@@ -1,0 +1,59 @@
+@import "../../../style/responsivness";
+
+:host {
+  display: block;
+  .container {
+    display: block;
+    background-image: url("../../../../assets/homePage/welcomeText.svg");
+    height: 350px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 750px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    h1 {
+      font-weight: 700;
+      font-size: 40px;
+      color: #304659;
+    }
+    p {
+      font-weight: 400;
+      font-size: 16px;
+      color: #304659;
+    }
+    button {
+      padding: 10px 20px;
+      margin-top: 14px;
+    }
+  }
+  @media screen and (max-width: $desktop) {
+    .container {
+      width: 600px;
+    }
+  }
+
+  @media screen and (max-width: $tablet) {
+    .container {
+      width: 400px;
+      h1 {
+        font-size: 35px;
+      }
+      p {
+        font-size: 14px;
+      }
+    }
+  }
+  @media screen and (max-width: $phone) {
+    .container {
+      width: 300px;
+      h1 {
+        font-size: 26px;
+      }
+      button {
+        padding: 8px 16px;
+      }
+    }
+  }
+}

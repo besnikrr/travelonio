@@ -1,0 +1,83 @@
+@import "../../../style/responsivness";
+@import "../../../style/breaking-points.scss";
+
+:host {
+  display: block;
+
+  .field-container {
+    height: 75px;
+    border-radius: 10px;
+    border: 1px solid #c1c4d6;
+    width: 100%;
+    margin: 15px 0;
+    &.dates {
+      background: white;
+    }
+
+    &.continue {
+      width: 247px;
+      border-radius: 10px;
+      font-size: 18px;
+    }
+  }
+  .calculation {
+    display: flex;
+    justify-content: space-between;
+    padding: 12.5px 0;
+    font-size: 18px;
+    font-weight: 500;
+    color: #304659;
+    &.border {
+      border-bottom: 1px solid #e6e8f0;
+    }
+  }
+  .buttons-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    .back-button {
+      margin-right: 30px;
+      height: 75px;
+      width: 110px;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 18px;
+    }
+  }
+
+  @media screen and (max-width: $medium) {
+    .mat-card {
+      padding: 10px !important;
+    }
+    .buttons-container {
+      justify-content: flex-end;
+      .field-container {
+        height: 50px;
+        width: fit-content !important;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .back-button {
+        margin-right: 16px;
+        height: 50px;
+      }
+    }
+  }
+
+  @media screen and (max-width: $small) {
+    .field-container {
+      &.continue {
+        font-size: 16px;
+      }
+    }
+    .calculation {
+      font-size: 16px;
+    }
+    .buttons-container {
+      .back-button {
+        font-size: 16px;
+      }
+    }
+  }
+}

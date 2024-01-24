@@ -1,0 +1,64 @@
+<div class="amenities-container">
+  <h5 i18n="@@amenitiesTitle">Select the amenities your place provides</h5>
+  <div *ngFor="let amenity of amenities" class="aminitie">
+    <h6>{{ Amenities.convertToString(amenity.name) }}</h6>
+    <mat-divider></mat-divider>
+    <div *ngFor="let option of amenity.option" class="option">
+      <div class="option-container">
+        <mat-checkbox
+          color="primary"
+          [checked]="option.selected"
+          (change)="
+            update(amenity.name, {
+              name: option.name,
+              selected: $event.checked
+            })
+          "
+          ><span>{{
+            Amenities.convertToString(option.name)
+          }}</span></mat-checkbox
+        >
+        <div class="distance" *ngIf="option?.distance !== null">
+          <app-single-line-field
+            [readOnly]="!option.selected"
+            [initialValue]="option?.distance > 0 ? option.distance : ''"
+            [validators]="[validators.pattern('^\\d+(\\.\\d+)?$')]"
+            (onChange)="
+              selectAmenity({
+                name: amenity.name,
+                option: {
+                  name: option.name,
+                  selected: option.selected,
+                  distance: +$event
+                }
+              })
+            "
+          ></app-single-line-field>
+          <p>km</p>
+        </div>
+      </div>
+
+      <app-single-line-field
+        class="other-monuments"
+        *ngIf="option.name === Amenities.OtherMonuments && option.selected"
+        placeholder="Enter here..."
+        i18n-placeholder="enter here text@@enterHereText"
+        label="Description"
+        i18n-label="generic text description@@describeDescription"
+        [initialValue]="amenitiesDescription"
+        (onChange)="updateAmenitiesDescription($event)"
+      ></app-single-line-field>
+    </div>
+  </div>
+
+  <div class="property-tags">
+    <app-tags-form
+      [propertyId]="propertyId"
+      [label]="whatElseOffered"
+      [placeholder]="'Select your Amenities'"
+      [tags]="tags"
+      [options]="propertyTags"
+      (tagUpdated)="tagUpdated($event)"
+    ></app-tags-form>
+  </div>
+</div>

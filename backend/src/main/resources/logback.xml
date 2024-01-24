@@ -1,0 +1,46 @@
+<configuration>
+    <logger name="akka" level="WARN"/>
+    <logger name="com.typesafe" level="INFO"/>
+    <logger name="io.netty" level="INFO"/>
+
+    <timestamp key="bySecond" datePattern="yyyy-MM-dd-HH-mm-ss"/>
+
+    <appender name="timeBasedFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>logs/backend.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>logs/old/backend.%d.%i.gz</fileNamePattern>
+            <!-- each file should be at most 5MB, keep 10 days worth of history, but at most 1GB -->
+            <maxHistory>10</maxHistory>
+            <maxFileSize>5MB</maxFileSize>
+            <totalSizeCap>1GB</totalSizeCap>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%date %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+
+    <appender name="asyncTimeBasedFile" class="ch.qos.logback.classic.AsyncAppender">
+        <appender-ref ref="timeBasedFile"/>
+    </appender>
+
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%date %.-5level [Reze] %-30logger{30} - %msg%n</pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>INFO</level>
+        </filter>
+    </appender>
+
+    <appender name="asyncConsole" class="ch.qos.logback.classic.AsyncAppender">
+        <appender-ref ref="console"/>
+    </appender>
+
+    <logger name="org.mongodb.driver" level="DEBUG"/>
+
+    <root level="DEBUG">
+        <appender-ref ref="asyncConsole"/>
+        <appender-ref ref="asyncTimeBasedFile"/>
+    </root>
+</configuration>

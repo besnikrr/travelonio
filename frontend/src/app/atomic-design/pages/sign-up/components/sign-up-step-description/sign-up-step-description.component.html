@@ -1,0 +1,43 @@
+<div class="step">
+  <h4 class="step-header">
+    {{ signUpTexts[signUpJourneyStep === 17 ? 16 : signUpJourneyStep].header }}
+  </h4>
+
+  <div class="name-suggestion-points">
+    <p class="sub-header">
+      {{
+      signUpTexts[signUpJourneyStep === 17 ? 16 : signUpJourneyStep]
+        .subheader1
+      }}
+    </p>
+    <p class="sub-header">
+      {{
+      signUpTexts[signUpJourneyStep === 17 ? 16 : signUpJourneyStep]
+        .subheader2
+      }}
+    </p>
+    <p class="list-title">
+      {{
+      signUpTexts[signUpJourneyStep === 17 ? 16 : signUpJourneyStep].listTitle
+      }}
+    </p>
+    <ul>
+      <li
+        *ngFor="
+          let option of signUpTexts[
+            signUpJourneyStep === 17 ? 16 : signUpJourneyStep
+          ].listOptions
+        "
+      >
+        {{ option }}
+      </li>
+    </ul>
+
+    <p class="sub-header">
+      {{
+      signUpTexts[signUpJourneyStep === 17 ? 16 : signUpJourneyStep]
+        .subheader4
+      }}
+    </p>
+  </div>
+</div>

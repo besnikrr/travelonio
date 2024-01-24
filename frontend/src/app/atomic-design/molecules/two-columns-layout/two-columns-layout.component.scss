@@ -1,0 +1,28 @@
+@import "../../../style/responsivness";
+
+:host {
+  display: block;
+  height: 100%;
+  width: 100%;
+
+  .container {
+    display: flex;
+    height: 100%;
+
+    .left-column {
+      display: flex;
+      flex-basis: 70%;
+    }
+
+    .right-column {
+      display: flex;
+      flex-basis: 30%;
+    }
+  }
+
+  @media screen and (max-width: $desktop) {
+    .container {
+      flex-direction: column;
+    }
+  }
+}

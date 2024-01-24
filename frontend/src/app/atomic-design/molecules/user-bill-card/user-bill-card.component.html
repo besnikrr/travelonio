@@ -1,0 +1,68 @@
+<mat-card>
+  <div class="field-container dates">
+    <app-check-in-out
+      [selectedEndDate]="selectedEndDate"
+      [selectedStartDate]="selectedStartDate"
+      [showPlaceholder]="true"
+      (startDate)="startDateChanged($event)"
+      (endDate)="endDateChanged($event)"
+    ></app-check-in-out>
+  </div>
+  <div class="field-container dates">
+    <app-guests-filter
+      [selectedGuests]="selectedGuests"
+      [showPlaceholder]="true"
+      (searchChange)="guestsChanged($event)"
+    >
+    </app-guests-filter>
+  </div>
+
+  <div class="calculation border" *ngIf="showRoomCountAndPrice">
+    <span>
+      € {{ room?.price }} x {{ nights }}
+      <span i18n="@@nightsText"> nights</span>
+      x {{ roomCount }}
+      <span i18n="@@rooms">rooms</span>
+    </span>
+    <span>€ {{ room?.price * nights * roomCount }}</span>
+  </div>
+  <!--  <div class="calculation border" *ngIf="showPriceAndButtons">-->
+  <!--    <span>TVSH</span>-->
+  <!--    <span>€ {{ roomBillReport?.vat }}</span>-->
+  <!--  </div>-->
+  <div class="calculation" *ngIf="showRoomCountAndPrice">
+    <span i18n="@@totalText">Total</span>
+    <span class="purple-color"
+      ><b>€ {{ room?.price * nights * roomCount }}</b></span
+    >
+  </div>
+
+  <div class="buttons-container">
+    <button
+      mat-button
+      class="back-button"
+      (click)="navigateBack()"
+      i18n="@@signupBack"
+    >
+      Back
+    </button>
+    <button
+      *ngIf="showContinueButton"
+      mat-raised-button
+      color="primary"
+      class="field-container continue"
+      (click)="navigateForward()"
+    >
+      <span>{{ getButtonName() }}</span>
+    </button>
+    <button
+      *ngIf="showBookNowButton"
+      mat-raised-button
+      color="primary"
+      class="field-container continue"
+      (click)="bookNowClicked()"
+    >
+      <span i18n="@@bookNow">Book now</span>
+    </button>
+  </div>
+</mat-card>

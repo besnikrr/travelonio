@@ -1,0 +1,122 @@
+/* You can add global styles to this file, and also import other style files */
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+}
+
+* {
+  box-sizing: border-box;
+  font-family: Lato, sans-serif;
+}
+
+.link-without-style {
+  text-decoration: none;
+  color: inherit;
+}
+
+@font-face {
+  font-family: "Lato";
+  src: local("Lato"),
+    url(./assets/fonts/Lato/Lato-Regular.ttf) format("truetype");
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+/* Track */
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px #f6f7f9;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  background: #c5cae9;
+  -webkit-box-shadow: inset 0 0 6px #f6f7f9;
+}
+::-webkit-scrollbar-thumb:window-inactive {
+  background: #c5cae9;
+}
+
+.general-dropdown {
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  border-radius: 5px;
+  border: 1px solid #dbdbdb;
+  padding: 5px 10px;
+  position: relative;
+  text-align: left;
+  min-width: 150px;
+
+  a,
+  button {
+    font-family: Lato, sans-serif;
+    border: none;
+    font-weight: 400;
+    font-size: 16px;
+    box-shadow: none;
+    text-align: left;
+    background: transparent;
+    padding: 10px 12px;
+
+    &:hover {
+      cursor: pointer;
+      color: #999;
+    }
+  }
+
+  .side-arrow-target {
+    position: absolute;
+    background-color: #fff;
+    top: -8px;
+    right: 15px;
+    width: 15px;
+    height: 15px;
+    transform: rotate(45deg);
+    border-top: 1px solid #dbdbdb;
+    border-left: 1px solid #dbdbdb;
+  }
+}
+
+.mat-form-field-outline-gap {
+  border-width: 1px !important;
+}
+
+.fullscreen-dialog {
+  max-width: 100% !important;
+  max-height: 100% !important;
+  width: 100%;
+  height: 100%;
+  .mat-dialog-container {
+    padding: 0 !important;
+  }
+}
+
+.purple-color {
+  color: #671bb5;
+}
+.invalid-field {
+  border: 1px solid #4caf50 !important;
+  animation: shake 800ms;
+}
+
+@keyframes shake {
+  25% {
+    transform: translateY(1px);
+  }
+  50% {
+    transform: translateY(-1px);
+  }
+  75% {
+    transform: translateY(1px);
+  }
+}

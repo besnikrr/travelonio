@@ -1,0 +1,98 @@
+<div class="overview">
+  <div class="description">
+    <div class="left">
+      <h1 class="heading title">
+        {{ name }} {{ propertyType }} at {{ city }}, {{ country }}
+      </h1>
+      <mat-divider></mat-divider>
+      <div class="mx-45">
+        <h3 class="subtitle property-title" i18n="@@propertyDescription">
+          Property Description
+        </h3>
+        <p class="paragraph">
+          {{ description }}
+        </p>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="item mx-45">
+        <h3 class="subtitle" i18n="@@breakfast">Breakfast</h3>
+        <p class="paragraph">
+          {{ setBreakfast() }}
+        </p>
+      </div>
+      <div class="item mx-45">
+        <h3 class="subtitle" i18n="@@languages">Languages</h3>
+        <p class="paragraph">
+          <span i18n="@@ourStaffLanguages">{{
+            "Our staff can talk in: "
+          }}</span>
+          <span
+            *ngFor="
+              let lang of this.propertyPoliciesData?.staffLanguages;
+              let last = last
+            "
+          >
+            {{ setStaffLanguages(lang) + (last ? " " : ", ") }}</span
+          >
+        </p>
+      </div>
+      <div class="item mx-45">
+        <h3 class="subtitle" i18n="@@cancellationPolicy">
+          Cancellation policy
+        </h3>
+        <div
+          class="cancelation-policy"
+          *ngIf="ratePlanType() === 'both'; else other_content"
+        >
+          <div class="mx-25">
+            <h3 class="subtitle subtitle-mb" i18n="@@fullRefund">
+              Fully Refundable tariff
+            </h3>
+            <p class="paragraph">
+              <span i18n="@@fullRefundText">
+                Under this tariff you can cancel this reservation free of charge
+                before
+              </span>
+              17:00 o'clock <span i18n="@@onDate">on</span> 10 Feb 2023
+            </p>
+          </div>
+          <div class="mx-25">
+            <h3 class="subtitle subtitle-mb" i18n="@@nonRefund">
+              Non-Refundable tariff
+            </h3>
+            <p class="paragraph" i18n="@@nonRefundText">
+              Under this tariff, you can not cancel you reservation after
+              booking. In case of no-shows the full amount will be charged
+            </p>
+          </div>
+        </div>
+      </div>
+      <ng-template #other_content class="mx-45">
+        <p class="paragraph">
+          {{ ratePlanType() }}
+        </p>
+      </ng-template>
+      <div class="item mx-45">
+        <h3 class="subtitle" i18n="@@houseRules">House rules</h3>
+        <p class="paragraph">
+          {{ setHouseRules(true) }}
+        </p>
+        <p class="paragraph">
+          {{ setHouseRules(false) }}
+        </p>
+      </div>
+    </div>
+    <div class="right">
+      <h1 i18n="@@availability">Availability</h1>
+      <app-user-bill-card
+        [selectedEndDate]="endDate"
+        [selectedGuests]="guests"
+        [selectedStartDate]="startDate"
+        [showRoomCountAndPrice]="false"
+        [showContinueButton]="false"
+        [showBookNowButton]="true"
+        [roomQuantityForBooking]="roomQuantityForBooking"
+      ></app-user-bill-card>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,226 @@
+@import "../../../../../style/responsivness";
+
+:host {
+  display: block;
+  width: 100%;
+
+  .container {
+    display: flex;
+    flex-direction: column;
+    padding: 0 30px 60px 60px;
+    width: 100%;
+
+    mat-divider {
+      border-top: 1px solid #e6e8f0;
+      margin: 32px 0;
+    }
+
+    .section {
+      display: flex;
+      width: 100%;
+      justify-content: space-between;
+
+      .policies {
+        h3 {
+          font-size: 20px;
+          font-weight: 600;
+          text-align: left;
+          color: #671bb5;
+          margin-bottom: 30px;
+        }
+
+        p {
+          font-size: 16px;
+          font-weight: 300;
+          text-align: left;
+          margin-bottom: 30px;
+          color: #696f8c;
+        }
+      }
+
+      .section-content {
+        display: flex;
+        flex-direction: column;
+        flex: 0 1 auto;
+        margin-right: 10px;
+
+        .header {
+          font-size: 24px;
+          font-weight: 700;
+          line-height: 32px;
+          letter-spacing: 0;
+          text-align: left;
+          color: #304659;
+          margin-bottom: 20px;
+        }
+
+        .dates {
+          display: flex;
+          flex-direction: column;
+          font-family: Lato, sans-serif;
+          font-size: 18px;
+          font-weight: 500;
+          line-height: 24px;
+          letter-spacing: 0;
+          text-align: left;
+          margin-bottom: 20px;
+
+          p {
+            margin-bottom: 0 !important;
+          }
+
+          .check-in {
+            display: flex;
+
+            .text {
+              color: #304659;
+            }
+
+            .hours {
+              color: #671bb5;
+              margin-left: 5px;
+            }
+          }
+
+          .check-out {
+            display: flex;
+
+            .text {
+              color: #304659;
+            }
+
+            .hours {
+              color: #ff6647;
+              margin-left: 5px;
+            }
+          }
+        }
+
+        .amenities {
+          ul {
+            padding-left: 20px;
+          }
+
+          li {
+            font-family: Lato, sans-serif;
+            font-size: 16px;
+            font-weight: 400;
+            line-height: 24px;
+            letter-spacing: 0;
+            text-align: left;
+            color: #696f8c;
+            margin-bottom: 20px;
+          }
+
+          li::marker {
+            color: #671bb5;
+          }
+        }
+
+        .sub-header-section {
+          display: flex;
+          align-items: center;
+
+          .policies-icon {
+            height: 36px;
+            width: 36px;
+            border-radius: 50%;
+            background-color: #f6f6f6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 16px;
+          }
+        }
+
+        .policies {
+          margin: 24px 52px;
+          display: flex;
+          flex-direction: column;
+          color: #696f8c;
+          p {
+            font-family: Lato, sans-serif;
+            font-size: 16px;
+            font-weight: 400;
+            line-height: 24px;
+            letter-spacing: 0px;
+            text-align: left;
+            color: #696f8c;
+          }
+        }
+
+        .sub-header {
+          font-family: Lato, sans-serif;
+          font-size: 16px;
+          font-weight: 700;
+          line-height: 24px;
+          letter-spacing: 0;
+          text-align: left;
+          color: #696f8c;
+          margin-bottom: 0 !important;
+        }
+      }
+
+      .image-container {
+        display: flex;
+        flex: 0 1 auto;
+        min-width: 350px;
+        margin-left: 20px;
+        height: 384px;
+        width: 465px;
+        left: 423px;
+        top: 191px;
+        border-radius: 10px;
+        background-color: #304659;
+
+        .image {
+          width: 100%;
+          height: 100%;
+          border-radius: 10px;
+        }
+      }
+    }
+  }
+
+  @media screen and (max-width: 1300px) {
+    .container {
+      .section {
+        flex-direction: column-reverse;
+        .section-content {
+          margin-top: 10px;
+        }
+        .image-container {
+          margin-left: 0;
+          margin-bottom: 60px;
+        }
+      }
+    }
+  }
+  @media screen and (max-width: $tablet) {
+    .container {
+      padding: 0 20px 20px;
+      .section {
+        .image-container {
+          width: 100%;
+          margin-bottom: 30px;
+        }
+      }
+    }
+  }
+  @media screen and (max-width: $phone) {
+    .container {
+      padding: 0;
+      .section {
+        .section-content {
+          .policies {
+            margin-right: 0;
+          }
+        }
+
+        .image-container {
+          margin-bottom: 16px;
+        }
+      }
+    }
+  }
+}

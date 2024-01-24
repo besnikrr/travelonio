@@ -1,0 +1,127 @@
+@import "../../../../../style/breaking-points.scss";
+@import "../../../../../style/responsivness";
+
+:host {
+  .availability {
+    width: 100%;
+    font-family: Lato, sans-serif;
+    font-style: normal;
+
+    .title {
+      font-weight: 700;
+      font-size: 24px;
+      line-height: 24px;
+      color: #304659;
+      margin: 35px 0;
+    }
+
+    .rooms {
+      display: flex;
+      flex-direction: row;
+      width: 100%;
+      flex-wrap: wrap;
+      gap: 20px;
+      @include columns-in-tablet;
+
+      .room {
+        display: flex;
+        flex-direction: row;
+        background-color: white;
+        border-radius: 20px;
+        width: 48%;
+        padding: 10px;
+        box-shadow: 0px 12px 14px rgba(67, 83, 138, 0.06);
+        @include columns-in-tablet;
+        @include full-width-in-tablet;
+
+        .left {
+          width: 40%;
+          @include full-width-in-tablet;
+        }
+
+        .right {
+          width: 60%;
+          @include full-width-in-tablet;
+          display: flex;
+          flex-direction: column;
+          padding-left: 10px;
+
+          .row-1 {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+
+            .room-price {
+              width: 135px;
+              text-align: right;
+            }
+
+            .price {
+              font-family: Lato, sans-serif;
+              font-style: normal;
+              font-weight: 500;
+              font-size: 14px;
+              line-height: 20px;
+              color: #671bb5;
+            }
+          }
+
+          .row-2 {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+
+            .beds {
+              .bed {
+                span {
+                  vertical-align: super;
+                }
+
+                .icon {
+                  width: 25px;
+                  height: 25px;
+                  box-sizing: border-box;
+                  background: #f9fafc;
+                  border: 1px solid #e6e8f0;
+                  border-radius: 100px;
+                }
+              }
+            }
+          }
+
+          .row-3 {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            .message {
+              color: red;
+              font-size: 11px;
+            }
+            .counter {
+              mat-form-field {
+                width: 120px;
+                margin-left: 5px;
+                ::ng-deep .mat-form-field-outline {
+                  box-shadow: 0 10px 27px 0 #671bb51a;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .image {
+      height: 150px;
+      width: 100%;
+      border-radius: 20px;
+      object-fit: cover;
+    }
+  }
+
+  @media screen and (max-width: $small) {
+    .title {
+      font-size: 20px !important;
+    }
+  }
+}

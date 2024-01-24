@@ -1,0 +1,137 @@
+<div class="container">
+  <div class="content">
+    <div class="heading">
+      <h1 id="title">{{ property?.name }}</h1>
+      <div class="subheading">
+        <div class="rating">
+          <mat-icon *ngIf="showIcons" [svgIcon]="'reze:rate-star'"></mat-icon>
+          <p>4.60 (280)</p>
+        </div>
+        <p>
+          {{ property?.location?.country }}, {{ property?.location?.city }}
+          {{
+            property?.location?.village
+              ? " - " + property?.location?.village
+              : ""
+          }}, {{ property?.location?.address }},
+          {{ property?.location?.zipCode }}
+        </p>
+      </div>
+    </div>
+    <div
+      class="gallery"
+      [style.grid-template-rows]="'repeat(' + +numRows + ', 5vw)'"
+    >
+      <div
+        *ngFor="let imageId of property?.imageIds; let index = index"
+        class="gallery__item gallery__item--{{ index + 1 }}"
+        (click)="onImageClick(imageId, index)"
+      >
+        <img
+          src="{{ baseUrl }}/attachments/properties/{{ propertyId }}/images/{{
+            imageId
+          }}"
+          alt=""
+        />
+      </div>
+      <div class="image-count">1/{{ property?.imageIds.length }}</div>
+    </div>
+    <div class="tabs">
+      <ul>
+        <li (click)="scrollTo('overview')" i18n="@@overview">Overview</li>
+        <li (click)="scrollTo('availability')" i18n="@@availability">
+          Availability
+        </li>
+        <li (click)="scrollTo('amenities')" i18n="@@amenities">Amenities</li>
+        <li (click)="scrollTo('policies')" i18n="@@policies">Policies</li>
+        <!-- <li (click)="scrollTo('reviews')" i18n="@@reviews">Reviews</li> -->
+        <li (click)="scrollTo('map')" i18n="@@map">Map</li>
+      </ul>
+    </div>
+
+    <app-property-overview
+      id="overview"
+      [property]="property"
+      [name]="property?.name"
+      [description]="property?.description"
+      [propertyType]="property?.propertyType.toString()"
+      [propertyPoliciesData]="property?.propertyPoliciesData"
+      [ratePlan]="property?.ratePlan"
+      [country]="property?.location?.country"
+      [city]="property?.location?.city"
+      [roomQuantityForBooking]="roomQuantityForBooking"
+    ></app-property-overview>
+
+    <mat-divider></mat-divider>
+
+    <app-property-availability
+      id="availability"
+      [ratePlan]="property?.ratePlan"
+      [rooms]="rooms"
+      [roomQuantityForBooking]="roomQuantityForBooking"
+      (setRoomQuantityForBooking)="setRoomQuantityForBooking($event)"
+    ></app-property-availability>
+
+    <app-property-amenities
+      id="amenities"
+      [amenities]="property?.aminityIds"
+    ></app-property-amenities>
+
+    <mat-divider></mat-divider>
+
+    <app-property-policies
+      id="policies"
+      [ratePlan]="property?.ratePlan"
+      [propertyPoliciesData]="property?.propertyPoliciesData"
+    ></app-property-policies>
+
+    <mat-divider></mat-divider>
+    <!-- <app-property-reviews id="reviews"></app-property-reviews> -->
+
+    <app-property-map
+      id="map"
+      [latitude]="property?.location?.latitude"
+      [longitude]="property?.location?.longitude"
+    ></app-property-map>
+  </div>
+</div>
+
+<div *ngIf="showModal" class="overlay">
+  <mat-card class="details-card">
+    <div class="before" (click)="previous()" *ngIf="!hidePreviousIcon">
+      <mat-icon [svgIcon]="'reze:left-arrow-slider'"></mat-icon>
+    </div>
+    <div class="details">
+      <div class="close" (click)="onClose()">
+        <mat-icon style="cursor: pointer">cancel</mat-icon>
+      </div>
+      <div class="preview">
+        <img
+          src="{{ baseUrl }}/attachments/properties/{{ propertyId }}/images/{{
+            imageId
+          }}"
+          alt=""
+        />
+      </div>
+      <p>{{ imgIndex + 1 }} / {{ property?.imageIds.length }}</p>
+      <div class="images images--preview">
+        <div
+          class="image-box image-box--preview"
+          *ngFor="let imageId of property?.imageIds; let index = index"
+          [class.show-overlay]="imgIndex === index"
+          (click)="onImageClick(imageId, index)"
+        >
+          <img
+            src="{{ baseUrl }}/attachments/properties/{{ propertyId }}/images/{{
+              imageId
+            }}"
+            alt=""
+          />
+        </div>
+      </div>
+    </div>
+    <div class="after" (click)="next()" *ngIf="!hideNextIcon">
+      <mat-icon [svgIcon]="'reze:right-arrow-slider'"></mat-icon>
+    </div>
+  </mat-card>
+</div>

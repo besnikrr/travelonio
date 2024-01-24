@@ -1,0 +1,69 @@
+<div class="container">
+  <div class="first-column">
+    <a routerLink="/sign-up">
+      <mat-icon
+        *ngIf="showIcons"
+        class="logo"
+        [svgIcon]="'reze:logo'"
+      ></mat-icon>
+    </a>
+
+    <div class="columns hide-in-desktop">
+      <div
+        class="column"
+        *ngFor="let column of [footerData[2], footerData[3], footerData[4]]"
+      >
+        <p class="heading">{{ column.heading }}</p>
+        <a
+          class="item"
+          *ngFor="let value of column.values"
+          (click)="clickFooterOption($event, value)"
+          >{{ value.name }}</a
+        >
+      </div>
+    </div>
+
+    <div class="socials">
+      <a
+        href="https://www.facebook.com/travelonio"
+        target="_blank"
+        rel="noopener noreferrer"
+        ><mat-icon *ngIf="showIcons" [svgIcon]="'reze:facebook'"></mat-icon
+      ></a>
+      <a
+        href="https://www.instagram.com/travelonio_/"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <mat-icon *ngIf="showIcons" [svgIcon]="'reze:instagram'"></mat-icon
+      ></a>
+    </div>
+
+    <div class="contact">
+      <mat-icon *ngIf="showIcons" [svgIcon]="'reze:viber'"></mat-icon>
+      <p>+383 43 84 84 92</p>
+    </div>
+
+    <div class="contact">
+      <mat-icon *ngIf="showIcons" [svgIcon]="'reze:envelope'"></mat-icon>
+      <p>hello@travelonio.com</p>
+    </div>
+
+    <p
+      class="easy-reservation"
+      i18n="easy reservation text@@easyReservationText"
+      (click)="navigateToHowItWorks()"
+    >
+      Easy Reservation: What is this?
+    </p>
+  </div>
+  <div class="column hide-in-phone" *ngFor="let column of footerData">
+    <p class="heading">{{ column.heading }}</p>
+    <a
+      class="item"
+      *ngFor="let value of column.values"
+      (click)="clickFooterOption($event, value)"
+      >{{ value.name }}</a
+    >
+  </div>
+</div>

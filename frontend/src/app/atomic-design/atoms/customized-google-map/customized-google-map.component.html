@@ -1,0 +1,22 @@
+<div class="map">
+  <div class="button" (click)="closeDialog($event)">
+    x
+  </div>
+  <google-map
+    [height]="'100%'"
+    [width]="'100%'"
+    [zoom]="zoom"
+    [center]="center"
+    [options]="options"
+    (mapClick)="addMarker($event)"
+  >
+    <map-marker
+      style="color: white"
+      *ngFor="let m of markerPosition"
+      [position]="{ lat: m.lat, lng: m.lng }"
+      [options]="markerOptions"
+      [label]="m.label"
+    >
+    </map-marker>
+  </google-map>
+</div>

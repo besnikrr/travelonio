@@ -1,0 +1,47 @@
+@import "../../../../../style/colors";
+
+:host {
+  display: block;
+
+  .container {
+    font-family: Lato, sans-serif;
+    font-style: normal;
+
+    .header {
+      mat-divider {
+        margin: 16px 0 32px 0;
+      }
+
+      h5 {
+        //styleName: Headings/H5;
+        font-family: Lato, sans-serif;
+        font-size: 24px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: 32px;
+        color: #101840;
+      }
+
+      h6 {
+        //styleName: Headings/H6;
+        font-family: Lato, sans-serif;
+        font-size: 20px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 24px;
+        color: #101840;
+      }
+    }
+
+    .other-rooms {
+      display: flex;
+      align-items: center;
+      margin-top: 32px;
+
+      button {
+        color: white;
+        background-color: #ff6647;
+      }
+    }
+  }
+}

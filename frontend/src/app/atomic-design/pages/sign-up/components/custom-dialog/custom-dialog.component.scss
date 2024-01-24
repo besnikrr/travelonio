@@ -1,0 +1,55 @@
+:host {
+  display: block;
+
+  h2 {
+    margin: 0;
+  }
+
+  mat-divider {
+    margin-top: 15px;
+  }
+
+  .custom-dialog {
+    border-radius: 20px;
+
+    mat-dialog-content {
+      h5 {
+        font-family: Lato;
+        font-style: normal;
+        font-weight: bold;
+        font-size: 24px;
+        line-height: 32px;
+        color: #304659;
+      }
+
+      p {
+        font-family: Lato;
+        font-size: 12px;
+        font-weight: 400;
+        line-height: 16px;
+        letter-spacing: 0px;
+        text-align: left;
+        color: #696f8c;
+      }
+    }
+  }
+
+  .footer {
+    display: flex;
+    justify-content: flex-end;
+
+    .second-button {
+      margin-right: 16px;
+    }
+  }
+}
+
+::ng-deep .cdk-overlay-container {
+  ::ng-deep .mat-dialog-container {
+    border-radius: 24px;
+  }
+}
+
+::ng-deep .mat-dialog-title {
+  margin: 0;
+}

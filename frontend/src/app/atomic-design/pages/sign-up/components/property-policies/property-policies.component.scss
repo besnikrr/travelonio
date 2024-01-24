@@ -1,0 +1,118 @@
+@import "../../../../../style/colors";
+@import "../../../../../style/breaking-points";
+
+:host {
+  display: block;
+
+  .policies-container {
+    display: flex;
+    flex-direction: column;
+    font-family: Lato, sans-serif;
+    font-style: normal;
+
+    .policies {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 16px;
+      font-weight: 600;
+      font-size: 18px;
+      line-height: 24px;
+      color: #101840;
+
+      p {
+        margin-bottom: 0 !important;
+      }
+    }
+
+    .policies:last-child:after {
+      margin-bottom: 0 !important;
+    }
+
+    mat-divider {
+      margin: 20px -35.39px;
+    }
+
+    .late-checkout {
+      margin-top: 28px;
+
+      p {
+        margin-bottom: 0 !important;
+        margin-left: 0 !important;
+        color: #696f8c;
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 20px;
+      }
+    }
+
+    .check-in-out {
+      display: flex;
+      flex-direction: column;
+
+      p {
+        font-size: 14px;
+        line-height: 20px;
+        font-weight: 600;
+        margin-left: 19px;
+        margin-top: 8px;
+      }
+
+      .check-in {
+        .check-label {
+          font-weight: 500;
+          font-size: 18px;
+          line-height: 24px;
+          color: #101840;
+          margin-left: 0 !important;
+        }
+
+        .from-to {
+          display: flex;
+          @media screen and (max-width: $medium) {
+            justify-content: space-between;
+          }
+
+          .from {
+            width: 278.42px;
+            height: 75px;
+            border: 1px solid #e6e8f0;
+            border-radius: 10px;
+            flex-direction: column;
+            margin-right: 16px;
+
+            @media screen and (max-width: $medium) {
+              width: 47%;
+              margin-right: 0;
+            }
+
+            mat-form-field {
+              width: 50%;
+              margin-left: 19px;
+              margin-top: -14px;
+
+              mat-label {
+                font-weight: normal;
+                font-size: 16px;
+                line-height: 24px;
+                color: #696f8c;
+              }
+
+              ::ng-deep .mat-form-field-flex {
+                background-color: white;
+                padding: 0 !important;
+              }
+
+              ::ng-deep .mat-form-field-underline {
+                display: none;
+              }
+
+              ::ng-deep .mat-select-arrow {
+                color: #ff6647;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

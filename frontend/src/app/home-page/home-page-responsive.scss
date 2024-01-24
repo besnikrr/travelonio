@@ -1,0 +1,278 @@
+@import "../style/responsivness";
+
+:host {
+  .hp-container {
+    &.background {
+      @media screen and (min-width: $phone) {
+        background-image: url("../../assets/homePage/hp-first-picture.png");
+      }
+
+      @media screen and (max-width: $phone) {
+        background-image: url("../../assets/homePage/hm-mobile-first-image.png");
+      }
+    }
+
+    .hide-in-phone {
+      @media screen and (max-width: $phone) {
+        display: none !important;
+      }
+    }
+
+    .hide-before-desktop {
+      @media screen and (max-width: $desktop) {
+        display: none !important;
+      }
+    }
+
+    @media screen and (min-width: $phone) {
+      align-items: center;
+    }
+
+    @media screen and (max-width: $phone) {
+      height: 467px;
+    }
+
+    .hp-content {
+      .hp-first-section {
+        @media screen and (max-width: $phone) {
+          margin: 0 15px;
+          justify-content: flex-start;
+        }
+
+        .headline-heading {
+          @media screen and(max-width: $phone) {
+            margin: 32px 0 0 10px;
+          }
+
+          h2 {
+            @media screen and (max-width: $phone) {
+              font-size: 32px;
+              font-weight: 700;
+              line-height: 40px;
+            }
+          }
+        }
+
+        .hp-search-fields-container {
+          @media screen and (max-width: 1200px) {
+            .hp-search-fields {
+              max-width: 100%;
+
+              .extra-margin .field-container {
+                width: 180px;
+
+                ::ng-deep {
+                  .field-placeholder {
+                    font-size: 12px;
+                  }
+
+                  p {
+                    margin: 0;
+                  }
+                }
+
+                &.dates {
+                  width: 350px;
+                }
+
+                &.search-button {
+                  width: 180px;
+                }
+              }
+            }
+          }
+
+          @media screen and (min-width: 510px) and (max-width: 800px) {
+            .hp-search-fields {
+              .extra-margin .field-container {
+                ::ng-deep {
+                  .toggler {
+                    top: 7px;
+                  }
+
+                  .parent-date {
+                    .placeholders p {
+                      display: none;
+                    }
+
+                    input::placeholder {
+                      font-size: 14px;
+                    }
+
+                    input {
+                      padding-top: 0;
+                      font-size: 14px;
+                      padding-left: 5px;
+                    }
+                  }
+                }
+              }
+            }
+          }
+
+          @media screen and (max-width: 510px) {
+            .hp-search-fields {
+              .extra-margin .field-container {
+                ::ng-deep {
+                  .parent-date {
+                    input {
+                      font-size: 14px;
+                    }
+                  }
+                }
+              }
+            }
+          }
+
+          @media screen and (max-width: $tablet) {
+            top: 150px;
+          }
+
+          .hp-search-fields {
+            @media screen and (max-width: $desktop) {
+              width: 100%;
+              overflow-x: auto;
+              overflow-y: hidden;
+
+              &::-webkit-scrollbar {
+                height: 8px;
+              }
+
+              ::ng-deep {
+                .field {
+                  margin: 0;
+                  padding: 3px;
+
+                  .field-placeholder {
+                    font-size: 10px !important;
+                  }
+                }
+              }
+            }
+
+            @media screen and (max-width: $phone) {
+              height: 375px;
+              width: 345px;
+
+              ::ng-deep .field {
+                padding: 8px 16px;
+              }
+            }
+
+            .extra-margin {
+              @media screen and (max-width: $phone) {
+                flex-direction: column;
+                height: 100%;
+                margin: 0;
+                padding: 15px;
+              }
+
+              .field-container {
+                @media screen and (max-width: $phone) {
+                  flex-direction: column;
+                  width: 100% !important;
+                  margin: 0;
+                }
+
+                &.search-button {
+                  @media screen and (max-width: $phone) {
+                    height: 59px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+
+      .hp-second-section {
+        p {
+          @include dont-show-in-phone;
+        }
+
+        @media screen and (max-width: $phone) {
+          margin: 510px 15px 32px 15px;
+        }
+
+        @media screen and (max-width: $desktop) {
+          ::ng-deep .trip-icon-text {
+            padding: 0 20px;
+
+            p {
+              font-size: 12px;
+            }
+          }
+
+          .divider {
+            display: none;
+          }
+        }
+
+        h3 {
+          @media screen and (max-width: $phone) {
+            font-size: 24px;
+            font-weight: 700;
+            line-height: 48px;
+            text-align: left;
+          }
+        }
+
+        .destination-close {
+          .destinations-scroll {
+            @media screen and (min-width: $desktop) {
+              display: none;
+            }
+          }
+        }
+
+        .popular-destinations-section {
+          @media screen and (max-width: $phone) {
+            margin-top: 74px;
+          }
+
+          h5 {
+            @media screen and (max-width: $phone) {
+              font-size: 24px;
+              line-height: 32px;
+            }
+          }
+
+          @media screen and (max-width: $desktop) {
+            .destination-cards-container {
+              overflow-x: scroll;
+              width: 100%;
+              display: flex;
+              justify-content: flex-start;
+              flex-wrap: nowrap;
+
+              ::ng-deep {
+                .destination-card {
+                  .container {
+                    width: 350px;
+                    margin-right: 20px;
+
+                    img {
+                      height: 230px;
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+
+        .testimonials-gallery {
+          h3 {
+            @media screen and (max-width: $phone) {
+              font-size: 24px;
+              line-height: 32px;
+            }
+          }
+        }
+      }
+    }
+  }
+}

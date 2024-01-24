@@ -1,0 +1,78 @@
+@import "~src/app/style/colors";
+
+::ng-deep .cdk-overlay-pane .price {
+  width: 250px !important;
+  border-radius: 24px !important;
+  margin-top: 10px;
+  margin-left: -10px;
+  padding: 12.5px 17.5px;
+
+  &::-webkit-scrollbar-track {
+    margin-block: 15px;
+  }
+
+  .mat-menu-ripple {
+    display: none;
+  }
+
+  p {
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 16px;
+    color: #696f8c;
+  }
+
+  .menu-item {
+    display: flex !important;
+    flex-direction: column !important;
+    .inputs {
+      display: flex;
+      flex: 1;
+      align-items: center;
+      margin-bottom: 10px;
+      span {
+        margin-left: 8px;
+        margin-right: 8px;
+        color: #101840;
+      }
+      .mat-select-placeholder {
+        color: #696f8c;
+      }
+      .mat-form-field-appearance-outline {
+        .mat-form-field-wrapper {
+          padding: 0 !important;
+          margin: 0 !important;
+        }
+        .mat-form-field-infix {
+          width: 70px;
+          height: 30px;
+          padding: 0;
+        }
+      }
+    }
+    .ngx-slider {
+      .ngx-slider-pointer,
+      .ngx-slider-selection {
+        background-color: #673ab7;
+      }
+      .ngx-slider-pointer {
+        width: 12px;
+        height: 12px;
+        top: -4px;
+      }
+      .ngx-slider-pointer:after {
+        display: none;
+      }
+    }
+  }
+}
+
+:host {
+  display: block;
+  font-family: Lato, sans-serif;
+
+  .mat-form-field {
+    margin-right: 8px;
+    margin-bottom: 8px;
+  }
+}

@@ -1,0 +1,50 @@
+<div class="container">
+  <div class="sign-up-content">
+    <div>
+      <app-property-selection
+        *ngIf="currentRoute?.state.url === '/sign-up'"
+        [properties]="myProperties"
+        (createPropertyEmitter)="createProperty.emit()"
+        (selectPropertyEmitter)="selectProperty.emit($event)"
+        (deletePropertyEmitter)="deleteProperty.emit($event)"
+      ></app-property-selection>
+
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+
+  <div
+    [ngClass]="{ transparent: this.currentStep === 4 }"
+    class="sign-up-footer"
+  >
+    <button
+      mat-raised-button
+      class="back-button"
+      *ngIf="+this.currentStep && +this.currentStep !== 0"
+      (click)="onBack()"
+    >
+      <mat-icon>arrow_back</mat-icon>
+      <span i18n="@@signupBack">Back</span>
+    </button>
+    <button
+      *ngIf="this.currentStep > 0 && this.currentStep <= 16"
+      mat-flat-button
+      class="next-button"
+      color="primary"
+      i18n="@@signupContinue"
+      (click)="onNext()"
+    >
+      Continue
+    </button>
+    <button
+      *ngIf="this.currentStep && this.currentStep === 17"
+      mat-flat-button
+      class="next-button"
+      color="primary"
+      (click)="onFinish()"
+      i18n="@@signupFinish"
+    >
+      Finish
+    </button>
+  </div>
+</div>

@@ -1,0 +1,78 @@
+@import "../../../../../style/breaking-points";
+
+:host {
+  .bank-details-container {
+    font-family: Lato, sans-serif;
+    font-style: normal;
+
+    .bank-details-header {
+      margin-top: 34.2px;
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 25.92px;
+
+      h5 {
+        font-weight: bold;
+        font-size: 24px;
+        line-height: 32px;
+        color: #304659;
+      }
+    }
+
+    .details-card {
+      //width: 571.28px;
+      box-shadow: 0px 16px 32px rgba(103, 27, 181, 0.25);
+      border-radius: 10px;
+
+      @media screen and (min-width: $large) {
+        max-width: 571.28px;
+        height: 360.11px;
+      }
+
+      .details {
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+
+        mat-icon {
+          height: 85.38px;
+          width: 85.35px;
+          margin-bottom: 45.71px;
+        }
+
+        .form-inputs {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          flex-wrap: wrap;
+
+          @media screen and (max-width: $large) {
+            justify-content: center;
+          }
+
+          app-single-line-field {
+            &.account {
+              ::ng-deep .mat-form-field-infix {
+                .mat-input-element {
+                  text-transform: capitalize;
+                }
+              }
+            }
+          }
+
+          app-single-line-field {
+            width: 255.92px;
+
+            ::ng-deep .mat-form-field-outline {
+              background: #f9fafc;
+              border: 1px solid #e6e8f0;
+              border-radius: 10px;
+            }
+          }
+        }
+      }
+    }
+  }
+}

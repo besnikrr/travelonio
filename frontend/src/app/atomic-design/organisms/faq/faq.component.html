@@ -1,0 +1,41 @@
+<div class="header">
+  <app-home-page-header class="absolute"></app-home-page-header>
+</div>
+<div class="content">
+  <div class="container">
+    <h1 class="title" i18n="@@faq">Frequently Asked Questions</h1>
+    <mat-tab-group>
+      <mat-tab>
+        <ng-template mat-tab-label i18n="@@forGuests"> For Guests </ng-template>
+        <mat-accordion [multi]="false">
+          <mat-expansion-panel
+            *ngFor="let faq of faqForGuestsText; let i = index"
+            [expanded]="i === 0 ? true : false"
+          >
+            <mat-expansion-panel-header>
+              <mat-panel-title> {{ faq.question }} </mat-panel-title>
+            </mat-expansion-panel-header>
+            <p *ngFor="let answer of faq.answer">{{ answer }}</p>
+          </mat-expansion-panel>
+        </mat-accordion>
+      </mat-tab>
+      <mat-tab>
+        <ng-template mat-tab-label i18n="@@forHosts"> For Hosts </ng-template>
+        <mat-accordion [multi]="false">
+          <mat-expansion-panel
+            *ngFor="let faq of faqForHostsText; let i = index"
+            [expanded]="i === 0 ? true : false"
+          >
+            <mat-expansion-panel-header>
+              <mat-panel-title> {{ faq.question }} </mat-panel-title>
+            </mat-expansion-panel-header>
+            <p *ngFor="let answer of faq.answer">{{ answer }}</p>
+          </mat-expansion-panel>
+        </mat-accordion>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+</div>
+<div class="footer">
+  <app-footer></app-footer>
+</div>

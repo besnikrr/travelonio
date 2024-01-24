@@ -1,0 +1,209 @@
+@import "../../../../../style/colors";
+@import "../../../../../style/breaking-points";
+
+:host {
+  display: block;
+  font-family: "Lato", sans-serif;
+
+  .sections {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    font-family: Lato, sans-serif;
+    font-style: normal;
+
+    .section {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      @media screen and (max-width: $small) {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .section-title {
+        font-style: normal;
+        font-weight: 500;
+        font-size: 18px;
+        line-height: 24px;
+        color: #101840;
+
+        @media screen and (max-width: $small) {
+          margin-bottom: 16px;
+        }
+      }
+
+      .section-options {
+        font-style: normal;
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 20px;
+        color: #696f8c;
+
+        ::ng-deep .mat-radio-button {
+          padding-left: 10px;
+
+          @media screen and (max-width: $small) {
+            padding-right: 20px;
+            padding-left: 0px;
+          }
+        }
+      }
+    }
+
+    .section-container {
+      display: flex;
+      flex-direction: column;
+      position: relative;
+
+      .section-option {
+        display: flex;
+        align-items: center;
+        height: 80.56px;
+        border: 1px solid #e6e8f0;
+        border-radius: 10px;
+        justify-content: space-between;
+        margin-top: 15px;
+        @media screen and (min-width: $medium) {
+          width: 570.88px;
+        }
+
+        .section-option-title {
+          display: flex;
+          flex-direction: column;
+          margin-left: 16px;
+
+          &.language {
+            margin-top: 8px;
+          }
+
+          p {
+            margin-bottom: 0 !important;
+          }
+
+          .section-option-label {
+            font-weight: 600;
+            font-size: 14px;
+            line-height: 20px;
+            color: #304659;
+          }
+
+          .section-option-placeholder {
+            font-weight: normal;
+            font-size: 16px;
+            line-height: 24px;
+            color: #696f8c;
+            @media screen and (max-width: $small) {
+              font-size: 12px;
+            }
+          }
+        }
+      }
+
+      .language-input {
+        min-height: 70px !important;
+        height: unset !important;
+
+        .chip-list-wrapper {
+          margin: 15px 0;
+        }
+      }
+
+      .section-option-input {
+        display: flex;
+        align-items: center;
+        margin-top: 17px;
+        margin-right: 15px;
+        position: absolute;
+        width: 220px;
+        right: 0px;
+        top: 8px;
+
+        @media screen and (max-width: $small) {
+          left: 65% !important;
+          right: unset !important;
+        }
+
+        @media screen and (max-width: 440px) {
+          left: 70% !important;
+        }
+
+        app-single-line-field {
+          @media screen and (max-width: $small) {
+            width: 86px;
+            height: 40px;
+          }
+          @media screen and (max-width: 440px) {
+            width: 46px;
+          }
+        }
+
+        .currency {
+          margin-left: 3px;
+
+          @media screen and (max-width: $medium) {
+            color: #671bb5;
+          }
+
+          @media screen and (max-width: $small) {
+            justify-content: flex-end;
+            margin-bottom: 0px;
+            margin-top: 16px;
+            font-size: 14px !important;
+          }
+        }
+      }
+    }
+  }
+
+  mat-divider {
+    margin: 22px -35.39px;
+  }
+
+  .flex-column {
+    display: flex;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+
+    .dropdown {
+      margin-left: 19px;
+      width: 93%;
+
+      .half-width {
+        width: 100%;
+      }
+    }
+
+    mat-form-field {
+      width: 100%;
+
+      mat-label {
+        font-weight: normal;
+        font-size: 16px;
+        line-height: 24px;
+        color: #696f8c;
+      }
+
+      ::ng-deep .mat-form-field-flex {
+        background-color: white;
+        padding: 0 !important;
+      }
+
+      ::ng-deep .mat-form-field-underline {
+        display: none;
+      }
+
+      ::ng-deep .mat-select-arrow {
+        color: #ff6647;
+      }
+
+      ::ng-deep .mat-form-field-suffix {
+        mat-icon {
+          width: 8px;
+          height: 8px;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,57 @@
+<div class="policies">
+  <h1 class="title" i18n="@@policies">Policies</h1>
+  <div class="info">
+    <h3 i18n="@@cancellationPolicy">Cancellation Policy</h3>
+    <p>{{ ratePlanType() }}</p>
+    <p class="learn">
+      <span i18n="@@learnMore">Learn more about our </span>
+      <span
+        class="diff"
+        i18n="@@cancellationPolicy"
+        (click)="navigateToCancelOptions()"
+        >Cancellation policies</span
+      >
+    </p>
+  </div>
+  <div class="rules">
+    <h2 class="title" i18n="@@houseRules">House rules</h2>
+    <div class="check">
+      <div class="check-in">
+        <mat-icon *ngIf="showIcons" [svgIcon]="'reze:check-in'"></mat-icon>
+        <p>
+          <span i18n="@@checkInFrom">Check in from: </span
+          >{{ propertyPoliciesData?.checkIn?.from }}
+          <span i18n="@@to"> to </span>
+          {{ propertyPoliciesData?.checkIn?.to }}
+        </p>
+      </div>
+      <div class="check-out">
+        <mat-icon *ngIf="showIcons" [svgIcon]="'reze:check-out'"></mat-icon>
+        <p>
+          <span i18n="@@checkOutFrom">Check out from: </span>
+          {{ propertyPoliciesData?.checkOut?.from }}
+          <span i18n="@@to"> to </span>
+          {{ propertyPoliciesData?.checkOut?.to }}
+        </p>
+      </div>
+    </div>
+    <ul class="list">
+      <li class="item" *ngFor="let rule of setHouseRules()">
+        {{ rule | titlecase }}
+      </li>
+      <li class="item">
+        <span i18n="@@maxGuests">Max guests: </span>
+        <span
+          *ngIf="
+            propertyPoliciesData && propertyPoliciesData.potentialGuestNumber;
+            else other_content
+          "
+          >{{ propertyPoliciesData.potentialGuestNumber }}</span
+        >
+        <ng-template #other_content>
+          <span i18n="@@notDefined">Not defined</span>
+        </ng-template>
+      </li>
+    </ul>
+  </div>
+</div>

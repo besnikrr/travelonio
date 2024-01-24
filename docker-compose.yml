@@ -1,0 +1,119 @@
+version: "3.7"
+
+volumes:
+  database:
+
+networks:
+  reze:
+    name: reze
+    driver: bridge
+
+services:
+  proxy:
+    container_name: proxy
+    restart: unless-stopped
+    build:
+      context: ./docker/proxy
+      dockerfile: Dockerfile
+    networks:
+      - reze
+    depends_on:
+      - backend
+      - frontend
+      - swagger-ui
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./docker/proxy/certbot/conf:/etc/letsencrypt
+      - ./docker/proxy/certbot/www:/var/www/certbot
+
+  proxy-http:
+    container_name: proxy-http
+    restart: unless-stopped
+    build:
+      context: ./docker/proxy
+      dockerfile: Dockerfile-http
+    networks:
+      - reze
+    depends_on:
+      - backend
+      - frontend
+      - swagger-ui
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./docker/proxy/certbot/conf:/etc/letsencrypt
+      - ./docker/proxy/certbot/www:/var/www/certbot
+
+  certbot:
+    image: certbot/certbot
+    container_name: certbot
+    volumes: 
+      - ./docker/proxy/certbot/conf:/etc/letsencrypt
+      - ./docker/proxy/certbot/www:/var/www/certbot
+    command: certonly --webroot -w /var/www/certbot --force-renewal --email durimkepuska@gmail.com -d travelonio.com -d www.travelonio.com --agree-tos
+
+  backend:
+    container_name: backend
+    restart: unless-stopped
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+    environment:
+      - "MONGO_SERVERS=mongo"
+      - "MONGO_DATABASE=reze"
+      - "JAVA_XMX=512m"
+    networks:
+      - reze
+    depends_on:
+      - mongo
+
+  mongo:
+    container_name: mongo
+    image: mongo:4.4.6
+#    ports:
+#      - 27017:27017
+    networks:
+      - reze
+    restart: always
+    command:
+      - "--wiredTigerCacheSizeGB"
+      - "0.25"
+      - "--logpath"
+      - "/var/log/mongodb/info.log"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=mongodb-user
+      - MONGO_INITDB_ROOT_PASSWORD=some-password
+    volumes:
+      - database:/data
+
+
+  swagger-ui:
+    container_name: swagger-ui
+    image: swaggerapi/swagger-ui:v3.51.1
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    environment:
+      - "BASE_URL=/openapi-ui"
+      - "URL=/doc/backend/openapi.yaml"
+    networks:
+      - reze
+
+  frontend: 
+    container_name: frontend
+    restart: unless-stopped
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      target: "${FE_TARGET:-prod}"
+    ports:
+      - "4200:80"
+    environment:
+      - "ENV=production"
+    networks:
+      - reze

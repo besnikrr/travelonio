@@ -1,0 +1,339 @@
+@import "../style/colors";
+@import "../style/responsivness";
+
+:host {
+  display: block;
+  //height: 100%;
+  font-family: Lato, sans-serif;
+  font-style: normal;
+  background-color: #fafbff;
+  //overflow: auto;
+
+  .hp-container {
+    display: flex;
+    width: 100%;
+    background-repeat: no-repeat;
+    flex-direction: column;
+    background-size: 100% 485.01px;
+
+    .hp-content {
+      width: 100%;
+      max-width: 1440px;
+
+      .hp-first-section {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        position: relative;
+
+        .headline-heading {
+          margin: 130px 0 90px 80px;
+          display: flex;
+
+          @media screen and (max-width: $tablet) {
+            margin: 50px 0 90px 20px;
+          }
+
+          h2 {
+            font-size: 48px;
+            font-weight: 700;
+            color: white;
+
+            @media screen and (max-width: $tablet) {
+              font-size: 30px;
+            }
+
+            @media screen and (max-width: $desktop) {
+              font-size: 40px;
+            }
+          }
+        }
+
+        .hp-search-fields-container {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          width: 100%;
+          position: absolute;
+          top: 275px;
+          left: 0;
+
+          .filters {
+            width: 100%;
+            overflow: hidden;
+            .selected {
+              background-color: #673ab7;
+              color: white;
+            }
+            mat-chip-list {
+              ::ng-deep {
+                @media screen and (min-width: $desktop) {
+                  .mat-chip {
+                    margin: 0 5px;
+                    border-bottom-left-radius: 0 !important;
+                    border-bottom-right-radius: 0 !important;
+
+                    &:first-of-type {
+                      margin-left: 0;
+                    }
+                  }
+                }
+              }
+
+              ::ng-deep .mat-chip-list-wrapper {
+                width: 100%;
+                flex-wrap: nowrap;
+                margin: 0;
+                overflow: auto;
+
+                @media screen and (max-width: $tablet) {
+                  margin: 10px 15px;
+                }
+
+                &::-webkit-scrollbar {
+                  height: 10px;
+                }
+              }
+
+              mat-chip {
+                height: 31px;
+                border-radius: 10px;
+                font-size: 14px;
+                font-weight: 500;
+
+                .filter-chip {
+                  min-width: 90px;
+                  display: flex;
+                  justify-content: center;
+                }
+              }
+            }
+          }
+
+          .hp-search-fields {
+            height: 132px;
+            width: 100%;
+            box-shadow: 0 16px 32px 0 #671bb51a;
+            border-radius: 10px;
+            background-color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            @media screen and (min-width: $desktop) {
+              border-top-left-radius: 0;
+            }
+
+            .extra-margin {
+              display: flex;
+              margin: 15px;
+              justify-content: space-around;
+              width: 100%;
+
+              .field-container {
+                height: 75px;
+                width: 225px;
+                border-radius: 10px;
+                border: 1px solid #c1c4d6;
+                margin: 0 10px;
+
+                &.dates {
+                  width: 463px;
+                }
+
+                &.search-button {
+                  width: 247px;
+                  border-radius: 10px;
+                }
+              }
+            }
+          }
+        }
+      }
+
+      .hp-second-section {
+        display: flex;
+        justify-content: center;
+        margin: 230px 70px 130px 70px;
+        flex-direction: column;
+
+        @media screen and (max-width: $desktop) {
+          margin: 230px 0 0 0;
+          padding: 15px;
+        }
+
+        h3 {
+          font-family: Lato, sans-serif;
+          font-size: 40px;
+          font-weight: 700;
+          line-height: 48px;
+          letter-spacing: 0px;
+          text-align: center;
+          color: #304659;
+        }
+
+        .trip-icon-container {
+          width: 100%;
+
+          mat-divider {
+            height: 16px;
+            color: #d8dae5;
+            margin: 0px -8px;
+          }
+
+          .trip-icons {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            overflow: auto;
+
+            &::-webkit-scrollbar {
+              height: 8px;
+            }
+          }
+
+          .divider {
+            background-color: #d8dae5;
+            height: 8px;
+            width: 100%;
+            margin-top: -8px;
+            border-radius: 4px;
+          }
+        }
+
+        .destination-close {
+          margin-top: 32.76px;
+
+          h3 {
+            margin-bottom: 32.76px;
+          }
+
+          .destinations-carousel {
+            carousel {
+              height: 680px !important;
+
+              ::ng-deep .carousel-cells {
+                width: 100% !important;
+              }
+
+              .carousel-cell {
+                display: flex;
+                justify-content: center;
+              }
+            }
+          }
+
+          .destinations-scroll {
+            display: flex;
+            overflow: auto;
+
+            app-carousel-item {
+              margin-right: 16.95px;
+            }
+          }
+        }
+
+        p {
+          font-family: Lato, sans-serif;
+          font-size: 14px;
+          font-style: normal;
+          font-weight: 500;
+          line-height: 20px;
+          text-align: center;
+          color: #304659;
+          margin-top: 26px;
+        }
+
+        .popular-destinations-section {
+          margin-top: 121px;
+          display: flex;
+          flex-direction: column;
+
+          h5 {
+            font-size: 32px;
+            font-weight: 700;
+            line-height: 40px;
+            color: #304659;
+            margin-bottom: 35px;
+          }
+
+          .destination-cards-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+
+            @media screen and (max-width: $desktop) {
+              margin-bottom: 15px;
+            }
+
+            .destination-card {
+              &.hide {
+                display: none;
+              }
+
+              app-country-display-card {
+                margin-bottom: 50px;
+
+                @media screen and (max-width: $desktop) {
+                  margin-bottom: 10px;
+
+                  ::ng-deep {
+                    .container {
+                      border: none;
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+
+        .testimonials-gallery {
+          margin-bottom: 180px;
+
+          @media screen and (max-width: $desktop) {
+            margin-bottom: 80px;
+          }
+
+          h3 {
+            font-family: Lato, sans-serif;
+            font-size: 40px;
+            font-style: normal;
+            font-weight: 700;
+            line-height: 48px;
+            letter-spacing: 0px;
+            text-align: left;
+            color: #304659;
+          }
+
+          .testimonials {
+            display: flex;
+            justify-content: space-between;
+
+            @media screen and (max-width: 1400px) {
+              height: 350px;
+            }
+
+            .just-pictures {
+              display: flex;
+              flex-direction: column;
+              justify-content: space-between;
+
+              @media screen and (max-width: 1400px) {
+                display: none;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .hp-footer {
+      background-color: white;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+    }
+  }
+}
